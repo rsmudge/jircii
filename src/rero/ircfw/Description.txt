@@ -1,0 +1,51 @@
+IRC Framework
+-------------
+
+The purpose of the IRC framework is to make handling of messages from the RFC1459 protocol
+easier to deal with and program with.
+
+This framework is at the heart of this IRC Client technology and could easily be utilized
+for other irc clients.
+
+What does the IRC framework consist of?  This framework is divided into 3 parts:
+
+A. An RFC1459 Parser
+
+   Put simply this part is just a simple regular expression based parser that takes a string
+   from the protocol and breaks it down into it's relevant information.  This information is
+   then stored in a disposable hashmap that can be passed around and taken advantage of in
+   whichever way is most beneficial to the client.
+
+   The parser also handles CTCP messages and the ACTION protocol.
+
+B. A Powerful Internal Data List for keeping track of relevant IRC related Info
+
+   The IDL gets a chance to examine every message before it is dispatched to the rest of the
+   client.   The IDL keeps track of personal information, user information, and nickname
+   information.
+
+   Essentially as a user yourself; your nick, address, current channels, and modes in each of
+   these channels are tracked.  On top of that your away status (and time) are tracked and
+   so are your personal modes.   
+
+   Normal users have there nickname, address, current channels in common with you, and modes
+   in each of these channels tracked.  On top of all of this there idle time is also tracked.
+
+   Finally channels are also kept track of.  Relevant channel info that is kept is the channel
+   name, topic, modes, and who is on the channel including there modes for those channels.
+   As an added bonus operators, halfops, voiced users, and normal user lists are mantained in
+   alphabetically sorted order.
+
+C. An event dispatcher for interfacing with the rest of your program
+
+   The Event dispatcher is very flexible allowing listeners to determine wether or not they want
+   to receive an event via an isChatEvent(EventName, Description) method.
+  
+   Each listener also has the power to halt processing on other listeners and to even remove itself
+   as a listener.
+
+   Finally the event dispatcher allows for two types of events.  Permanent and temporary listeners.
+   Temporary listeners are fired before the permanent events and removed after processing (generally).
+
+   :P~
+

@@ -1,0 +1,6 @@
+This is the bridges sub system.  I say subsystem because it technically
+belongs to the scripting system.
+
+I have it put aside in this package as a matter of convienence.  The main
+purpose of these classes is to bridge sleep with other systems within the
+irc client.

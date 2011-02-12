@@ -1,0 +1,35 @@
+:irc.Prison.NET 001 IamBuTANE :Welcome to the Internet Relay Network IamBuTANE
+:irc.Prison.NET 002 IamBuTANE :Your host is irc.Prison.NET, running version 2.8/comstud-1.13-Alpha3+RF-2.9
+:irc.Prison.NET 003 IamBuTANE :This server was created Nov  8 2001 09:42:44
+:irc.Prison.NET 004 IamBuTANE irc.Prison.NET 2.8/comstud-1.13-Alpha3+RF-2.9 oOi biklmnopstv
+:irc.Prison.NET 251 IamBuTANE :There are 8614 users and 116012 invisible on 61 servers
+:irc.Prison.NET 252 IamBuTANE 430 :operator(s) online
+:irc.Prison.NET 254 IamBuTANE 45359 :channels formed
+:irc.Prison.NET 255 IamBuTANE :I have 1275 clients and 1 servers
+:irc.Prison.NET 250 IamBuTANE :Highest connection count: 2267 (2266 clients)
+:irc.Prison.NET NOTICE IamBuTANE :You are client #69224 to connect since Wed May 28 08:42:46 2003 PDT
+:irc.Prison.NET 375 IamBuTANE :- irc.Prison.NET Message of the Day -
+:irc.Prison.NET 372 IamBuTANE :-
+:irc.Prison.NET 376 IamBuTANE :End of /MOTD command.
+:IamBuTANE MODE IamBuTANE :+i
+:IamBuTANE!~a@pcp02792562pcs.roylok01.mi.comcast.net JOIN :#PoLLuTiOn
+:irc.Prison.NET 332 IamBuTANE #PoLLuTiOn :http://cgi.ebay.com/ws/eBayISAPI.dll?ViewItem&item=2175475973&category=14433
+:irc.Prison.NET 333 IamBuTANE #PoLLuTiOn styckx 1054275838
+:irc.Prison.NET 353 IamBuTANE @ #pollution :IamBuTANE _dev_ grimzy jono rdwarlock _dev _riot era- @jay_ dist_ _ntrac phos 
+:irc.Prison.NET 366 IamBuTANE #PoLLuTiOn :End of /NAMES list.
+:irc.Prison.NET 306 IamBuTANE :You have been marked as being away
+:irc.Prison.NET 352 IamBuTANE #pollution ~a pcp02792562pcs.roylok01.mi.comcast.net irc.Prison.NET IamBuTANE H :0 d
+:irc.Prison.NET 352 IamBuTANE #pollution ~osama cpe-66-190-144-156.hkry.nc.charter.com irc.secsup.org _dev_ H :5 beezooble
+:irc.Prison.NET 352 IamBuTANE #pollution grimzy ranawebben.com irc.vrfx.com grimzy G :2 i eat humans
+:irc.Prison.NET 352 IamBuTANE #pollution ~horsesass alcohol.chem.grid.edu efnet.xs4all.nl jono H :6 horsesass
+:irc.Prison.NET 352 IamBuTANE #pollution rdwarlock ts46-01-qdr3499.kfalls.or.charter.com irc.dkom.at rdwarlock H :5 rdwarlock
+:irc.Prison.NET 352 IamBuTANE #pollution rcp cpe-66-190-144-156.hkry.nc.charter.com irc.he.net _dev H :5 owned.
+:irc.Prison.NET 352 IamBuTANE #pollution insanity ip68-97-96-173.ok.ok.cox.net irc.wh.verio.net _riot H :5 casey
+:irc.Prison.NET 352 IamBuTANE #pollution ndove wsip-24-234-47-214.lv.lv.cox.net irc.isprime.com era- H :3 bill gates smokes crack.
+:irc.Prison.NET 352 IamBuTANE #pollution snively host-216-78-116-177.msy.bellsouth.net irc.dkom.at jay_ H@ :5 aaarrrrgggghhhhh
+:irc.Prison.NET 352 IamBuTANE #pollution martyr 24-90-102-204.nyc.rr.com irc.vrfx.com dist__ G :2 i'm underground bitch, you don't want none
+:irc.Prison.NET 352 IamBuTANE #pollution intrac god.i.love.those.sluttynuns.org irc6.Qeast.net intrac H@ :6 hacked.
+:irc.Prison.NET 352 IamBuTANE #pollution dan c-24-129-68-91.se.client2.attbi.com irc.vrfx.com phos G :2 up with dope, down with hope
+:pathogen!path@CPE0050ba56dd8f-CM00e06f1ae56e.cpe.net.cable.rogers.com JOIN :#pollution
+:pathogen!path@CPE0050ba56dd8f-CM00e06f1ae56e.cpe.net.cable.rogers.com PRIVMSG #pollution :work sucks.
+

@@ -1,0 +1,40 @@
+Three ways to fire events each has advantages / disadvantages
+
+1. create an artificial irc event and inject it into the stream
+
+Advantages: all sorts of parsing and variable creation is taken
+  care of for you.  Event registering is a no brainer.  Very 
+  easy for client to take advantage of these types of events
+
+Disadvantages: slightly inefficient.  another event that adds to
+  the list of *all* events being iterated through during a given
+  chat evnet.
+
+Use (ChatFramework).injectEvent(<string>)
+i.e.
+
+  assume: ChatFramework temp;
+  temp.injectEvent("`butane!scripter@my.address.net COLORTEXT #mIRC :I was using ^k13colored text");
+
+2. create an artificial event description and give it to the irc
+   framework protocol dispatcher 
+
+Advantages: Event registering is a no brainer.  Very 
+  easy for client to take advantage of these types of events.
+  Lots of flexibility in terms of what variables are passed
+  with the event.
+
+Disadvantages: slightly inefficient (although a little more than
+  the first method).  Also adds another event that is iterated
+  through when all events are iterated through.  Just how the irc
+  framework was designed.
+
+3. create an implementation of your listener and have it extend 
+   ScriptedEventListener.
+
+Advantages: much more efficient than any of the above.  Doesn't touch
+  the irc frameworks way of doing things.  Lots of flexibility.
+
+Disadvantages: tougher to create.  tougher for the client itself to
+  take advantage of these types of events.  Mostly for scripters.
+

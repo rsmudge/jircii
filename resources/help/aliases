@@ -1,0 +1,83 @@
+ame::/ame is away... sleep::sends an action to all channels you are on::text - the text to send.
+away::/away robbing a liquer store::sets yourself as away on the irc server::reason - reason you are set away
+back::/back::sets yourself as back from being away
+banstat::/banstat #jIRCii::lists all bans on the active or specified channel.::+channel - channel to list bans from
+chat::/chat blue-elf::sends a DCC chat request to specified nick::nick - person to send the dcc chat request to.
+cls::/cls::clears the current window.
+clear::/clear::clears the current window.
+clearall::/clearall::clears all of the windows.
+cping::/cping tanto::sends a ctcp ping request to the specified nick/channel.::+target - nick/channel to send ping to
+ctcp::/ctcp `butane VERSION::sends a specified ctcp request to a user::nick - user to send the request to::command - request to send to user.
+creply::/creply Tobias VERSION x-chat: paid Windows version::sends a ctcp reply to the target::target - who to send reply to::type - type of ctcp reply to send::+parms - parameters to send
+cycle::/cycle::leaves and joins the current/specified channel::+#channel - channel to cycle
+dcc::/dcc send JakieChan ~/jerksrc.tar<br>/dcc chat tanto<br>/dcc accept blue-elf<br>/dcc close JakieChan::DCC stands for Direct Client Connection.  It is a way of sending and receiving files from other users on IRC.  It also provides facilities for chatting with another user outside of the IRC environment.::+stats - show dcc statistics in a window::send|chat|close|accept - type of dcc command to send.::nick - user to send dcc request to.::+file - filename to send
+debug::/debug xdcc.irc +trace<br>/debug xdcc.irc -warn::sets/unsets debug flag for the specified script::filename.irc - script to set debug flag for::++level|-level - level to set. options include trace, warn, and all
+deop::/deop tijiez::takes away half operator privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to deop::+nick... - other users to deop.
+describe::/describe #jIRC slaps tanto.::sends an action to the specified channel::#channel - channel to send action to.::text - action to perform.
+devoice::/devoice tijiez::takes away voice (-v) privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to devoice::+nick... - other users to devoice.
+dh::/dh blue-elf::takes away half op privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to de-halfop::+nick... - other users to de-halfop.
+dns::/dns www.google.com::looks up the hostname/ip address of the specified host::host|ip - the host or ip to look up
+do::/do tijiez::takes away half operator privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to deop::+nick... - other users to deop.
+dop::/dop tijiez::takes away half operator privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to deop::+nick... - other users to deop.
+dv::/dv tijiez::takes away voice (-v) privileges for user on active channel. You can specify up to 4 nicknames (uses nick completion).::nick - user to devoice::+nick... - other users to devoice.
+eval::/eval 3 * 12<br>/eval $var<br>/eval "my nickname is $me"::evaluates a sleep expression and echos the result::expr - sleep expression to evaluate
+exec::/exec notepad c:\autoexec.bat::executes the specified command::command - command to execute::+arguments - arguments to pass to the command
+exit::/exit::closes jIRC.  The only command you need to know.
+h::/h tijiez::gives halfop (+h) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give halfop to.::nick... - other users to give halfops to.
+help::/help::shows the jIRC help dialog.
+ho::/ho tijiez::gives halfop (+h) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give halfop to.::nick... - other users to give halfops to.
+hop::/hop::leaves and joins the current/specified channel::+#channel - channel to cycle
+ignore::/ignore *!*@*.aol.com::Adds the specified mask to the ignore list.  Messages, notices, ctcp requests/replies, and actions from matching hosts in the ignore list are ignored.::nick!user@host - host mask to ignore, wildcards ? and * are allowed
+invite::/invite `butane::Invites user to the specified channel (or the current channel by default)::nick - user to invite::+#channel - channel to invite user to
+j::/join #jIRC::Joins the specified channel.  If you are already on that channel, jIRC will set the status window query to the specified channel::[#]channel - channel to join/query::+key - channel key
+join::/join #jIRC::Joins the specified channel.  If you are already on that channel, jIRC will set the status window query to the specified channel::[#]channel - channel to join/query::+key - channel key
+k::/k JakieChan you suck!::kicks user from current channel with the specified reason.::nick - user to kick::+reason - specified kick message.
+kb::/kb JakieChan you suck!::kicks and bans user from current channel with the specified reason.::nick - user to kick::+reason - specified kick message.
+kick::/kick #jIRC tanto I'll add a timer later!::kicks a user from the specified channel with the specified reason::channel - channel to kick user from::nick - user to kick::+reason - specified kick message.
+kill::/kill drakx does it work ok?::disconnects the specified user from the server.  Must be an IRC operator for this to work::user - user to disconnect::+reason - reason to disconnect them
+l::/l #mIRCscripts::leaves the specifed channel::+#channel - channel to leave.
+list::/list *mp3*::retrieves a list of channels from the server::+-gui - dump channel list to a window::+filter - wildcard to filter list of channels with.
+load::/load bitchx.irc::loads a specified sleep script, if no file is specified /load lists the currently loaded scripts.::+file.irc - name of sleep script to load.
+leave::/leave #mIRCscripts::leaves the specifed channel::+#channel - channel to leave.
+m::/m blue-elf did you get the latest beta?::sends a message to the specified nick/channel::target - nick/#channel to send message to::text - message to send.
+me::/me goes to the store...::sends an action to the current channel::text - the text to send.
+mode::/mode #floods -o funbox::changes the modes for the specified nick/channel::nick|#channel - the target nick/channel::-/+n - unset/set mode n::+nick - target nick for a mode change on the specified channel
+msg::/msg blue-elf did you get the latest beta?::sends a message to the specified nick/channel/=nick<br><br>Use =nick to send a message to a dcc chat with a specified nick.::target - nick/#channel to send message to::text - message to send.
+n::/n blue-elf I am not accepting messages either!::sends a notice to the specified nick/channel::target - nick/#channel to send notice to::text - message to send.
+newserver::/newserver -ssl lug.mtu.edu 6669::creates a new irc session and connects it to the specified server::+-ssl - use the secure sockets layer (SSL) to connect to the server::+-pass mypass - server password (if needed)::hostname - the host you want to connect to::port - the port number of the server
+nick::/nick mneptok::steal eer change your nickname to something else::newnick - your desired new nickname.
+notice::/notice blue-elf I am not accepting messages either!::sends a notice to the specified nick/channel::target - nick/#channel to send notice to::text - message to send.
+notify::/notify remove JakieChan::add/remove a user from the notify list::add|remove - action to take::nick - user to take action on
+o::/o tijiez::gives operator (+o) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give op to.::nick... - other users to give ops to.
+op::/op tijiez::gives operator (+o) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give op to.::nick... - other users to give ops to.
+p::/p tanto::sends a ctcp ping request to the specified nick/channel.::+target - nick/channel to send ping to
+pa::/pa::leaves all channels you are currently on (part-all).
+part::/part #mIRCscripts::leaves the specifed channel::+#channel - channel to leave.
+ping::/ping tanto::sends a ctcp ping request to the specified nick/channel.::+target - nick/channel to send ping to
+query::/query #jIRC::sets the active query of the status window to the specified nick/channel.<br><br>/query by itself lists all the channels you are currently on.::target - nick/#channel to make active.
+quote::/quote PRIVMSG #mIRC :haha you all suck!::sends the specified text to the server, used for sending a command that might not be implemented by jIRC.::text - text to send to the server.
+raw::/raw PRIVMSG #mIRC :haha you all suck!::sends the specified text to the server, used for sending a command that might not be implemented by jIRC.::text - text to send to the server.
+reload::/reload bitchx.irc::rehashes the specified script.  It might even work at times.::+filename.irc - script to reload.
+run::/run notepad c:\autoexec.bat::executes the specified command::command - command to execute::+arguments - arguments to pass to the command
+sc::/sc #jIRC::shows the users on the specified channel.::+#channel - channel to show.
+send::/send JakieChan jerkb12.zip::dcc sends a file to the specified nick::nick - user to send the file to::+file - file to send.
+server::/server -ssl lug.mtu.edu 6669::connects the current irc session to the specified server::+-ssl - use the secure sockets layer (SSL) to connect to the server::+-pass mypass - server password (if needed)::hostname - the host you want to connect to::port - the port number of the server
+sm::/sm::shows the mode on the current channel.
+st::/st::shows the topic on the current channel.
+sv::/sv::show version - sends a message showing your jIRC pride to the current nick/channel.
+theme::/theme /Users/raffi/mIRC-theme.thm::loads a jIRCii theme file::file.thm - the theme file to load
+topic::/topic #jIRC no the beta is not done yet.::sets or displays the topic for the specified channel.::+#channel - channel to set topic for.::+new topic - The new topic to set for the given channel. If no new topic is specified, the current topic for the specified channel will be displayed.
+unban::/unban `butane::unsets bans against the specified nick.::nick|banmask - nickname to unset all matching bans for or banmask to unset.
+unignore::/unignore *!*@*.aol.com::removes the specified mask from the ignore list.::nick!user@host - mask to remove from ignore list.
+unload::/unload xdcc.irc::unloads specified script.::file.irc - script to unload.
+ut::/ut #jIRC::unsets the topic for the specified channel.::+#channel - channel to unset the topic for.
+v::/v tijiez::gives voice (+v) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give voice to.::+nick... - other users to give voice to.
+ver::/ver tanto::requests version information from specified nick/channel.::+target - nick/channel to request version info from.
+voice::/voice tijiez::gives voice (+v) privileges to specified users.  You may specify up to 4 nicks (uses nick completion)::nick - user to give voice to.::+nick... - other users to give voice to.
+wall::/wall hrm...::write all ops, sends a /notice to all the channel operators (+o) on the current channel.::text - message to send.
+wallex::/wallex JakieChan I think chan likes men.::write all except - sends a /notice to everyone on the active channel except the specified nicks.::nick1,nick2 - users who do not receive the notice::text - message to send
+wallops::/wallops argh, my server was just owned::writes a message to all irc operators on the server::message - the message to send
+whois::/whois `butane::looks up information on the specified user from the server.::nick - user to look up information on.
+wi::/wi `butane::looks up information on the specified user from the server.::nick - user to look up information on.
+window::/window #mIRC::creates a new window for the specified nick/#channel/=nick.::target - target to open a window for.
+ww::/ww blue-elf_::looks up information on who the specified user was.::nick - user to look up information on.

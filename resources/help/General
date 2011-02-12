@@ -1,0 +1,26 @@
+<font color="#000099" size="+1"><b>Help on Help</b></font>
+<br>
+<br>The jIRCii Help system is divided up into two sections.  The section you are currently in is the General Help.  This section is 
+meant to offer help on general concepts such as how to send formatted text to a channel or how to use the help system.
+<br>
+<br>The other section is the commands section.  jIRCii features a plethora of built in commands.  The built in help for jIRCii 
+commands all follow certain conventions.
+<br>
+<br>The example below is the command help for the <b>/j</b> command. The /j command is a shortcut to join a channel.  At the top 
+of the command help is a brief description of the /j command and the parameters it takes.  
+<br>
+<br>
+<b><font color="#000099">/j</b> &lt;[#]channel&gt; [key]<br><br>Joins the specified channel.  If you are already on that channel, 
+jIRCii will set the status window query to the specified channel<br><br><b><font 
+color="#333333">Parameters:</font></b><br>&lt;[#]channel&gt; - channel to join/query<br>[key] - channel key<br><br><b><font 
+color="#333333">Example:</font></b>
+<br>/join #jIRCii
+<br>
+<br>Parameters enclosed in [ ] square brackets are optional.  That is they can be specified but don't have to be.  Parameters 
+enclosed in &lt; &gt; angle brackets are required parameters.  In the above example the channel [key] is an optional parameter.  
+Also typing # before a #channel is optional as well.  
+<br>
+<br>The rest of the command help also includes a description of each of the parameters.  Most commands also include an example or 
+two of the command syntax.
+
+

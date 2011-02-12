@@ -1,0 +1,798 @@
+<h1>jIRC Development</h1><center><img src="http://jirc.hick.org/register/logo.jpg"></center>
+<br>
+<br>For those not in the know, jIRC is an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client I've been developing for the past x number of years.  Right now I'm taking the old code base and doing a complete rewrite.  Within this page I plan to post my progress and kind of keep an active development log.
+<br>
+<br><img src="http://www.hick.org/~raffi/pics/nextgen.png">
+<br>
+<br><li><a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=roadmap">jIRC&nbsp;Roadmap&nbsp;-&nbsp;list&nbsp;of&nbsp;milestones&nbsp;and&nbsp;update&nbsp;on&nbsp;progress</a>
+<br>
+<br><b>2/25/04</b>
+<br>
+<br>Welp I haven't been online much due to traveling and such.  However I have done some cleaning up on my jirc directories and all of that.  I haven't received any beta tester complaints about b4 beyond that one problem I addressed and fixed.  Taking all of that into account I will be releasing jIRCii Stable 1 - today.  As soon as I get to an internet cafe.
+<br>
+<br>Thanks a lot for following the development of this project.  It has been a lot of fun for me.  I hope to provide updates and little enhancements in the future.  If anyone else wants to pick up the project and do something with it that is cool with me as well.  I'm also willing to take patches, scripts, or other miscellaneous stuff.  I'll gladly post any extra stuff to the user contributed section of the jIRCii wesite.  
+<br>
+<br>It has been fun!
+<br>
+<br><b>2/21/04</b>
+<br>
+<br>I haven't done any development lately.  I've been traveling.  I did fix a bug fix that was in beta 4.  Basically calling subroutines declared in another script is BROKEN in beta 4.  I have fixed that though in what will be beta 5.  I've also started work on making jIRCii webstartable.  
+<br>
+<br>Being that I'm traveling its been kind of a tough process though.   I'm probably not going to be pursuing any new features.  Rather I'm going to probably release beta 5 as the clients actual release and then work on polishing <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> up and making it a project ready for release.
+<br>
+<br>Thanks for playing.
+<br>
+<br><b>2/18/04</b>
+<br>
+<br>Released beta 4.  Have at it!
+<br>
+<br><b>2/17/04</b>
+<br>
+<br>Currently working on help menu type stuff.  Resisting the urge to go overboard.  I had a great idea of a way to hook into the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> html parser and make a really cool and dynamic help interface based on the stuff I plug into it.    Basically I'd look for <a name="whatever">title of section<a> tags.  Then I would use that to construct a tree view of the document in the left hand side listbox thing.  It would probably be a days work to learn the API, reabstract things, and all of that.  For a near complete project its not worth it.  I want jirc to be done!
+<br>
+<br>I did fix all of my bugs except for two.  One bug is on Windows, URL's with a ? get spit back by Windoze exploder.   The other is on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a>, the font preview doesn't change when the font gets changed.  Otherwise functionality wise b4 is done.
+<br>
+<br>I have one more function I want to add to the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> though.  Its kind of eccentric but cool.  I noticed that many unicode compatible fonts have all of the console/dos characters.  The typical upper ascii stuff like you'd find in a terminal font.  They aren't mapped the same but they are there.  I was thinking of writing a filter function that converts a given ascii string's upper ascii characters to the proper unicode characters making any text passed through this filter emulate a console/terminal font.  
+<br>
+<br>:) I'll expect <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">scripters</a> doing ansi type characters to call the function on there text manually.  I don't want to slow down the display for such a small addition.  If they end up really lazy they can just simply do on window { echoRaw($0, consoleCharConvert($1)); halt; }
+<br>
+<br>Once I do the above I'll package beta 4 as a release candidate.  If I don't receive any real bug reports I'll release a jIRCii 1.0.  Then I'll mothball the project :)  
+<br>
+<br><b>2/13/04</b>
+<br>
+<br>Hard at work on beta 4.  Its looking like beta 3 was actually reasonably stable.  My plan is to create as much of a release candidate as possible and release it as beta 4.  Once I feel there are no surprises or anything I'll probably recompile with <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=java_performance">optimization</a>s turned on and release jIRC as a stable project.  Then I will go do something else with my life.  
+<br>
+<br><b>2/12/04</b>
+<br>
+<br>47 logged changes into beta 3 so far.  All done since tuesday.  Mostly small changes... tweaking the client more or less.  I don't like making such a pile of changes though.  As such I don't 100% trust this beta yet.  I think I'm going to do a beta 4 to be safe.  I just made way to many changes (fixes mostly) to the core parts of the client to really be able to trust this beta.
+<br>
+<br>I'm still debating wether or not to release beta 3 tonight.  I'm going to go through it a little bit and I may do the release yet.
+<br>
+<br><b>2/11/04 - belated again</b>
+<br>
+<br>Still at it.  Working on some problems related to the ident daemon.  More later.
+<br>
+<br><b>2/10/04 - belated</b>
+<br>
+<br>Oops.  Forgot to write in an update yesterday.  Back to active bug fixing with minor development.  All of the stuff I'm implementing now is like polish which is pretty cool.  I concentrated on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> bugs yesterday.   Making it so if you try to print an array or a hash (or otherwise use it as a scalar) - it will automatically be converted to a scalar representation.  Fixed a problem with foreach loops making it so you can declare the foreach var to be local.   Down to 2 bugs in my development todo list.  I'll fix those and then onward to enhancements and then minor additions.
+<br>
+<br>Beta 3 will be a lot of forward progress.  As much as beta 2 was.  In my oppinion beta 1 was a pretty damned good start.  I don't know if I'll do a beta 4.  I'll probably go right to a public release from beta 3.  Depends on how many bugs I get hammered with.  
+<br>
+<br>So progress is really good.   Only problem is other things are starting to demand my attention so I'll be a little short on coding time.
+<br>
+<br><b>2/9/04</b>
+<br>Welp I finally got the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> for the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> thrown together.  It is up on the jIRC website:
+<br><li><a href="http://jirc.hick.org">http://jirc.hick.org</a>
+<br>
+<br>I'm taking the rest of tonight off and then tommorow starting in on fixes/additions for beta 3.  I may post jIRC to freshmeat to hopefully get some more people involved.  I've been getting good beta tester feedback.  Mainly them bumping into stupid things I wouldn't do and them picking up on glaring ommissions in my <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> library.  
+<br>
+<br><b>1/8/04 - 3am</b>
+<br>Hola...  I figured I would umm write an update.  I took the day off mostly.  Well I answered questions and submitted jIRC to betanews.  Then took the night off to enjoy some normal socializing.  Hah.  Anyways so far I have a healthy list of fixes/changes for b3 todo list.  Nothing to overwhelming.  
+<br>
+<br>Some folks in #mircscripts efnet are playing with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a>.  Its tough without <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> for them to go to.  They bug me every 3 seconds with shit but its cool.  So tommorow <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> is the priority.  Its cool to see people actually writing scripts for jirc.  Hopefully a little bit of a community pops up.  Thats my hope anyways. 
+<br>
+<br>I'm very very happy with how well <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> has been isolating syntax errors and reporting script warnings so far.  Not for me but for everyone else.  They're learning the hard way what the language considers to be crap and what it considers to be okay.   But to write in a language with no <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> is a tough task.  So props to them.   
+<br>
+<br>I'm also impressed with how well <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>/jirc handles script loading/unloading.  Like if someone makes a theme script and I unload it.  When I unload it, life goes back to normal.  Which I think is pretty damned cool.  Working flawlessly with the aliases and sets so far.   Such a huge step.
+<br>
+<br>So anyways yeah, its looking like the project is coming together.
+<br>
+<br><b>1/7/04 - 2am</b>
+<br>Released beta 2 with over 40 changes logged.  Not bad for a weeks worth of work.  Go check it out.  
+<br>
+<br><li><a href="http://jirc.hick.org">jIRC&nbsp;Resource&nbsp;Center</a>
+<br>
+<br><b>1/6/04</b>
+<br>The new script loader API is in place and being used by jIRC.   I've logged 14 changes today alone.  Sheesh I've been coding like a mad man.  I hope to exhaust my todo list tonight or tommorow.  Then I will release another beta.   While that beta is out I'll continue work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.  
+<br>
+<br>Getting closer.  Expect a new beta tommorow sometime.
+<br>
+<br><b>1/5/04</b>
+<br>Well made some good progress today.  Whipped through my todo list implementing various small things like /run and such.  Right now I started work on what is going to be a big API change for <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.  I'm working on a script loader class that acts as a central point for loading scripts and in/out processing bridges.  
+<br>
+<br>I've also been doing some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> console.  Right now its looking like these new API's are designed well enough that the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> console will integrate directly into the script environment for an app and can be used to manipulate it.   Assuming the application author takes proper advantage of the script loader.   jIRC will use the script loader API but I don't intend to integrate the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> console into jIRC.  Once I'm sure the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> code is stable I will then proceed to integrate this new stuff into jIRC.
+<br>
+<br>The cool thing is bridges will be able to tell if they have been loaded into a shared environment or not.  If they have they won't be loaded again.  This will save on memory and script loading time.  This will also split up the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> API a little bit making it somewhat more logical and easier to follow.  So all around this is a good change to make.  Albeit one I was planning on making later but ah who cares.
+<br>
+<br><b>1/4/04</b>
+<br>Oops.  Missed my update from last night.  I fixed bugs and did lots of work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a>.  I also put some work into the background dialog so its a little bit more obvious what you can/can't do.  
+<br>
+<br>I have a small list of enhancements to push forward with.  I'm going to be doing that.  :)  
+<br>
+<br>18 documented bug fixes/enhancements made so far.  Thats not to bad.  Definetly a long ways toward a better user experience.
+<br>
+<br><i>Bug List currently:</i>
+<br>closing tab needs to shift menubar focus to current context
+<br>remove concurrent modification exceptions
+<br>localizing a $var in foreach doesn't work, find out why
+<br>
+<br><b>1/3/04</b>
+<br>Little bits of <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> work.  My main work today has been bug fixing.  Which is good.  Its kind of like polishing the client up.  I spent 3 hours tweaking the dimensions of the icons used in the mdi windows and the switchbar buttons.  Trying to get something that looks good on Windows without mesing with <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a> or the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> look and feel.  
+<br>
+<br>I'll continue my bug hunt until I exhaust my todo list.  Then I'll probably zip another beta with the fixed bugs and continue writing <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.
+<br>
+<br>I've been writing small scripts as well to try and catch bugs in the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language.  I hate to say it but I caught a few to many today and thats what led me to start fixing bugs so aggressively.  I might start writing an XDCC script to really give the system a workout.    
+<br>
+<br>Even once jIRC is released as a public release, I will do at least a bug fix release later on.  I'm not the kind of programmer who likes to leave something with known bugs circulating around for long.
+<br>
+<br>One good sign though.  As I've been coding I haven't felt a strong desire to add new features.  Which is good.  That means the project is pretty much winding down and I will actually finish it.  I've got two weeks as of today of "disposable" time.  Time I can use to get this thing finished.
+<br>
+<br><b>1/2/04</b>
+<br>I just noticed below that I wrote "righting" instead of writing <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.  Goes to show what burn out mode coding will do to you.   I'm still "writing" <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.  *snooze*.  
+<br>
+<br><b>1/31/04</b>
+<br><h1><a href="http://jirc.hick.org/">Released a beta</a></h1>
+<br>My next few days shall go towards righting <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.  Ta
+<br>
+<br>- Added date related functions, formatDate(), parseDate, timeStamp(), 
+<br>and timeDateStamp(long)
+<br>- Added colormap manipulation API's
+<br>- added a loadFont function for loading a ttf font file into the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a>
+<br>virtual machine.  It will then be selectable from the options dialog.
+<br>The scripter can set the font as well by looking up the format in
+<br>jirc.properties and calling setProperty("client.font", "the font format")
+<br>- fixed a text display bug related to scrolling occuring with popup
+<br>menus being present
+<br>- two command line options -settings "directory", to specify what
+<br>directory to use as the settings directory, and -lnf "some.class.name"
+<br>to specify a look and feel on the command line
+<br>
+<br><b>1/30/04</b>
+<br>Good progress today as well.  I now have the majority of API's I feel are necessary in place.  I will add some date related API's as well though.  From there I will worry about expanding the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> organically (i.e. if someone asks for it, I'll add it).  I'm going to spend some time modifying the build scripts to create packages.  Once I have this thing packaged reasonably well I will release a beta.  Expect a beta on Sunday.  While the beta is out I'll write <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>, fix bugs, and add very small <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> features.  Don't expect new client features.  We are *very* close now.
+<br>
+<br>Its friday so I'm going to go and have some semblence of a social life.  In any case my progress for today is as follows:
+<br>
+<br>- added a DCC_REQUEST set, same thing as CTCP_REQUEST except for DCC's  
+<br>- fixed error messages for connecting DCC's, they are now fired correctly.
+<br>- fixed the DCC status/error sets for sends/receives.  The sets/events are:
+<br>  Prefix: RECEIVE_ or SEND_
+<br>  Postfix: FAILED, COMPLETE, START
+<br>- changed some of the DCC API's adding getDCCFileName and getDCCFilePath
+<br>- added scalar casting functions: double(), int(), and long() - forces scalar to
+<br>  be represented as any of those...
+<br>- fixed bug with refreshWindow() always default to status window
+<br>- added local('$x $y $z') to declare scalars as local variables
+<br>- altered the way locals are handled, no longer automatically removes value from global
+<br>  space...
+<br>- unbroke nick completing channel commands like /do, /v, /kb etc..
+<br>- /hop and /cycle now work with +k'd channels
+<br>- added Process I/O to <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> (the i/o framework I have freaking rocks!@)
+<br>- added an eval() function to evaluate and execute code on the fly..
+<br>- added a interface for file system API's
+<br>- added API's for showFileDialog() and showDirectoryDialog()
+<br>  
+<br><b>1/29/04</b>
+<br>Good progress today.  I would have liked to have gotten more done but this is decent for a days work.   Theres always tommorow I guess.
+<br>
+<br>- added a clear(@array) function that clears the passed in array
+<br>- oops, unbroke use of && in if statements and added regression tests
+<br>  for the same type of problem in the future.
+<br>- Line number information is now passed to predicate checks so use of
+<br>  a non-existent predicate can be pointed out
+<br>- made some changes to add(@array, "data"), you can now specify an
+<br>  <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=list">index</a> as the 3rd parameter i.e. add(@array, "sluts", 3).
+<br>- added $pt variable for ctcp PING replies...
+<br>- send ctcp and send notic echos now go to the same place as ctcp
+<br>  replies and notices, depending on how you have things configured  
+<br>- unjacked actions within queries (it had the word ACTION being echoed
+<br>  as well...)
+<br>- scripted USER_MODE set...
+<br>- unbroke dcc chat, I'm surprised it wasn't broke before with what was
+<br>  wrong..
+<br>- Unbroke/improved the logic for resolving/handling local info.
+<br>- Most popup menu hooks now have event data associated with them,
+<br>  background, menubar, and tab menus do not have a $0-.  Query
+<br>  windows, Channel windows, nicklist, Status window do though.
+<br>  (Status window isn't anything worth getting excited about)
+<br>- fixed problem with nicklist popups dieing when a channel window is
+<br>  reused (i.e. I join channel, leave somehow, then join again without
+<br>  closing channel window).
+<br>- /exit now uses the global quit hook, so a quit message is sent and
+<br>  all that when exiting view /exit.
+<br>- Changed behavior of window closing in SDI.  When a window is closed
+<br>  the window to the left of it in the switchbar becomes active.
+<br>  Pretty cool!
+<br>- fixed bug with /QUIT, it wasn't sending parameters to the server
+<br>  correctly.
+<br>
+<br><b>1/28/04</b> 
+<br>Good progress today.  Added a remove() function that works for arrays and hashes in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.  I also implemented the DCC related functions.  I've been doing some work <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> the menus for the client.  So far I'm happy with how they are turning out.  I'm doing pretty good with scripted dynamic menus.    
+<br>
+<br>I had one issue I just realized I don't need to solve.  Say I script a cool menu snippet but want to use it in more than one place.  I was going to create new language keywords and everything.   I just realized I could throw the menu snippet into a subroutine and call the subroutine where ever I'd like the menu snippet to be.  Hows that for cool.  Sometimes being the designer of my own language is dangerous.  To much time spent thinking of what I can add to solve problems rather than using what I've already got.  
+<br>
+<br>So progress is really solid.  I feel that adding code to interface with the file system and get file attribution information is important.   So I might do that tommorow.   I'm happy with how the client is shaping up though.   Also /reload got quite a workout today.  Works flawlessly so far.  Definetly a good thing.
+<br>
+<br><b>1/27/04</b> - part 2
+<br>DId some work adding more functions.  Added a usable for file/socket i/o.  Wrote in bridges for creating and managing timers.  Added bridges for interfacing with the config system.   I also added a rand() function to the math stuff.
+<br>
+<br>Good progress today.
+<br>
+<br>I want to get the DCC operators in place and add in the dialog stuff.  Once those are done I'll do some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a>.   Once the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> is more solidified I'll actually release a beta.
+<br>
+<br>While the beta is out I'll expand the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> repetoire organically i.e. if someone asks for something I'll add it.  I'll fix bugs during that time and work on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.   Maybe even add some of my easter eggs.   
+<br>
+<br>From there we should be close to a release.  
+<br>
+<br><b>1/27/04</b>
+<br>Sorry, I've been out of town for the past 3 weeks or so.  Thats how it goes.  In any case I've been working on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> i/o facilities lately.  I'm working on making sockets and files use the same API so things will be reasonably consistent.  I hope I can make it work.  We'll see.  
+<br>
+<br>I'm making good progress though.  Like right now I have a really simple raw <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client coded.  I can send stuff to the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> server off of input from the console and I can read shit from the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> server.  This is significant because I can do all of this at once from a simple script (using callback functions for the reads).  Heres the code:
+<br><pre>
+$socket = connect("irc.blessed.net", 6667);
+println($socket, "USER a b c :d");
+println($socket, "NICK butang");
+
+sub onread
+{
+   println(getConsole(), "Server: " . $1);
+
+   @temp = split(" ", $1);
+   if (@temp[0] eq "PING")
+   {
+      println($0, "PONG " . @temp[1]);
+   }
+}
+
+sub oninput
+{
+   println($socket, $1);
+   println(getConsole(), "Me: " . $1);
+}
+
+read($socket,      &onread);  # on read from socket...
+read(getConsole(), ); # console input y0, getConsole() 
+                                 # returns the IO handle for STDIN/OUT
+</pre>
+<br>
+<br><b>1/8/04 - 6am</b>
+<br>Now my error checking is *real* slick.  If an exception happens while a script is processing the interpreter catches it.  Prints the stack trace to the console and fires off the exception description as a runtime warning.   Whats really cool is that this runtime warning also contains the <b>script</b> line number where the exception occured.   This will make it a lot easier to debug problems in the future as well.
+<br>
+<br>I've been going through and implementing all the necessary built in functions.   Once I'm done implementing this stuff, then its on to fixing bugs and writing <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>.   I'll probably release a beta before I start in on a massive bug hunt.
+<br>
+<br><b>1/7/04</b>
+<br>Sleep is back in place.  Since I've got my error checking stuff in place I've decided to get back to working on the client and working towards a release.  Its mostly <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> related stuff now coupled with bug fixes.  Almost there I guess.
+<br>
+<br><b>1/5/04</b> - Another 3am update
+<br>This is worth writing about.  The code generator *is* in place.  So we're rockin in that respect.  I spent some time chasing down a problem with predicates.  
+<br>
+<br>My predicate parser wasn't breaking down tokens properly.  I was getting pissed because I kept following the code and going in circles (much like the computer was doing following a never ending recursion).  For the life of me I couldn't figure out what was supposed to happen.   I copied the code from my old parser and modified it to use the new data structures I wrote.  So it should have worked okay.   Then I discovered the problem.   I have a method that is supposed to regroup predicates,  well that method never gets used in the old parser codebase.  It existed but didn't get used.  I was using it and it was creating a never ending recursive situation for me.   I axed that method and used a generic regrouper method and then everything was peachy keen.
+<br>
+<br>I also started an important package requirement for the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> language.  I wrote a <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=What_is_perl">perl</a> script to run a bunch of scripts in a directory and compare there output to output from the same scripts from a time when I knew they actually worked.   This way I can quickly test changes to <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> to make sure the library is working as it should.   Pretty important to have if I want anyone to take it seriously.  
+<br>
+<br>I'm going to continue parser testing and brainstorming runtime debugging options.
+<br>
+<br><b>1/5/04</b>
+<br>Still working on the code generator.  I've got everything compiling.  Now its a matter of debugging everything and making sure I didn't break anything.   I'll probably be done with all of this by the end of the week at the very lastest.
+<br>
+<br><b>1/3/04</b>
+<br>Shoot me for wanting to commit to another big <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1068016995">open source</a> project.   jIRC from its roots was meant to be a "hackers" <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client, even though its written in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a>.   I've been shooting for the hADES/bX feel/attitude ever since I started writing it.  I was also trying to counter balance this with some of mIRC's ease of use.  Having a niche audience is all well and good so long as your targetting what your audience uses.  Well it seems many people I know have moved to SILC (Secure Internet Live Conferencing).   
+<br>
+<br>The reason I'm putting so much time into a "hackers" <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.  I'm trying to give back to that community.  I want something that is useful as well though.  SILC isn't a script kiddie toy and as such I wouldn't mind <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1068441817">hacking</a> out something that is SILC compatible.  
+<br>
+<br>I've really toyed with the idea of using jIRC's codebase to make a SILC client.   However reading the protocol drafts I've been so far unable to figure out the damned protocol.  However today I discovered a public domain <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> silc library for use as a base for a <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> silc client.   I plan to release jIRC as an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client first but when I've got jIRC out the door I'm going to take a look at the silc library.   I may be able to pull it off.  
+<br>
+<br>Anyways you probably want to know jIRC's progress.  I'm working on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language parser pipeline still.   My focus is making it possible to pass around tokens that contain a code snippet and a line number indicating where in the script file the token is.  
+<br>
+<br>Progress is good.  I'm picking up on errors much better than before but I'm not done yet.   I'm happy with the way it is turning out though.  So far much better than I originally thought.  
+<br>
+<br><pre>Error: Mismatched Parentheses - missing close paren at line 5
+<br>          if (3 * (4 / <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=friends">sluts</a>())
+<br>             ^</pre>
+<br><br>
+<br><b>1/2/03</b>
+<br>How do you eat an entire elephant?  Cut him into small peices.  I'm coming down with something I don't necessarily expect to get a lot of work done tonight.   I have the great task of rewriting <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>'s parser setup.   Basically what I have now doesn't propagate line number information for each code snippet.  This makes error reporting incredibly difficult.   I haven't had a problem with this as I can usually spot syntax errors quickly but I'm sure other people using <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> would like the error reporting.   I estimate this to take 3-4 days if I work fast.   Ideally I'd like to release jIRC on the 14th.  Wether that happens or not remains to be seen.
+<br>
+<br><b>1/1/03</b>
+<br>Lots of work done tonight.  
+<br>- Fixed DCC (I broke it)
+<br>- Modified Control-O behavior (resets everything but the color since we don't have anything to reset it to)
+<br>- A default quit message is sent when exiting the client
+<br>- Added switchbar options including position (top, bottom), enable/disable, and activity highlight color...  a dialog to edit all this is included as well (my dialog creator kit rules!)
+<br>- autoreconnect has been fixed (made smarter/better etc.)
+<br>- Added sets for IRC_CONNECT, IRC_DISCONNECT, IRC_RECONNECT
+<br>- fixed a bug with local host resolve via server method, basically if you hit the dialog to do it several times each time it would register a temporary chat listener saying "hey lookup my local info".
+<br>
+<br>So yeah good progress.  Now to start over on a whole new leaf.  Script error reporting.  This will be mostly work with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> API.   I'm going to use exceptions to communicate parser errors and I'm going to use an event/listener model to communicate script runtime warnings.
+<br>
+<br><b>12/31/03</b>
+<br>Happy new years everyone.  I've been watching the server logs.  I know people read this thing every day (some even come back).   So anyways thanks for your interest.  I won't be coding tonight though since its new years even.   However:
+<br>
+<br>My new years resolution...  be more of a prima-donna.  My other new years resolution...  finish this freaking <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.   :)
+<br>
+<br>We're almost there...  really.
+<br>
+<br><b>12/30/03</b>
+<br>Wrote in some of the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a> specific stuff.  I had a frustrating problem with MRJAppBuilder only to learn my bundled jar file wasn't working because I needed to upgrade my development tools and use Jar Builder.  Blah...
+<br>
+<br><center>
+<br><a href="http://www.hick.org/~raffi/ss/jircosx.png"><img src="http://www.hick.org/~raffi/ss/jircosxth.png"></a>
+<br>jIRC on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a>
+<br></center>
+<br>
+<br>I'm debating wether or not to include <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> specific <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> tweaks i.e. the icons in the switchbar buttons look like shit.  I might install 10.3 first to see if Apples updates to <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> fix that problem.
+<br>
+<br><b>12/29/03 - technically 12/30/03 at 4am</b>
+<br>Did some more work tonight.   Implemented a -pass option to /server for server password support.  Finally implemented the use of your alt nick if you try to connect and the server says your nick is in use.   I also added an ignore feature.  Its very basic:  you add a mask like *!*@*.aol.com and it just simply ignores all messages (public/private), notices, actions, ctcps, replies, dcc's, etc. from the matching hosts.  Some dude on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> was annoying me so I'm testing the feature out on him.   
+<br>
+<br>I've also made a change to the options dialog, using a JTree instead of a JList for navigating available options.  I discussed it with someone and he disagreed with the idea of using a JTree.  After implementing it I think it separates the options better and makes the list easier to navigate. So I'm happy with the change.
+<br>
+<br>Tommorow I'm going to dilly dally with some more options, adding options for the switchbar position and the swithcbar activity highlight color (some people just don't like red).  My goal isn't option overkill however I think a little bit of flexibility is okay.   I may work on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> specific stuff tommorow as well.   Then beyond that it will be time to start on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> stuff.  All the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> stuff will be a lot of coding however it goes quick.  So progress is pretty solid thus far.
+<br>
+<br><b>12/29/03</b>
+<br>Let us capture the moment, shall we.  I'm almost done with jIRC.   Almost there.  I just crossed off two huge milestones:
+<br>- config dialogs / help dialogs
+<br>- tie options into the dialogs
+<br>
+<br>These two are not 100% done (I might add something) however for what I've got they are done.  All the options in the options dialog are now implemented.  Including ident which I did tonight.   I also made the setup dialog connect button use the configured port and use ssl if that is enabled or not.
+<br>
+<br>This is huge.  Some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language, some scripted features, and some <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a> then we have a releaseable <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.   I'm very excited about this as I've been promising this client to the world for a long time now and it is almost there.  :)
+<br>
+<br><b>12/28/03</b>
+<br>Tied the option dialog results for notify list manager and the script manager into the client.  So this stuff all works well and good.  
+<br>
+<br>I've decided that for my scripted sets I'm going to try to consolidate them down a little.  Instead of having a set for every single possible echo I'm going to try to generalize them a little bit, like DCC_ERROR instead of SEND_FAILED, RECEIVE_ERROR, RESUME_ERROR etc..   
+<br>
+<br>I've encountered some kind of bug with my implementation of scritped aliases or <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.   If a script uses "return;" within an alias it causes other code that is <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=exercise_log">running</a> to freak out big time.  The language recovers after a minute or so but something is seriously wrong.   I don't have much in the way of debugging <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> in place yet.   I should be able to get past this one.  I'm going to take a swing at it tommorow.   To be honest though bugs within <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> always scare me.  :(  
+<br>
+<br>I've also made a little design decision.  I have a ton of built in commands.  I'm going to make it so none of the built in commands echo anything.   If someone wants to have some echo going along with an alias they can redefine it as an alias and use call("/ $+ $0-", "built-in");  I'll script some alias echos this way like /notify by itself.  I'm also going to do /dcc this way as well.
+<br>
+<br>I don't have a long list of changes like yesterday but tonights progress was pretty good as well.
+<br>
+<br><font color="red">Update:</font> found the bug.  I first isolated it by trying to produce the same results with a subroutine instead of an alias.   I couldn't.  I even went so far as to move the code over exactly to a subroutine and make the alias call the subroutine.   It worked fine when I did this.  So whats the difference between how my aliases run code and how a subroutine runs code.  Subroutines clear the return flag after they are done executing.   Aliases weren't doing that.   That was kind of a problem.    I'm noticing all of my other bridges use SleepUtils.runCode() to execute a block and that clears the return value for them.   Probably what I should have done all along with my aliases.  Damned!@  When I actually package and document <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> i'm going to have to make the API's really idiot proof and really make clear what developers should and shouldn't call.   
+<br>
+<br>It looks like I foresaw this exact problem.  The <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a>doc for SleepUtils.runCode() states it is the safe way to run code because of the return value clearing thing.   Hehe :)
+<br>
+<br><b>12/27/03</b>
+<br>Made a lot of progress tonight...  so much progress that I'm calling it a night early.  However some of the shit I've implemented/done tonight:
+<br>
+<br>- implemented local info lookup using 3 methods, the user can input an ip address, the ip address can be obtained from the operating system, or the ip address can be resolved from the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> server.
+<br>
+<br>- reworked the dcc data structure code and made it better and easier to get what I want.  This carries over to making /dcc accept and /dcc close work as intended.
+<br>
+<br>- rearranged the dialogs a little bit, created an external programs one and moved the open files with option over there.
+<br>
+<br>- fixed save problem with the options dialog
+<br>
+<br>- added a control in the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> Options to set the color for the editbox.
+<br>
+<br>- did some work on the statusbar: it is now thinner, the option to change the number of statusbars is now implemented (but not really setable yet), and if the statusbar is set to 0 lines it will appear as a 1 pixel line to separate the editbox from the text display.
+<br>
+<br>- implemented the ui option for switching the client font;  everything seems to be resetting correctly.  Unfortunately my custom components do not work perfectly with all fonts.  Most normal fonts don't seem to have a problem however some do (i.e. VT100).   I may investigate this further later but for now I consider it safe enough to go into the first release with.
+<br>
+<br>- made the help, about, and option dialogs non-modal.   
+<br>
+<br>So in summary, good progress for a day.  Next on the agenda will be tieing in the notify and script loading options.   I'll then have to decide wether I want to work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> or continue digressing and implement the identd and notify features.   Progress is good though.
+<br>
+<br><b>12/25/03</b>
+<br>Just a quick update.  I did a lot of my "planned" work on the dcc stuff.  I added sets for RESUME_REQUEST, SEND_RESUME_REQUEST, RESUME_SUCCEESS, and RESUME_FAILED.   
+<br>
+<br>Once all the DCC stuff is in place I'll start tieing the other options in.   Beyond making the options work I have to do some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> stuff but we're much closer to a complete client.
+<br>
+<br><b>12/22/03</b>
+<br>Did some more work on the dcc options.  Interestingly enough I've more or less implemented all of them.   Now for a little bitching and then some on the spot design work.   
+<br>
+<br>The current DCC data structures don't do jack for me.  They do not fit the needs of the client and as such may need to be reworked.   In fact I'm not satisfied with the external aspect of the dcc architecture (the internal aspect is pretty good though).  
+<br>
+<br>By external I mean notifications to the client that dcc stuff has occured,  sets currently in place for the dcc stuff, dcc related echos etc...    I feel the implemented range of dcc commands is weak as well, and the data structure for getting at the active/inactive dcc's is totally inadequate.  I'm going to sit down with a notebook tonight and see if I can figure out a better architecture for some of this stuff.   I *should* just call it good but I want something better than what I've got.   
+<br>
+<br>As for implementing options for the dialogs I've created here is where I'm at:
+<br>- setup dialog is mostly rocking, port and ssl options need to be used when clicking the connect button
+<br>- ident isn't implemented yet so the notify dialog is useless right now
+<br>- notify dialog settings need to be carried over to the notify system itself
+<br>- script manager settings need to be used
+<br>- the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> option for setting the client font needs to be used
+<br>
+<br>Thats pretty good considering setup options are mostly implemented ,auto window options are 100%, <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> options are 100%, window images, and <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> options are implemented as well.   So we're doing good in that respect.
+<br>
+<br>The main two things standing between now and a complete client is implementing all of the options in the config dialogs *and* some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language.   
+<br>
+<br><b>12/20/03</b>
+<br>Minor dialog work today, mainly dcc dialogs for graphically prompting the user that a dcc request has been made.  I don't plan to put to much effort into this as I consider dialogs to be lame for this type of program.
+<br>
+<br><b>12/18/03</b>
+<br>Minor bug fixes today.   Scripted in clickable URL's (yes, scripted...  hows that for a capable client).  
+<br>
+<br><pre>on click
+{
+   if (left($item, 7) eq "http://")
+   {
+      openCommand($item);
+   }
+}</pre>
+<br>
+<br>My next two focuses are going to be the DCC stuff and error reporting within the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a>.  At dinner tonight I was having a conversation with a friend about the "feel" of a project.  Yesterday jIRC crossed that magical line where it is now starting to feel like a complete work coming together.   This means it will be done soon and I will have something that I'm happy with.  :)   Yay for ~5 years of work on an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client (several rewrites of course, plus a social life, several jobs, and pursuit of several other interests).
+<br>
+<br><b>12/17/03</b>
+<br>More solid progress today.  I fixed the setWindowTitle() problem causing an occasional deadlock.  Coded up auto /window options.  Implemented the shit in the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> options dialog to echo certain types of events in the active window.  Definetly making progress.
+<br>
+<br><b>12/16/03 - 2</b>
+<br>Made some solid progress today.  Implemented the Help dialog and worked on the about dialog.
+<br>I even managed to get a few easter eggs in place.  I have one more important (to me) easter egg
+<br>to implement and then I'll just continue finishing stuff up.   Progress is good though.
+<br>
+<br><b>12/16/03</b>
+<br>Last night I did some miscellaneous bug fixing and today I packaged the client together.  Beleive it or not packaging is kind of a big deal.  I had to do some work to make sure all of the resources were accessible within the .jar file but also accessible if they changed and ended up being saved in the users ~/.jIRC directory.   Everything seems fine now.
+<br>
+<br>If you want a copy of what I submitted to my professor for the independent study let me know.  I'm having the feeling that I won't actually be betaing the first public release.   I'm shooting for all or nothing as far as getting a release out the door.  What I will do though is when I release I'll keep the first release on the down low and then I'll start development on an update right away.  The update will go through a normal beta process and once that is done I'll actually post that to freshmeat.net and make some effort to get it out there.
+<br>
+<br><b>12/11/03</b>
+<br>Did some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a>.   Worked on fixing some problems with the window related <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> stuff.   More or less I'm just <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1068441817">hacking</a> away trying to figure out solidly what direction I'm going to take with regards to the balance between hard coding and <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a>.
+<br>
+<br><b>12/10/03</b>
+<br>Made some good progress tonight:
+<br>- Finished the server setup dialog.  Huge!!!!  It works reasonably well too.   
+<br>- Added <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=SSL_Java">SSL</a> support for connecting to <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> servers.   Took some research but I pulled it off.
+<br>- Added a special set of escapes to parsed literals in jIRC's interfacing with <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.   I added \b for bold, \c for color, \u for underline, \r for reverse, and \o for cancel.   Basically not having an editor geared towards writing jIRC scripts makes it hard to put those <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> formatting characters into a script.  I decided to get around that inconvienence.  So like
+<br>
+<br>echo("Hello \bice cream\b");  will be like "Hello <b>ice cream</b>";
+<br>
+<br>Pretty useful :)
+<br>
+<br>
+<br><b>12/9/03</b>
+<br>Almost done with this stupid server editing dialog.   Lame.  Lame. Lame.  Unfortunately its one of the first things people notice/interact with in the client.   Plus its important to make it easy to find a common list of servers.   
+<br>
+<br>I'll have that done tommorow and then I'll press on with getting more coding.  Blah blah blah.
+<br>
+<br>I'm thinking of putting a beta out on Tuesday as that is the utlimatum day for me to actually package and deliver something resembling an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.   I'm on it.
+<br>
+<br><b>12/6/03</b>
+<br>Not much to write.  I've been working on the server list editor dialog thingy.  Not fun.  I am not a fan of writing <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a>'s.  Very repetitive, finicky, boring, frustrating, and uninteresting work.   Still a required feature of any <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.   Another big problem is this feature is one of those takes more time than its worth features.  Like in one day I managed to implement the single document interface option.  In three I can't finish one half of one lousy dialog.  Lame.  So you may be wondering whats up, heres the deal...
+<br>
+<br>- I will not be finishing jIRC before the term is over.   I just don't have time to hit my "vision" of a solid IRC client.   I can do it.  I will do it.  Time is just not on my side.  Having a social life at times and passing classes does occasionally take priority.
+<br>
+<br>- I am receiving credit for writing this.  1 college credit because I can't afford to pay for more.  As such I do have to deliver something.  I have a lot to deliver but now I need to prioritize on the features for the next week.   
+<br>
+<br>- Once I deliver some version to my teacher I will simultaneously release a beta and reactive the jIRC beta tester website.   I will then continue the beta process.   Hopefully from that I'll have a completed product within a few months.  Hopefully.
+<br>
+<br><u>Features for Delivered jIRC</u>
+<br>- Completed Server Dialog thing
+<br>- Make jIRC tie into as many of the dialog options as possible.
+<br>- Help Dialog
+<br>- Updated <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=HELP">documentation</a>
+<br>- Scripted menus (default stuff mostly)
+<br>- Ident Daemon
+<br>- if time - string manipulation functions in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>
+<br>- Deployable via double clicking on a jar file or <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> -jar jerk.jar.  Nothing else to setup.
+<br>
+<br>Dialogs I don't finish the "features" for should be disabled.  For example I didn't get around to implementing auto /window.  As such I should remove that dialog for the turned in version and beta process until there implemented.
+<br>
+<br>So that is whats going on.
+<br>
+<br><b>12/4/03</b>
+<br>Making  a <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">Java</a> app look and feel right on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> is a pain in the ass.   Really.   I think its cool that my <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">Java</a> app can be so well integrated into MacOS but holy shit Apple has a lot of crap you have to do to make that happen.   Worse yet they even have API's using there classes that they want you to use to hook into there default created menubar menu.   I'm kind of pissed about that because I want something that will compile on any platform.   I'm also pissed because in order to get a dock icon and such I'll have to distribute jIRC as a .app package which is <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> specific.  I of course plan to distribute jIRC as a .jar file but it looks like I'll have to make a separate <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> specific distribution as well.   I think that is stupid.  If I had to do that for every platform I wanted jIRC to run on I'd just be screwed.   
+<br>
+<br>On the bright side I modified Jakiechan's jIRC logo a little bit with some software until 3am last night and ended up with a dock icon for jIRC.    You can't tell much but it has been aquafied a little bit.   This is to make jIRC fit in better with <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> when I finally figure out how I'm going to do this integration without killing the crossplatformness of the app.  
+<br>
+<br><img src="http://www.hick.org/~raffi/ss/dock.png">
+<br>
+<br><b>12/3/03</b>
+<br>Tonight has been hugely positive for jIRC development:
+<br>
+<br>- I managed to do a clean compile (deleted all of the classes and recompiled).   This is good news as this step can sometimes result in problems.
+<br>
+<br>- <big><u>I have implemented a single document interface option</u></big>, jIRC is by default (and just its nature) a MDI client.  MDI meaning multiple document interface.   SDI is a more natural fit for <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a> and I'm sure some users will prefer it over MDI.   mIRC is an MDI client, X-chat is an SDI client to kind of put it in perspective.
+<br>
+<br><b>12/2/03</b>
+<br>Did some tweaking to the dialog I worked on yesterday.  Made no progress otherwise though.  Tsk.  On the bright side I had an idea and I'm going to try to implement it.   Basically I have an idea of how I can alter the architecture of my window management code such that the code depends on the parent container of the window for window management.   This would allow for me to use different containers for windows i.e. a JFrame, a JDesktopPane or even a JPanel with a card layout manager.  I think so anyways.   Its kind of a drastic change but limited to a few files.   What I'm going to do is backup all my code and just have at it and hope it works.    We'll see.   If I get so far though as the ability to do an MDI interface and a single document interface then I'll consider myself golden.   The MDI really bugs me on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">Mac <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a></a>.   I think its cool in X windows or even in Windows itself but on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">OS X</a> it just does not feel right.  So that is whats going on.
+<br>
+<br>I also managed to start brainstorming on some of the final <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> API's I plan to implement.  Onward closer to a release.
+<br>
+<br><b>12/1/03</b>
+<br>Managed to get an important dialog out of the way.  Window image configuration!  The <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">GUI</a> isn't ultra pretty but it works.   I had to fit a lot of configuration options in a small space so I went with some tabs.  Each tab contains 1 or 2 controls.  I'm going to spend some time and see if I can make it so when something can't be done for say configuring the window (i.e. can't be made transparent) then the option will go away.   Otherwise though the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> was made with the dialog creator kit.  I'm managing to build some good flexibility into it.   Looks like when the time comes I'll be able to do some pretty slick dialogs for various jIRC options.  Unfortunately I'm on a 3 week crunch to finish this thing though.   Screenshot of the image config dialog below:
+<br>
+<br><a href="ss/setupbgs.png"><img src="ss/setupbgsth.png" border="0"></a>
+<br>
+<br>To consider the dialogs milestone done I have to complete the following:
+<br>- help dialog 
+<br>- <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> options dialog
+<br>- setup dialog (nickname, altnick, realname, edit servers connect etc.)
+<br>- local info
+<br>- cancel options dialog restores settings as they were before.
+<br>
+<br>If I continue neglecting school I can have all of this done by Wednesday or Thursday night.   I may throw in some other <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> options just for the fun of it.  If I can swing it maybe a SDI interface instead of an MDI one and disable the menubar.  
+<br>
+<br>SDI would be easy to do...  all I'd have to do is create a different class to manage the windows, something other than ClientDesktop.   This might be an important option to add as MDI doesn't feel right on a Mac at all.  Since I use a mac taking a mac into account is kind of important.  
+<br>
+<br>The setup dialog will be a big chunk of work.  I'll try to knock that one off tommorow.
+<br>
+<br><b>11/29/03 - Take II</b>
+<br>I think I know how I can finish jIRC to some level of satisfaction (for myself).  If I ship the client with a <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> (and options) that make it resemble mIRC - I can have a complete client with mininimal muss and fuss in the tight time frame I've got.  Part of what makes the client cool though is the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a>/options I was creating but I personally don't care about the look so much anymore and I don't have an eye for solid aesthetics.  I'm sure some scripter will make some sort of cool looking theme to replace whatever crap I ship anyways.   With this in mind I may be able to pull off a completed client on time.   
+<br>
+<br><b>11/29/03</b>
+<br>Well yeah.  I haven't updated in a few days.  I'm still working on the dialog creator kit.   The bright side is that the bottom up approach is absolutely wonderful.   So far the dialogs are what I want.  A consistent interface that looks pretty decent.   For example one of my DCC dialogs the code looks like this:
+<br><pre>
+   public void setupDialog()
+   {
+      addBlankSpace();
+      addBlankSpace();
+
+      addSelectInput("dcc.onsend", 0, 
+               new String[] { "Ask", "Auto Accept", "Ignore" },
+               "On Send Request:  ", 'S', 75);
+      addSelectInput("dcc.exists", 0, 
+               new String[] { "Ask", "Overwrite", "Resume", "Ignore" }, 
+               "       If file exists: ", 'I', 75);
+
+      addBlankSpace();
+      addSelectInput("dcc.onchat", 0, 
+              new String[] { "Ask", "Auto Accept", "Ignore" }, 
+              "On Chat Request:  ", 'C', 75);
+
+      addBlankSpace();
+
+      DGroup temp = addDialogGroup(new DGroup("DCC Ports", 50)
+      {
+          public void setupDialog()
+          {
+             addStringInput("dcc.low" , "4000", "  First:  ", 'f',  60);
+             addStringInput("dcc.high", "5000", "  Last:   ", 'l',  60);
+          }
+      });
+   }
+</pre>
+<br>Pretty solid in my oppinion.   Really easy to customize the dialogs and change them around.  Not to mention adding new ones.  That makes me happy.  :)  Alright back to work.
+<br>
+<br><b>11/25/03</b>
+<br>Oops.  I didn't log what I did last night.  Besides playing a 6 hour game of Galactic Battlegrounds (I <3 RTS) I did the design work on the dialog creator kit.   Basically I'm doing a bottom up approach to writing my dialogs.  Bottom up meaning I'm designing an easy to work with abstraction for creating my dialogs.  This should hopefully allow for a consistent interface and save me some major development time.   That is the plan anyways.  I did start writing the code its looking like that part won't be a short job.  I'll slog through it.   This week is starting to look tight on wether or not I'm going to hit my milestones (this is *not* a good week to fall behind because none of them get any easier).
+<br>
+<br><b>11/24/03</b>
+<br>Finished off the gui <-> script bridges.  I've done very little testing but it appears to work so far.  I don't feel like I included everything or designed my API's particuarly well but at least they are there.   *shrug*.   I'll see if I can make some progress on the DCK tonight.
+<br>
+<br><b>11/22/03</b>
+<br>Did a lot of work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">GUI</a> <-> Script bridges.  I still have some window management stuff left to do to complete this milestone.  Probably another good hour on this one yet.
+<br>
+<br>Tommorow I'm going to work on what I call the dialog creator kit.  Some code basically that will make it much easier for me to create dialogs.   I've done most of the design work already so it should just be a matter of <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1068441817">hacking</a> it out.   
+<br>
+<br><b>11/16/03</b>
+<br>Did some work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> and fixed bugs as they occured.  I'm definetly not going to hit my milestones this week or next week.   I've been pretty damned sick for the past week (still not over it) and during that time I've been mostly unable to work.  Next week I have a physics exam which will take up my time for a good portion of the week.   I still have to release in 5 weeks though.
+<br>
+<br>I've refactored the milestones again.   Unfortunately I had to remove some of the features that would have gone into the first release.   These include a DCC "dialog", <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=SSL_Java">SSL</a> Sockets, and desktop windows.  I'll add them in if I get time before releasing.   Otherwise they will make it into a follow up release.  
+<br>
+<br>Once I do a public release I plan to do a follow up release that addresses problems people pointed out in the first release.   So just because I'm not doing something before the first public release doesn't mean I don't plan to do it.  
+<br>
+<br><b>11/12/03</b>
+<br>No progress today however I removed a debug statement from my text stuff which helped out my perceived performance when scrolling up and down.  So I'm happy about that.  Still suspicious of the text performance but a little releived.
+<br>
+<br><b>11/11/03</b>
+<br>Finished up my work on <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> for this week.  Stayed up all night doing it.  This is a pretty key milestone as the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language is at the core of the whole client.  So what exactly did I do staying up all night?  More than you might think...
+<br>
+<br>- Tested the hash stuff...  its working a-okay (and damned fast as well).
+<br>
+<br>- Wrote wrapper classes to make it 1000x easier to take program data structures and make them accessible in the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> environment.   It's all a matter of SleepUtils.getArrayWrapper(Set instance) or SleepUtils.getHashWrapper(Map instance).  This will help me quite a bit and it should help developers who choose to use <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> in there apps in the future.   The other cool thing is the wrapper classes have very little overhead compared to creating a copy of the data structure I wanted to make available with all scalar values.   This is huge!   Now operations like getOps(#channel) won't be expensive.  Likewise using size(getOps(#channel)) won't be an issue either.  I'm very happy about this.
+<br>
+<br>- I actually added some built in operator precedence.  +, -, and . take highest precedence now.  This is so arithmetic expressions done in Sleep (without good parentheses) actually evaluate in the same way as they would in other languages.   Enjoy.
+<br>
+<br>- Made a small predicate change.  you can now do if ($x) { } or if (myFunction()) { } as a test case.  The way it works is any 0, "", or null value means false.  Anything else means true.  A big convienence for coding.  Enjoy that one as well.
+<br>
+<br>- I tested out my increment hack <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=java_performance">optimization</a>.  It was a factor of two increase however I had to do an empty loop with 2 million iterations to get good numbers.   For the lack of flexibility the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=java_performance">optimization</a> would cost me I figured its not worth it.  Things are pretty quick as is.
+<br>
+<br>Getting some of this stuff worked out is pretty important to finishing jIRC (and releasing Sleep).  I'm sick as a dog right now and dead tired.  However I think the progress I made tonight was very well worth it.
+<br>
+<br>I just noticed I keep saying enjoy this or enjoy that.  I suppose you won't be enjoying nothing until I actually release something.   My bad.  Well when its released enjoy.
+<br>
+<br><b>11/10/03</b>
+<br>I've been reworking the way <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> handles variables.  I've got my interfaces defined and everything seems to be working so far.   I changed the implementation of foreach to (supposedly) have less overhead using a <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a> Iterator.  
+<br>
+<br>I've got the array and hash implementation done as interfaces so I can change the under lying implementation (or wrap an existing data structure with low time cost).  That was the important part of all of this.   I still have yet to test the hash stuff though (to make sure it works).   
+<br>
+<br>My biggest concern with reworking the interface was the possibility of making <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> take a performance hit.  That would be a bad thing.  The good news.  I tested the old code (and some possible array implementations in the new code) and overall we have a small performance improvement.  The really good news: the new code fixes some old problems and  the new code is cleaner.  I may also be able to do some <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=java_performance">optimization</a>s to $x++ and $x-- so they have less overhead.  Overall these changes are a  win-win for <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.
+<br>
+<br><br><pre>
+<br>Test Results:
+<br>
+<br>           |Push/Pop |Random Access|Iterator
+<br>-----------+---------+-------------+---------
+<br>Stack      | 12460ms | 12942ms     | 12385ms
+<br>LinkedList | 12989ms | 49201ms     | 12703ms
+<br>ArrayList  | 14201ms | 13308ms     | 12970ms
+<br>Old Code   | 14402ms | 14541ms     | 16076ms
+<br></pre>
+<br>
+<br>The iterator test is basically just a test of using foreach on an array containing 20,000 elements.  Random Access is a test of going through an array of 20,000 elements accessing each element with @scalar[index].  
+<br>
+<br>Those two tests also have the overhead of calling add() on the 20,000 elements.   Push/Pop is a test of pushing 20,000 elements onto an array and popping the same 20,000 elements back off.  The string 20,000 elements in the test are printed out to the console as well so that adds quite a bit of overhead.  The stack implementation without printing to the console takes 1368ms.  So looping performance seems good.
+<br>
+<br>I expected ArrayList to have the best performance of all of the data structures.  Stack appears to be the reigning champion.   
+<br>
+<br>It took me awhile to get everything setup for testing the old codebase for a comparison.  Hope you appreciate it.
+<br>
+<br>One other change I want to make.  I want to somehow add operator precedence to the parser.  I personally use parantheses when doing any math in a program but others probably don't so this is kind of necessary.  I hope to be done modifying the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> library itself by the end of the day tommorow.
+<br>
+<br><b>11/9/03</b>
+<br>Alright.  Background options code is in place and I am <u>very</u> happy with the functionality.  I'm happy with the code and the design of the code (the way it fits together) isn't perfect.  However it works very well and its very fast (images are stored in video memory when possible, transforms and such are done once and reused as long as possible).  
+<br>
+<br>I've even got a wide array of options.  These include the ability to center an image (with a solid color in the non filled spaces), smart stretching of an image, fill (which just stretches the image to the width and height of the target area), and tile.   The normal stuff.  Now for the kicker.  Any of these options can be done relative to the object (a window, statusbar, or MDI desktop background) or relative to the desktop so everything aligns right.
+<br>
+<br>The other options in place include just using the default color for the look and feel (desktop and statusbar).  Using a solid color for a fill.  Also the statusbars can be transparent with a specified tint. 
+<br>
+<br>So yes, the background code is in place and it is awesome.  I'm going to try to do some miscellaneous work tonight.  If I get anything done I'll post it here.
+<br>
+<br><i>One other worthwhile change.  When a user says something and is no longer idle (and only when there is a change in there idle status) the listbox for the channel they said something in is now forced to repaint.   This way the listbox will be reasonably up to date with who is idle and who is not.</i>
+<br>
+<br><b>11/8/03</b>
+<br>Working on the code for background options.  Trying to figure out any other backgrounds options I might want to add as well.  Currently we have backgrounds for the MDI desktop, the windows themselves, and options for the statusbar.
+<br>
+<br>Statusbar: default for component, solid color, transparency tinted with a solid color, image, image w/ a solid color tint (maybe)
+<br>
+<br>MDI Desktop: default, solid color, image
+<br>
+<br>Window: solid color, image, image w/ a solid color tint
+<br>
+<br>Image arrangements include two types of tiling at the moment.  Trying to decide on others.
+<br>
+<br><a href="ss/jircbgs.png"><img src="ss/jircbgsth.jpg"></a>
+<br>
+<br><b>11/7/03</b>
+<br>Implemented popup menu hooks up the freaking wazoo.  I can only think of one place where they are missing and I never intended to put them in this one place to begin with (although if Sun adds the proper hooks for me and it seems possible I'd consider it).   Basically I'd like to have a menu for the icon of an internal frame and for the switchbar buttons.  However Sun doesn't provide an obvious hook for me to provide this kind of functionality w/i the JInternalFrame.  It's not important enough to add to the switchbar buttons alone.   I might investigate this for some future version of jIRC though.  
+<br>
+<br>I finished the two menu related milestones.  Each time a menu click occurs the variable $command is set with the text of the clicked menu.   I have a $snick variable for the selected nickname (for listbox popups).  Everything else should be well covered through other options already in place or to be added later.
+<br>
+<br>I have menu hooks for the following:
+<br>menubar - the top level menubar
+<br>nicklist - the nicklist within a channel
+<br>channel - channel popups
+<br>query - user query popups
+<br>chat - dcc chat popups
+<br>status - popups for the status window when no query is set, otherwise the appropriate menus are used
+<br>input - popups for the text field (so cut, copy, paste etc. can be scripted by default)
+<br>background - the background of the MDI desktop for the jIRC windows
+<br>tab - popups for the server connection tab (now these can be right clicked on with stuff).
+<br>
+<br>Why did I go so nuts on making all of the menu stuff <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">scriptable</a>?  The simple answer is coding popups in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">Java</a> by hand is very cumbersome, repetitive, and boring.  Not to mention error proned, inflexible, unexciting, and just a slow worthless process.   This is one thing that it makes sense to script.  I'm going to make a script called like menus.irc that will contain the standard menu stuff like cut, copy, paste and all of that.  This file will be separate from the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> and will stay loaded unless someone chooses to unload it.  This provides a quick way for me to edit the menus and tweak the overall user experience.  
+<br>
+<br>Personally I think any application would benefit from using an embedded <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> language to speed up development of this kind of stuff in the application.  Just a thought :)  Although it would have to be a big app to have the benefits of providing bridges to some of the application functionality outweigh the time it takes to integrate the language and develop the bridges.  
+<br>
+<br><b>11/6/03</b>
+<br>Made some good progress today.  I have most of the menubar and popup code setup.  I had a really frustrating problem with my mouse listeners but got around it.  Apparently the lowest component in the component hierarchy gets the mouse events. Once it is dispatching mouse events to its listeners other components in the hierarchy won't receive the events.  Kind of frustrating but I got around it.  
+<br>
+<br>Still left before I call the menubar and popup milestones complete:
+<br>- have some way when a script is loaded / unloaded that the menubar is refreshed
+<br>- make a menu item pass a variable to the code it is executing.  Probably will do something like $description which contains the text of the menu that was clicked on.  This is for menu items added in a loop.
+<br>- get the listbox popups working and make sure $snick contains the primary selected nickname.   
+<br>- I don't know how I'm going to handle the other selected nicknames yet other than a function like getSelectedNicks() that returns an array of the selected nicknames.  
+<br>
+<br>I should be able to get all of that done tommorow.  Any other coding I do will be towards the background milestone.  I should be able to hit my milestones this week but unfortunately I don't expect to get ahead at all.   Next weeks milestones are going to be a tough hit so I was hoping to get to that point.  Ah well.  
+<br>
+<br>Also if your curious what I did about the problem with the menu bridge and the long assed line of code.  I opted to keep things as they are.  It won't really hurt anything and once its done I won't be touching the code so :P
+<br>
+<br><b>Screenshot</b>
+<br>
+<br><a href="http://www.hick.org/~raffi/ss/jirc11.6.png"><img src="http://www.hick.org/~raffi/ss/jirc11.6th.jpg"></a>
+<br>
+<br>I haven't done any work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> other than to get the basics in.  Thats why there is no color.   Next week I'll be working on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> so hopefully we'll get something better looking than that.  However you can see that my rewrite is starting to size up to be just like the original code base that I abandoned.  
+<br>
+<br><b>11/4/03</b>
+<br>((UserHandler)SessionManager getGlobalCapabilities() getActiveSession() getCapabilities() getDataStructure("commands")) processCommand(code);  
+<br>
+<br>(.'s replaced with spaces so it wordwraps)
+<br>
+<br>An absolute abuse of object oriented <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=Programming_Links">programming</a> and the API's I've provided myself.  Unfortunately the menu bridge I've designed is isolated from the capabilities object.  I'd have to restructure how my bridges are instantiated and how they receive data to make the above code be a simpler call.  
+<br>
+<br>I could just make the menu bridge a second class bridge in which case this wouldn't be a problem.   The menu bridge is the last primary bridge I have to add as well so there are no unanticipated other problems to deal with.   
+<br>
+<br>The above code is the only bad spot in my menu code and its only used for the scripter convienence function of:
+<br><pre>addItem("menu description", "/command to execute when menu is clicked");</pre>
+<br>
+<br>Of course it would be just as easy to do this (and the code underlying it is cleaner):
+<br><pre>item "menu description"
+{
+    call("/command to execute when menu is clicked");
+}</pre>
+<br>My 4 options consist of:
+<br>1. remove the addItem function - its not really needed anyways
+<br>2. keep things as is, if it ain't broke, don't fix it
+<br>3. move the menu bridge to the rero.client.whatever package and make it a second class bridge (which doesn't feel right) - being a second class or primary bridge doesn't affect performance or anything its just an organization of code issue.
+<br>4. redesign the API's for how primary bridges are instantiated
+<br>
+<br>I'm leaning towards 3 as that would (possibly) give me the ability to make the menu bridge install the top level menubar itself rather than relying on outside code to update the menubar when a change occurs (i.e. a script is loaded).
+<br>
+<br>I'm working on menus right now, can't you tell?
+<br>
+<br><b>11/3/03</b>
+<br>Implemented key bindings and fixed some bugs.  So now people can script key bindings, kind of fun.  An example would be this:
+<br><pre>bind Ctrl+N { call("/newserver"); } </pre>
+<br>The above code creates a key binding to Control and N being pressed at the same time.  When that happens the code above creates a new server instance.   The bindings work anywhere within jIRC and the binding is executed from the loaded script(s) of the currently active server.  
+<br>
+<br>1 milestone for this week down already (and its only Monday).
+<br>
+<br>Started work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">scriptable</a> menubar code which will carry over very nicely to the popup code when I'm ready to implement that.
+<br>
+<br><b>11/2/03</b>
+<br>Managed to write the config system today.  I haven't really tested it but it has been written.  Speaking of which I haven't integrated it into anything either.  Although as I choose to add options I'll be able to do it.  I've managed to hit my milestones for this week and do some thinking ahead work for week 12 type stuff.  Next week is key bindings and menus galore.
+<br>
+<br>In case anyone is curious jIRC is looking more and more like the old codebase.  The client is pretty usable now (albeit no dialogs or config options yet).  After next week I expect the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> is going to look exactly the same.  After week 13 the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a> will be in place in which case its going to look like a complete client (at least in screenshots). 
+<br>
+<br><b>10/31/03</b>
+<br>Spent some time designing the way scalars will work in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a>.  This isn't a jIRC change per se but <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> (scripting language) is a huge part of jIRC so any change to it affects jIRC.  Basically I'm trying to make it so array and hashtable containers in <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> are an interface.  This way I can bridge other data structures with interface code instead of having to do an expensive conversion from one data structure to another (sleep-friendly) every time the user requests something in the language.   I'm also trying to fix some long standing problems with the way I handle arithmetic.  I'm a little nervous though because this is a big change and I don't know what it will yield for performance.  
+<br>
+<br>I'm thinking all non-object values (strings, longs, ints, and doubles) will be passed around as copies.  Every time they are assigned somewhere a copy of the original will be assigned.  For objects including hashes and scalars I'm thinking I will pass these around by reference.  
+<br>
+<br>I'm also putting some thought into making normal scalars ($variables) have list like behaviors and be able to be treated as lists.  i.e. each $scalar could have another scalar linked to it (which in turn could have another scalar linked to it).   Then I'd provide like different commands like head(), rest(), tail(), first() etc... and many other lisp favorites.  Something I'm thinking about anyways.  Lists are powerful and fast and damned it, I like them.  This is something I'm thinking about though so stayed tuned.  It may or may not happen.
+<br>
+<br><b>10/30/03</b>
+<br>Finished implementing the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> related <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> features.  Enough to call the milestone done.  The scary thing is I haven't tested any of it.  Just coded a shit ton.  Its now almost 8pm and I think I'm done writing code for tonight.
+<br>
+<br>All I've gotta do yet this week is implement the user preferences code.  This should be pretty easy.  Hopefully I'll get ahead and start some other milestone this weekend.   Maybe not though, its halloween weekend and I might just be partying alot.  Hehe.  CIAO
+<br>
+<br><center><a href="http://www.hick.org/~raffi/pics/halloween.PNG"><img src="http://www.hick.org/~raffi/pics/halloweenth.JPG"></a></center>
+<br>
+<br><b>10/29/03</b>
+<br>Starting work on the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> related <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> stuff.  I've posted a list of <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> related functions and the style of naming for built in functions.  Please check it out and offer feedback if you have any.  Thanks.
+<br>
+<br><li><a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">Proposed&nbsp;IRC&nbsp;Related&nbsp;Functions</a>
+<br>
+<br><b>10/28/03</b>
+<br>- Made jIRC automatically setup the active query for the status window taking into account /windows.  This seems pretty complete and well functioning now.
+<br>- Debugged the code I did yesterday (for different types of outputs).  Had an interesting situation with users quitting.  All of my data structures get updated BEFORE the actual set code is fired and such.  So I had to have a work around for this.  
+<br>- Made a way to set the tab text for a given server.  So this will be <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">scriptable</a> as well.   
+<br>
+<br>I'm calling the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> integration done.  I wanted to do some stuff for making the listbox get repainted more often but I can't do anything until I know where there is a problem and wether it needs to be fixed.   So I'm going to move on to the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=programming_for_masses">scripting</a> integration so I can get something more towards a usable <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">default script</a>.   When the experience is complete I'll be able to tell.
+<br>
+<br><b>10/27/03</b>
+<br>I rewrote my milestones today.  These milestones seem a little more logical as far as getting things done in the right order.  Unfortunately I immediately put myself behind as I'm still working on the integrating my <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> code with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> code step.   This isn't a bad thing though.  I'm trying to make sure I do this step right!  I can probably finish this milestone by tommorow night and then I'll be back on track.
+<br>
+<br>Tonight I wrote specialized window printing functions for different situations that I might want to echo text to windows for i.e. echo text to all relevant channel windows containing this user (i.e. for an on quit event).   I also updated all of my set firing code to use these new functions.   Another nice side effect is the on window event will not be accidentally bypassed by any code.  So any text being spit out by jIRC can be caught by an on window event and halted or whatever.
+<br>
+<br>The <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> stuff I'm doing right now consists of a lot of bug fixes and minor tweaks.  I want to get them out ofthe way now so they don't annoy me later or worse yet get lost in the shuffle.  Progress is pretty solid.  I'm feeling much better now about where my <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> code is compared to yesterday. 
+<br>
+<br><b>10/26/03</b>
+<br>Yeah, umm....  I haven't finished any of my 3 milestones this week.  I'm really well into integrating the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> into the client.  I'm trying to do a good job on this.  I'm going to rearrange my milestones tonight or tommorow to allow me a couple more days to finish the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> <-> client integration.  
+<br>
+<br>Right now I've got /window for queries and channels, I've got /newserver, and a channel listbox and sets working well with the statusbar.  I've also got the tabbed interface responding to connecting / disconnecting from the server.  All in all really good progress.   Definetly feels like an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client now.  
+<br>
+<br><b>10/25/03</b>
+<br>Continuing my work on the listbox stuff.  On the bright side the code is efficient in a computer sciency sort of way.  I'm using a binary tree to keep the channel data sorted.  I'm also just displaying this binary tree to the listbox directly rather than trying to keep an internal address list and the listbox synced up separate of eachother.   I've also got it efficient with respects to how often the scripted set is called for data in the listbox.  Joining a channel with a few hundred or thousand users shouldn't kill the client anyways.
+<br>
+<br>On the other hand...  the code is quite a cluster fuck, its ugly, and I don't like it :)  It does work though.  Later on tonight I'm going to make the code smarter about window names and handling case, rewrite the way query windows are handled, fix a wordwrapping bug with the special formatting for the /names reply, and fix a gap in the listbox <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> that I don't like.   If I get all of that done then I will add popup menus tonight.  Tommorow I'll do the config system and then those will be my milestones for the week.   I may also want to make some things fire change events.
+<br>
+<br>One of the coolest features in jIRC was how it would dim listbox entries for idle users.  This feature is back in full force but with a more close to real time response.  So I'm happy about that.
+<br>
+<br><b>10/24/03</b>
+<br>Stuck.  Trying to get the Channel data structures to cooperate with the List box stuff.  I'm kind of frustrated by this at the moment.   Lots of progress integrating the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> code though.  I've also managed to so far keep the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> code pretty well separated from the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> code.   Currently working on /window.  Always a good time, right?
+<br>
+<br>Tommorow I'm going to use the Compator interface to rework the way User's are stored in a Channel object.  I'm trying to make something that is *easy* to iterate through for the listbox code.  Building this iterator has to be as efficient as possible in order for listbox painting to not eat up tons of CPU time.  I'm off to a good start just trying to make sure I get this part right.
+<br>
+<br><b>10/23/03</b>
+<br>- Fixed wordwrapping bug with lots of null spaces at the end of a string.  (not 100% there yet)
+<br>- Started special "formatting" for /names reply (basically treat each formatted nickname as a token to wrap by, and use only 80% of the screen).
+<br>
+<br><b>10/22/03</b>
+<br>I don't think i'm going to hit my milestones this week.  Interfacing with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">GUI</a> is going to require working out several kinks.  I do have jIRC interfacing with the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">GUI</a> in some form though.  Not necessarily badly either.   There are still a few problems.  
+<br>
+<br>Tonight I wrote in a painting <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=java_performance">optimization</a> to the text area.  This makes text selection "feel" lightning fast.  Text selection now takes precedence over the rendering of backgrounds colors.  Definetly a nice thing to have.   
+<br>
+<br>My next focus is going to be to rework the API's for dealing with an active window and a query window.   Once I get that figured out I'll eliminate all System.out.println's so everything is going to the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">GUI</a>.   From there I have a wordwrapping bug that has to be fixed.   I also don't know how much I like the current line spacing.  I can't tell if it feels right or not.  As you can see this is a big step but not an easy one.   I'll keep <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1068441817">hacking</a> at it though.
+<br>
+<br><b>10/18/03</b>
+<br>Dirty hacks and all I've hit this weeks milestone.  The goal for this week was to write up the window management and get the appropriate data structures in place.   Done!  I say dirty hacks and all because sometimes swing can be a whore.    Next week is *slightly* ambitious.  I'm going to be integrating the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client stuff with the gui I've got, write the config system classes, and write in popup menus.  At that point I'm sure this thing will feel very much like an <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.
+<br>
+<br><b>10/17/03</b>
+<br>Working on one of the most important things (to me).  That thing being window management.  I'm also trying to figure out how to add a shortcut like Ctrl+D that puts the window on the desktop.  I'm happy with the progress I'm making.  We'll see how far I can take it though.  This is one of them things if my objects aren't designed right then I *will* get burned.  So far so good.
+<br>
+<br><b>10/16/03</b>
+<br>Started work on designing the window classes.  I did a very basic "background" class that just supports a black background.  Right now I have what the status window will look like.   Doing something to deal with <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=JAVA_ARTICLES">java</a>s focus model should be one of my next priorities.  Also tweaking the look of the components is pretty important as well.
+<br>
+<br><b>10/14/03</b>
+<br>Still designing how I'm going to manage windows and have that part of the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=1070128407">UI</a> interface with the client.  
+<br>
+<br><b>10/13/03</b>
+<br>Finished the listbox stuff.  Shift+Click and Control+Shift+Click is in place for all the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=text_components">text component</a>s.  Listboxes are kind of odd in that you hve to use Control+Shift+Click to edit the colors of the elements in the listbox.  Awesome feature though.
+<br>
+<br><b>10/12/03</b>
+<br>Input field is done.   Working on the listbox now.  All I actually have to do yet on the listbox is implement some selection behavior beyond the obvious stuff and create some API's for getting the selected elements.  I'm thinking that I am going to leave shift+click out of the listbox (as shift+click is used for selection behavior).  The next step after the listbox is done is to start figuring out the window switchbar and how jerk windows will be made accessible to the rest of the client.   
+<br>
+<br><center><img src="http://www.hick.org/~raffi/ss/textss.png"></center>
+<br>
+<br><b>10/11/03</b>
+<br>Making great progress on the input field.  I've got smart pasting working perfectly.  I've also added a cool new feature.  Setting prompt text for the indent field.  Prompt text is basically a "prompt' within the input field.   Instead of the field being blank there can be <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=text_components">attributed text</a> pointing out maybe the active channel or an action the user is supposed to take.  Its a feature in many <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=unix_history">UNIX</a> clients.
+<br>
+<br>All I've gotta do now is the up and down arrow actions and some built in shortcuts for color, underline, bold etc..  wish me luck :)
+<br>
+<br><i>...Several more weeks happen where I didn't have a wiki to keep a devlog in...</i>
+<br>
+<br><b>8/26/03</b>
+<br>Finished writing a proposal for an independent study.  This independent study is on the art of peiceing together a large peice of software.  Any guesses on what that large peice of software happens to be?   jIRC.  I'm actually arranging to receive college credit to finish my <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> client.  I'll post relevant updates here.
+<br>
+<br>Tonight I worked on the event bridge between <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=script_rfc">sleep</a> and the <a href="http://jirc.hick.org/cgi-bin/raffi.cgi?ACTION=VIEW&PAGE=hacking_irc">irc</a> framework.  Permanent "on" events have been added.  "wait" events are next. Should be simple enough.
+

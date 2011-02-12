@@ -1,0 +1,60 @@
+jIRC Dialogs
+
+   TLD -> Setup (* input/edit/select servers to connect to, edit user information) 
+      Incomplete -> Server input/edit/select
+      DLG -> User Information
+         Text -> Realname:
+         Text -> Email:
+         Text -> Nick:
+         Text -> Alt. Nick:
+
+z  TLD -> Identd Setup       <-- implemented
+      DLG -> Ident Options
+         Text -> User ID: 
+         Text -> System:
+         Text -> Port:
+      DC-Checkbox -> Enable Ident Server
+
+z  TLD -> Notify Setup (* input users for notify list, plus see whose online and such *)  <-- implemented
+
+x  TLD -> IRC Options
+      DLG -> Show in Active
+         Checkbox -> CTCP's
+         Checkbox -> CTCP Replies
+         Checkbox -> Notices
+         Checkbox -> Notifies
+         Checkbox -> Queries
+         Checkbox -> Whois
+
+      (* Misc options *)
+      Checkbox -> Show MOTD
+      Checkbox -> Timestamp Events
+
+    TLD -> Perform (* edit perform stuff for users *)
+      DC-Checkbox -> Perform Enabled
+      Groupbox -> Network:  (tied into servers, I guess)
+      ListText -> 
+
+    
+    TLD -> DCC Options
+      Select -> On Send Request
+      Select -> On Chat Request
+      DLG -> DCC Ports
+         Number -> First:
+         Number -> Last:
+
+    TLD -> Auto /Window                     <-- implemented
+      DLG -> Create a window when...
+         Checkbox -> I join a channel
+         Checkbox -> someone messages me
+         Checkbox -> a dcc chat connects
+ 
+      DLG -> Close window when...
+         Checkbox -> I leave a channel
+
+    TLD -> UI Options
+         FontSelect -> Client Font
+         Checkbox   -> Use Native Look and Feel
+
+
+

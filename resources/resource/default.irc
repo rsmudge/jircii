@@ -1,0 +1,1021 @@
+#
+# default.irc
+# ----
+# a basic jirc script, does some simple stuff.
+# realizing my *dream* of ircii colored in with a crayon.
+#
+# The theme is simple on purpose, and the colors are campy
+# on purpose.  
+#
+#
+
+$DEBUG = 0; # set to 1 if you want to see numerics in the default
+            # numerci echo.
+
+#
+# These are some color constants I put together, so I could quickly
+# change them, the shift+click stuff in jIRC is dependent on a color
+# being a custom color so right here all the custom colors I want to
+# use are binded to a scalar
+#
+
+# color scheme
+#
+# \c17 -> Light Gray     -> general text and such
+# \c18 -> Blue           -> Quit, Part, Kick, Notify Signoff
+# \c19 -> Green          -> channel joins, notify Sign on, Nick change
+# \c20 -> Orange         -> CTCP requests / notices 
+# \c21 -> Teal           -> User text
+# \c22 -> Violet         -> My text, Action text
+# \c22 -> Purple         -> messages
+# \c23 -> Yellow         -> mode changes, topic changes
+# \c24 -> Brown          -> notices
+# \c25 -> odd tan color  -> timestamps
+# \c26 -> op color       
+# \c27 -> voice color    
+# \c28 -> halfop color
+# \c29 -> user color
+# \c30 -> red            -> ctcp color
+# \c31 -> green          -> dcc chat color
+# \c32 -> black          -> statusbar color
+# \c33 -> grey           -> server reply neutral color
+# \c34 -> purple         -> send/receive messages
+# \c35 -> light red      -> server reply nick/user@host stuff
+# \c36 -> orange         -> server reply channels/hosts
+# \c37 -> red            -> error replies like server error
+# \c39 ->                -> ident request
+# \c40 ->                -> misc colors (url opening and such)
+# \c41 ->                -> dcc closed/done messages
+# \c42 ->                -> dcc open/status messages
+
+$nnn = chr(0x257C) . "\b*\b" . chr(0x257E); # the bullet used in all of our echo's
+$nnn = "*\b*\b*";
+
+sub rehashWindow
+{
+   if (-iswindow $1)
+   {
+      local('$mmode');
+
+      if ("l" ismode $1)
+      {
+         $mmode = getMode($1) . " " . getLimit($1);
+      }
+      else
+      {
+         $mmode = getMode($1);
+      }
+
+      &setWindowTitle($1, "$1 [ $+ $mmode $+ ] " . strip(getTopic($1)));
+   }
+}
+
+set CHANNEL_MODE_IS!
+{
+   return "\C17$nnn Mode for\B $0 $+ \B\R:\R $parms"; 
+}
+
+set CHANNEL_TOPIC_IS!
+{ 
+   return "\C17$nnn Topic for\B $0 $+ \B\R:\R $parms"; 
+}
+set CHANNEL_TOPIC_SETBY!
+{ 
+   return "\C17$nnn Topic for $1 set by $nick on $seton"; 
+}
+
+set NICKLIST_FORMAT
+{
+   return formatNick($nick, $channel, $nick);
+}
+
+sub formatNick {
+  if (($1 !hasmode $2)) {
+    return "\C29 $+ $3";
+  }
+
+  $uchar = getModeFor($1, $2);
+
+  if($uchar eq '@') {
+    return "\C26@\C29 $+ $3";
+  }
+
+  if($uchar eq '%') {
+    return "\C28%\C29 $+ $3";
+  }
+
+  if($uchar eq '+') {
+    return "\C27+\C29 $+ $3";
+  }
+
+  return "\C26\B $+ $uchar $+ \B\C29 $+ $3";
+}
+
+set CHANNEL_CREATED!
+{ 
+   return "\C17$nnn Channel $1 was created on $created";
+}
+
+on topic
+{
+   rehashWindow($1);
+}
+
+on mode
+{
+   if ($me ison $target)
+   {
+      refreshWindow($target);
+   } 
+}
+
+on open
+{
+   if ($me ison $window)
+   {
+      rehashWindow($window);
+   }
+}
+
+on repl_324
+{
+   rehashWindow($1);
+}
+
+set JOIN_SYNC!
+{
+   return "\C17$nnn Join to\B $1 \Bwas synched in\B $sync \Bsecs."; 
+}
+
+set CHANNEL_MODE 
+{ 
+   rehashWindow($target);
+   return "\C23$nnn $source has set mode\B $target $+ \B: $parms"; 
+}
+
+set USER_MODE 
+{ 
+   return "\C23$nnn $source has set mode\B $target $+ \B: $parms"; 
+}
+
+set CHANNEL_JOIN 
+{ 
+   return "\C19$nnn \b$nick \b(\b $+ $address $+ \b) has joined:\B $target"; 
+}
+
+set CHANNEL_KICK 
+{ 
+   return "\C18$nnn \B$1 \Bhas been kicked by $nick $+ :\B $2-"; 
+}
+
+set USER_QUIT 
+{ 
+   return "\C18$nnn Signoff:\B $nick \B(\B $+ $parms $+ \B)"; 
+}
+
+set CHANNEL_PART 
+{
+   if ($parms eq "")
+   {
+      return "\C18$nnn $nick ( $+ $address $+ ) has left: $target"; 
+   } 
+   else
+   {
+      return "\C18$nnn $nick ( $+ $address $+ ) has left: $target \B(\B $+ $parms $+ \B)"; 
+   }
+}
+
+set CHANNEL_TEXT 
+{ 
+   if ($me isin $parms) 
+   {
+      return "\C21<\B\U $+ $nick $+ \U\B>\C17 $parms";
+   }
+   return "\C21<\B $+ $nick $+ \B>\C17 $parms";
+}
+
+set CHANNEL_TEXT_INACTIVE 
+{ 
+   return "\C21<\b $+ $nick $+ \b\R:\R $+ $target $+ >\C17 $parms"; 
+}
+
+set SEND_TEXT 
+{ 
+   return "\C22<\B $+ $me $+ \B>\C17 $parms"; 
+}
+
+
+set SEND_TEXT_INACTIVE 
+{ 
+   return "\C22<\B $+ $me $+ \B\R:\R $+ $target $+ >\C17 $parms"; 
+}
+
+set USER_NICK 
+{
+   return "\C19$nnn $nick is now known as:\B $1";
+}
+
+set CHANNEL_TOPIC_CHANGED 
+{ 
+   rehashWindow($0);
+   return "\C23$nnn $nick has changed the topic to:\B $parms"; 
+}
+
+set ACTION 
+{ 
+   return "\C22\B*\B $nick $parms"; 
+}
+
+set PRIVACTION 
+{ 
+   return "\C22\B*\B> $nick $parms"; 
+}
+
+
+set ACTION_INACTIVE 
+{
+   return "\C22* $nick $+ \R:\R $+ $0 $parms";
+}
+
+set SEND_ACTION 
+{ 
+   return "\C22*\B $me \B $+ $parms";
+}
+
+set SEND_ACTION_INACTIVE 
+{ 
+   return "\C22*\B $me $+ \B: $+ $0 $parms"; 
+}
+
+set SEND_ACTION_PRIV 
+{
+   return "\C22*\B $me \B: $+ $0 $parms"; 
+}
+
+set REPL_324!
+{
+   return;
+}
+
+set REPL_372! 
+{ 
+   return "\C17 $+ $parms";
+}
+
+set FORMATTED_NAMES_HEADER!
+{
+   return "\C17$nnn Users on\R:\R\B $2";
+}
+
+set FORMATTED_NAMES
+{
+   if ($nick isnormal $2)
+   {
+      return " " . formatNick($nick, $2, left("$[12]nick", 12));
+   }
+   return formatNick($nick, $2, left("$[12]nick", 12));
+}
+
+set TIMESTAMP 
+{ 
+   return "\C25[\B $+ $time $+ \B] "; 
+}
+
+set CTCP_REPLY 
+{ 
+   $stuff = $2-;
+
+   if ($pt ne "")
+   {
+     $stuff = $pt;
+   }
+
+   return "\C30[ $+ $nick \B $+ $1 $+ \B reply]\R:\R $stuff";
+}
+
+set SEND_DCC
+{
+   if ($1 eq "SEND")
+   {
+      return "\c42$nnn DCC SEND to $0 $+ \r:\r " . getFileName($4-) . " (" . formatBytes($3) . ")";
+   }
+
+   return "\c42$nnn DCC " . uc($1) .  " to $0";
+}
+
+
+set SEND_CTCP 
+{
+   if ($1 eq "PING")
+   {
+      return "\C30\r->\r [ $+ $0 \BPING\B]";
+   }
+   else if ($2- eq "")
+   {
+      return "\C30\r->\r [ $+ $0 \B $+ $1 $+ \B]";
+   } 
+   else
+   {
+      return "\C30\r->\r [ $+ $0 \B $+ $1 $+ \B]\R:\R $2-";
+   }
+}
+
+set SEND_NOTICE 
+{
+   return "\c24 $+ -> -\b $+ $0 $+ \b- $+ \c17 $parms";
+}
+
+set SEND_WALL
+{
+   return "\c24\r[\rwall\r/\r\b $+ $0 $+ \b\r]:\r\c17 $parms";
+}
+
+set SEND_WALLEX
+{
+   return "\c24\r[\rwall-x\r/\r\b $+ $0 $+ \b\r]:\r\c17 $parms";
+}
+
+set NOTICE 
+{
+   if ($nick eq "")
+   {
+      return "\c24 $+ $parms";
+   }
+
+   return "\c24 $+ -\b $+ $nick $+ \b-\c17 $parms";
+}
+
+set PRIVMSG 
+{
+   return "\C34 $+ *\B $+ $nick $+ \B*\C17 $parms";
+}
+
+set SEND_MSG 
+{
+   if (-iswindow $target)
+   {
+       return "\C34*\B $+ $me $+ \B*\C17 $parms";
+   }
+   else
+   {
+       return "\C34 $+ \R->\R *\B $+ $target $+ \B*\C17 $parms";
+   }
+}
+set NOTIFY_SIGNON
+{
+   return "\C19 $+ $nnn Signon:\B $nick \B( $+ $address $+ )";
+}
+set NOTIFY_SIGNOFF 
+{
+   return "\C18 $+ $nnn Signoff:\B $nick \B( $+ $address $+ )";
+}
+
+set REPL_366 { return; } # hide REPL_END_OF_NAMES
+
+#
+# Whois Reply
+#
+set REPL_401 { return "\c33$nnn \c35\b $+ $1 $+ \b\c33 $2-"; } # no such nick/channel
+set REPL_406 { return "\c33$nnn \c35\b $+ $1 $+ \b\c33 $2-"; } # was no such nick/channel
+set REPL_301! { return formatWhois("Away", "$2-"); }
+set REPL_307! { return formatWhois("Register", "\c35\b $+ $1 $+ \b\c33 $2-"); }
+set REPL_311! { return formatWhois("Whois", "\c35\b $+ $1 \b\r[\r $+ $2 $+ \r@\r $+ $3 $+ \r]\c33:\r $5-"); }
+set REPL_312! { return formatWhois("Server", "\c36 $+ $2 \c33\r(\r $+ $3- $+ \r)\r"); }
+set REPL_313! { return formatWhois("Ircop", "\c35\b $+ $1 \b\c33 $+ $2-"); }
+set REPL_314! { return formatWhois("Who Was", "\c35\b $+ $1 \b\r[\r $+ $2 $+ \r@\r $+ $3 $+ \r]\c33:\r $5-"); }
+set REPL_317! { return formatWhois("Idle", formatTime3($2)); }
+set REPL_330! { return formatWhois("Register", "\c33 $+ $1 $3- \c35\b $+ $2"); }
+set REPL_318  { return ""; } # hide END of /WHOIS 
+set REPL_369  { return ""; } # hide END of /WHOWAS 
+set REPL_319! 
+{ 
+   local('$chtemp');
+   foreach $var (split(" ", $2-))
+   {
+      if (strlen($var) > 0 && charAt($var, 0) ne "#" && charAt($var, 0) ne "&") 
+      {
+         $var = "\r" . charAt($var, 0) . "\r" . substr($var, 1, strlen($var));
+      }
+      $chtemp = "$chtemp $+ $var ";
+   }
+
+   return formatWhois("Channels", "\c36 $+ $chtemp"); 
+}
+set REPL_320! { return formatWhois("Secure", "\c35\b $+ $1 $+ \b\c33 $2-"); }
+set REPL_671! { return formatWhois("Secure", "\c35\b $+ $1 $+ \b\c33 $2-"); }
+set REPL_338! { return formatWhois("Host", "$2"); }
+set REPL_379! { return formatWhois("Modes", "$5-"); }
+set REPL_378! { return formatWhois("Mask/IP", "$5-"); }
+set REPL_310! { return formatWhois("Help", "\c35\b $+ $1 \b\c33 $+ $2-"); }
+set REPL_703! { return formatWhois("Codepage", "\c35\b $+ $2 \b\c33 $+ $3-"); }
+
+sub formatWhois
+{
+   local('$temp');
+   $temp = "\b" . charAt("$[8]1", 0) . "\b" . substr("$[8]1", 1, strlen("$[8]1"));
+   return "\c33 $+ $temp $+ \r:\r $2";
+}
+
+#
+# formatted numerics
+#
+set REPL_403 { return formatNumeric($1, $2-); } # no such channel
+set REPL_442 { return formatNumeric($1, $2-); } # you're not on that channel
+set REPL_473 { return formatNumeric($1, $2-); } # banned
+set REPL_474 { return formatNumeric($1, $2-); } # invite
+set REPL_475 { return formatNumeric($1, $2-); } # key
+set REPL_433 { return formatNumeric($1, $2-); } # nick in use
+
+sub formatNumeric
+{
+   if (charAt($1, 0) eq "#")
+   {
+      return "\c33$nnn \c36\b $+ $1 $+ \b\c33 $2"; 
+   }
+   return "\c33$nnn \c35\b $+ $1 $+ \b\c33 $2";
+}
+
+#
+# Formatted Server Output Type Stuff
+#
+
+# /who reply
+set REPL_352! 
+{
+   return "\c36 $+ $1 \c35\b $+ $5 \b\r[\r $+ $2 $+ \r@\r $+ $3 $+ \r]\r\c33 on\c36 $4 $+ \c33\r:\r $8-";
+}
+
+set REPL_315 { return; }
+
+# /mode #channel +b reply
+$_bancount = 0;
+
+set CHANNEL_BANLIST
+{
+   local('@info');
+   @info = split('!', $3);
+
+   $_bancount++;
+
+   return "\c36 $+ $1 \c35\b $+ $2 \b\c33set by\r:\r\c35 " . @info[0];
+}
+
+set CHANNEL_BANLIST_END
+{ 
+   if ($_bancount == 0)
+   {
+      return "\c36 $+ $1 \c35\bno\b bans set";
+   }
+
+   $_bancount = 0;
+   return; 
+}  # hide end of banlist reply...
+
+# /links reply
+set REPL_364! 
+{
+   return "\C36 $+ $[20]1 \c33-\b>\b\c36 $[20]2 \c33\r(\r\b $+ $3 \bhops\r):\r $4-";
+}
+
+set REPL_365 { return; }
+
+# /list reply
+set REPL_321! 
+{
+   return "\c33\bC\bhannel              \bU\bsers   \bT\bopic";
+}
+
+set REPL_322! 
+{
+   return "\c35\b $+ $[20]1 $+ \b\c33 $[-5]2   $3-";
+}
+
+set REPL_323 { return; }
+
+set NUMERIC! 
+{ 
+#   return "\C17$nnn \r(\r\b $+ $numeric $+ \b\r)\r $parms"; 
+   return "\C17$nnn $parms"; 
+}
+
+set CTCP_REQUEST 
+{
+   if ($2- eq ""  || ($1 eq "PING" && -isnumber $2) )
+   {
+      return "\C30[ $+ $nick \B $+ $1 $+ \B]";
+   }
+   else
+   {
+      return "\C30[ $+ $nick \B $+ $1 $+ \B]\R:\R $2-";
+   }
+}
+
+set SBAR_LEFT 
+{
+  if (($me hasmode $query)) {
+    $ime = "\B" . getModeFor($me, $query) . "\B $+ $me";
+  } else {
+    $ime = "$me";
+  }
+
+  if ($me ison $query)
+  {
+     $ichan = "on $query";
+  }
+  else
+  {
+     $ichan = "Query\R:\R $query";
+  }
+
+  return "\c32 $+ [Lag:\B $lag $+ \B] $time $ime $ichan";
+}
+
+sub getDCCPercentage
+{
+  if (getConnectionType($1) eq "RECEIVE")
+  {
+     return int((double(getBytesReceived($1)) / double(getExpectedSize($1))) * 100);
+  }
+
+  if (getConnectionType($1) eq "SEND")
+  {
+     return int((double(getBytesSent($1)) / double(lof(getDCCFilePath($1)))) * 100);
+  }
+}
+
+sub getDCCSizeSoFar
+{
+  if (getConnectionType($1) eq "RECEIVE")
+  {
+     return getBytesReceived($1);
+  }
+
+  if (getConnectionType($1) eq "SEND")
+  {
+     return getBytesSent($1);
+  }
+}
+
+set SBAR_RIGHT
+{
+  if (size(getActiveConnections()) > 0)
+  {
+     foreach $var (getActiveConnections())
+     {
+        if (getConnectionType($var) eq "RECEIVE")
+        {
+           $pc = getDCCPercentage($var);
+
+           if ($DCC_WATCH_TIMER eq "")
+           {
+              sub timertemp
+              {
+                 refreshWindow(getActiveWindow());
+              }
+              $DCC_WATCH_TIMER = addTimer(&timertemp, 2000);
+           }
+
+           return "\c32\r[\r" . left(getDCCFileName($var), 25) . "\r:\r $+ $pc $+ %\r]\r";
+        } 
+     }
+  }  
+
+  if ($DCC_WATCH_TIMER ne "")
+  {
+     stopTimer($DCC_WATCH_TIMER);
+     $DCC_WATCH_TIMER = "";
+  }
+
+  if (!-isSetT "ui.showtabs" && isServerConnected())
+  {
+     return "\c32\r[\r".getServerHost()."\r:\r".(getSessionId() + 1)."\r]";
+  }
+
+  return "\c32\Rj\RIRC\Bii\B";
+}
+
+set ON_CHANNELS 
+{
+  return "$nnn Channels: $parms";
+}
+
+set SET_IGNORE
+{
+   if ($0 eq "add") { return "\c40 $+ $nnn Added\b $parms \bto ignore list"; }
+   if ($0 eq "remove") { return "\c40 $+ $nnn Removed\b $parms \bfrom ignore list"; }
+}
+
+set SET_NOTIFY
+{
+   if ($0 eq "add") { return "\c40 $+ $nnn Added\b $parms \bto notify list"; }
+   if ($0 eq "remove") { return "\c40 $+ $nnn Removed\b $parms \bfrom notify list"; }
+}
+
+set PROCESS_DATA! 
+{
+  return "[0] $parms";
+}
+
+
+#
+# DCC Chat Related
+#
+
+set DCC_REQUEST 
+{
+   if ($2 eq "SEND")
+   {
+      return "\c42$nnn DCC SEND request from $nick $+ \r:\r $3 (" . formatBytes($6) . ")";
+   }
+
+   return "\c42$nnn DCC $2 request from $nick";
+}
+
+set CHATMSG
+{
+   return "\c31=\b $+ $0 $+ \b=\c17 $parms";
+}
+
+set SEND_CHAT_ERROR
+{
+   return "\c41$nnn there is no open chat with $0";
+}
+
+set SEND_CHAT
+{
+   if (-iswindow ("=" . $0))
+   {
+      return "\c31=\b $+ $me $+ \b=\c17 $parms";
+   }
+   else
+   {
+      return "\c31-> =\b $+ $0 $+ \b=\c17 $parms";
+   }
+}
+
+set CHAT_OPEN
+{
+   return "\c42$nnn Chat with\b $nick \bopened.";
+}
+
+set CHAT_CLOSE
+{
+   
+   return "\c41$nnn Chat with\b $nick \blost\b\r:\r $1-";
+}
+
+#
+# /dcc command...  don't want anyone feeling to left out :)
+#
+
+alias dcc
+{
+   if ($1 ne "")
+   {
+      call("/ $+ $0-", "use-built-in-command-only");
+      return;
+   }
+
+   echo("\c17\bT\bype     \bN\bick        \bI\bnformation");
+
+   foreach $conn (getActiveConnections())
+   {
+      $type = getConnectionType($conn);
+      $nick = getDCCNickname($conn);
+
+      $info = DCCInformation($conn);
+
+      echo("\c36$[7]type  \c35$[10]nick  $info");
+   }
+}
+
+set DCC_LIST_TYPE
+{
+   $conn = getDCCConnection($this);
+   return "\c36" . getConnectionType($conn);
+}
+
+set DCC_LIST_NICK
+{
+   $conn = getDCCConnection($this);
+   return "\c35" . getDCCNickname($conn);
+}
+
+sub DCCInformation
+{
+   local('$info $conn');
+
+   $conn = $1;
+   $type = getConnectionType($conn);
+
+   if (!-isdccopen $conn)
+   {
+     return "Waiting...";
+   }
+
+   if ($type eq "CHAT")
+   {
+     $info = "\c33\bI\bdle\r:\r " . formatTime3(getDCCIdleTime($conn) / 1000);
+   }
+   else
+   {
+     $info = "\r(\r\bE\bst\r:\r " . formatTime2(getTimeRemaining($conn)) . "\r)\r";
+          
+     local('$a $b $c $d');
+     $a = getDCCPercentage($conn);
+     $b = getDCCFileName($conn);
+     $c = formatBytes(getTransferRate($conn)) . "/s";
+     $d = "\r(\r\bS\bize\r:\r " . formatBytes(getDCCSizeSoFar($conn)) . "\r)\r";
+
+     $info = "\c33 $+ $[21]info $+ $[-2]a $+ \r%\r $[7]c $+ $[22]d $+ $b"
+   }
+
+   return $info;
+}
+
+set DCC_LIST_INFORMATION
+{
+   return DCCInformation(getDCCConnection($this));
+}
+
+#
+# 
+#
+set RECEIVE_COMPLETE
+{
+   $dcc  = getDCCConnection($this);
+   $file = getDCCFileName($dcc);
+   $rate = formatBytes(getTransferRate($dcc)) . "/s";
+   return "\c41$nnn Receive of $file from $nick complete at $rate";
+}
+
+set SEND_COMPLETE
+{
+   return "\c41$nnn Send to $nick complete";
+}
+
+set RECEIVE_START
+{
+   $dcc  = getDCCConnection($this);
+   $file = getDCCFileName($dcc);
+   return "\c42$nnn Receive of $file from $nick has started";
+}
+
+set SEND_START
+{
+   return "\c42$nnn Send to $nick has started";
+}
+
+set RECEIVE_FAILED
+{
+   return "\c41$nnn Receive from $nick has failed: $1-";
+}
+
+set SEND_FAILED
+{
+   return "\c41$nnn Send to $nick has failed: $1-";
+}
+
+#
+# Normal DCC Messages..  always fun
+#
+set RESUME_SUCCEEDED
+{
+   return "\c42$nnn Resume request to $nick successful";
+}
+
+set RESUME_FAILED
+{
+   return "\c41$nnn Resume request to $nick \bfailed\b";
+}
+
+set RESUME_REQUEST_ERROR
+{
+   return "\c41$nnn $nick has made a jacked up resume request";
+}
+
+set RESUME_REQUEST
+{
+   return "\c42$nnn $nick has requested to resume the dcc transfer";
+}
+
+set RESOLVED_LOCALINFO
+{
+    return "\C42$nnn Resolved local host to\B $0";
+}
+
+# /dns reply
+set RESOLVED_HOST
+{
+    if ($2- ne "")
+    {
+       return "\C42$nnn Resolved\b $0 \bto $2 $+ \r[\r $+ $1 $+ \r]\r";
+    }
+    else
+    {
+       return "\C42$nnn Unable to resolve $0 $+ \r:\r host not found";
+    }
+}
+
+#
+# aliases
+#
+alias notify
+{
+   if ($1 ne "")
+   {
+      call("/ $+ $0-", "use-built-in-command-only");
+      return;
+   }
+
+   echo("\c17$nnn Signed on\r:");
+   
+   $output = "";
+
+   foreach $var (getSignedOnUsers())
+   {
+      $otime   = onlineFor($var);
+
+      if ($otime < 300)                # users signed on within the past 5 minutes
+      {
+         $output = "$output \b $+ $var $+ \b";
+      }
+      else if ($otime < (60 * 60))     # users signed on for up to an hour
+      {
+         $output = "$output $var";
+      }
+      else                             # anything over an hour
+      {
+         $output = "$output \r $+ $var $+ \r";
+      }
+   }
+ 
+   echo("\c17  $output");
+
+   echo("\c17$nnn Signed off\r:");
+   
+   $output = "";
+
+   foreach $var (getSignedOffUsers())
+   {
+      $output = "$output $var";
+   }
+  
+   echo("\c17  $output");
+}
+
+set IDENT_REQUEST
+{
+   return "\c39$nnn Ident request from $0";
+}
+
+set SERVER_ERROR
+{
+   return "\c37$nnn Server error: $parms";
+}
+
+set IRC_ATTEMPT_CONNECT
+{
+   return "\c19$nnn Attempting to connect to " . $0;
+}
+
+set IRC_DISCONNECT
+{
+   return "\c18$nnn Disconnected from\b " . getServerHost() . "\b\r:\r $parms";
+}
+
+set IRC_CONNECT
+{
+   return "\c19$nnn Connected to\b " . getServerHost() . "\b";
+}
+
+set IRC_RECONNECT
+{
+   return "\c19\r$nnn Attempting to reconnect to\r\b " . getServerHost() . "\b";
+}
+
+set INVITE
+{
+   return "\c24$nnn \b $+ $nick $+ \b invites you to join\r:\r $1";
+}
+
+set REPL_341
+{
+   return "\c33$nnn $1 has been invited to\r:\r\c36 $2";
+}
+
+#
+# Completes the current nickname in the editbox..
+#
+$_TAB_TEXT    = "";
+@_TAB_NICKS   = array();
+$_TAB_LAST    = "";
+
+sub setTabInput
+{
+   $_TAB_TEXT = "$1 $+ $2";
+   $_TAB_LAST = $2;
+   setInputText(getActiveWindow(), $_TAB_TEXT);
+}
+
+bind tab
+{
+   local('$text @data $pnick');
+
+   $text  = getInputText(getActiveWindow());
+   
+   if (-ischannel $active && $text eq "/topic")
+   {
+      setTabInput("/topic $active " . getTopic($active));
+   }
+   else if ($_TAB_TEXT eq $text && size(@_TAB_NICKS) > 0)
+   {
+      if (left($text, 1) eq "/" && indexOf($text, " ") is $null)
+      {
+         setTabInput("/", shift(@_TAB_NICKS));
+      }
+      else 
+      {
+         $text  = substr($text, 0, strlen($text) - strlen($_TAB_LAST));
+         setTabInput("$text", shift(@_TAB_NICKS));
+      }
+   }
+   else if (left($text, 1) eq "/" && indexOf($text, " ") is $null)
+   {
+      $text       = substr($text, 1);
+      @_TAB_NICKS = array();
+     
+      foreach $var (getAliasList())
+      {
+         $var = lc($var);
+
+         if (left($var, strlen($text)) eq $text)
+         {
+            add(@_TAB_NICKS, $var, 0);
+         }
+         else if ($text isin $var)
+         {
+            push(@_TAB_NICKS, $var);
+         }
+      }
+
+      push(@_TAB_NICKS, $text);
+      setTabInput("/", shift(@_TAB_NICKS));
+   }
+   else if ($text ismatch '/dcc send \S+ (.+)' || 
+            $text ismatch '/send \S+ (.+)' || 
+            $text ismatch '/load (.+)' || 
+            $text ismatch '/theme (.+)' || 
+            $text ismatch '/xdcc offer (.+)' || 
+            $_IS_FILE_COMPLETE == 1)
+   {
+      @data  = matched();
+      $pnick = pop(@data);
+      $text  = substr($text, 0, strlen($text) - strlen($pnick));
+
+      @_TAB_NICKS = fileCompleteAll($pnick);
+
+      setTabInput("$text", shift(@_TAB_NICKS));
+   }
+   else if (-ischannel $active && strlen($text) > 0 && right($text, 1) ne " ")
+   {
+      @data  = split(' ', $text);
+      $pnick = pop(@data);
+      $text  = substr($text, 0, strlen($text) - strlen($pnick));
+
+      if ($pnick eq "#")
+      {
+         @_TAB_NICKS = array();
+         setTabInput("$text $+ $active", "");
+      }
+      else if (left($pnick, 1) eq "/")
+      {
+         # do nothing...  we don't want to nick complete a "command"
+      }
+      else
+      {
+         @_TAB_NICKS = nickCompleteAll($pnick, $active);
+         setTabInput("$text", shift(@_TAB_NICKS));
+      }
+   }
+   else if ($_LAST_MESSAGE)
+   {
+      @_TAB_NICKS = array();
+      setInputText(getActiveWindow(), "/msg $_LAST_MESSAGE ");
+   }
+}
+
+on msg
+{
+   $_LAST_MESSAGE = $nick;
+}
+
+set WALLOPS
+{
+   return "\c35 $+ =\b $+ $nick $+ \b:\b<ircops>\b=\c17 $parms";
+}
+
+set SEND_WALLOPS
+{
+   return "\c35 $+ -> =\b<ircops>\b= $+ \c17 $parms";
+}

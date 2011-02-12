@@ -1,0 +1,21 @@
+The socket system is a simple abstraction of a socket for the limited
+purpose of connecting to a server and sending and receiving text data.
+
+Exported Capabilities
+--------
+connect socket       (creates a new thread)
+disconnect socket
+send message
+
+Exported Structures
+--------
+network info
+
+Exported Events
+--------
+read message 
+
+
+Imported <all>
+--------
+none

@@ -1,0 +1,26 @@
+= Intro =
+
+Welcome developer to the Released Early, Released Often IRC Client.  This
+document is meant to explain some of the various design patterns being used
+within RERO.  Knowing the design pattern will help make you a more effective
+developer and more capable of navigating the code behind RERO.  Enjoy.
+
+= Overview =
+
+Simply put RERO is divided up into several different modules or areas.  
+RERO is divided up so each of these different areas can be thought of as little
+mini projects in there own right.
+
+However as with all software these little mini areas need to be connected
+together in such a way that we have a large coherent working application.  
+
+There are a number of challenges when writing a larger peice of software.
+For example if we split the project up into to many areas, then communication
+between these areas becomes really complicated.  Then there is the issue
+of determining how the different "areas" of the software will communicate
+together.
+
+For RERO we will be working with a model of imports and exports.  Each
+software area will be able to export certain capabilities, data structures,
+and event notifications.  Each area will also be able to import items from
+each of these areas.  

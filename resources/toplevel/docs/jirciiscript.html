@@ -1,0 +1,2565 @@
+<html>
+ <head>
+   <style>
+     body
+     {
+        background-color: white;
+        padding-left:  0.75in;
+        padding-right: 0.75in;
+        padding-top: 0.25in;
+        padding-bottom: 0.25in;
+     }
+
+     h1
+     {
+        font-size: 1.25em;
+        color: #2222FF;
+     }
+
+     h2
+     {
+        font-size: 1.15em;
+        color: darkblue;
+     }
+
+     h3
+     {
+        font-weight: bold;
+        font-size: 1em;
+     }
+
+     img 
+     {
+        padding-bottom: 1em;
+     }
+
+     td
+     {
+        vertical-align: top;
+        padding-right: 2em;
+     }
+
+     th
+     {
+         font-weight: normal;
+         text-align: left;
+         border-bottom: 1px solid black;
+     }
+   </style>
+   <title>jIRCii Scripting Reference</title>  
+ </head>
+ <body>
+   <center><img src="jirciidotnet-ansi1.jpg"></center>
+
+   <h1>Customizing your IRC Experience</h1>
+
+   <p>jIRCii is a fully scriptable using the sleep language. Sleep is a simple language that slightly resembles perl. This document covers the jIRCii specificadditions
+to sleep. The <a href="http://sleep.dashnine.org/manual/">Sleep 2.1 Manual</a> provides full coverage of the features in sleep itself. You may want to read it before
+you read this. This document is written as a reference, it is not meant to serve as a full tutorial for scripting with jIRCii.</p>
+
+   <p>Also be sure to set <code>debug(7)</code> while you're writing your scripts.  This will echo all errors opening files and such (checkError() stuff) and force you
+   to declare  your variables.</p>
+	
+   <h2>Loading and Unloading Scripts</h2>
+
+   <p>The following commands are at your disposal for script loading and unloading.</p>
+
+   <p><b>/load filename.irc</b>
+   <br>Loads the specified script.</p>
+
+   <p><b>/unload filename.irc</b>
+   <br>Unloads the specified script, restoring any aliases/sets that were overridden by the specified script.</p>
+
+   <p><b>/reload filename.irc</b>
+   <br>Unloads and then reloads the specified script.</p>
+
+   <p>You can also use the script manager dialog. Click the View menu, Options, and then select Script
+Manager. The script manager dialog has options for loading and unloading scripts.</p>
+
+<P>The script manager dialog has an option to "ignore script warnings". If you are developing a
+script you should never have this option checked. Often times script errors won't be caught when
+they are loaded. They are usually announced when the script is running</p>
+
+  <h1>Aliases</h1>
+
+<p>An alias in jIRCii is a way of specifying a /command that when called it will execute a bunch of
+statements.</p>
+
+<pre>alias jf
+{
+  call("/join #mIRCScripts");
+  call("/join #java");
+}</pre>
+
+<p>The alias jf is for joining favorite channels. The keyword alias followed by jf declares jf as an
+alias. This means /jf is now a valid command in jIRCii.</p>
+
+<p>Inside of jf the function call() is called with a string each time. Call executes the specificjIRCii
+command within the double quotes. Using call() is just like typing a command in the editbox.
+Custom aliases can also receive parameters.</p>
+
+<pre>alias j
+{
+  call("/join $1");
+}</pre>
+
+<p>Aliases in jIRCii can receive parameters. The first parameter is the scalar $1. The second
+parameter is the scalar $2. The third is $3 etc.. The name of the alias is $0. The above alias is a
+shortcut for the join command. If you type /j #floods, $1 in the above alias would have the value
+of #floods.</p>
+
+<p>The " double quoted string inside of call is known as a parsed literal. It is basically a string where
+$scalar values are evaluated. See the sleep language fundamentals document for more about
+parsed literals and scalars.</p>
+
+<h2>Built in Variables</h2>
+
+<p>jIRCii supports a number of built in variables that are always ready to use. Whenever an alias is
+typed in you immediately have everything broken down for you. For example say a user types: <code>/blah hello ice cream!</code></p>
+
+<p>Immediately you have the <var>$n</var> variables available to you were n is an integer or a range of integers.
+For example:</p>
+
+<table>
+ <tr>
+   <th>$n var</th>
+   <th>value</th>
+ </tr>
+ <tr>
+  <td>$0</td>
+  <td>/blah</td>
+ </tr>
+ <tr>
+  <td>$1</td>
+  <td>hello</td>
+ </tr>
+ <tr>
+  <td>$2</td>
+  <td>ice</td>
+ </tr>
+ <tr>
+  <td>$3</td>
+  <td>cream!</td>
+ </tr>
+ <tr>
+  <td>$1-</td>
+  <td>hello ice cream!</td>
+ </tr>
+ <tr>
+  <td>$2-</td>
+  <td>ice cream!</td>
+ </tr>
+ <tr>
+  <td>$1-2</td>
+  <td>hello ice</td>
+ </tr>
+ <tr>
+  <td>$-2</td>
+  <td>/blah hello ice</td>
+ </tr>
+</table>
+
+<p>This is different than sleep subroutines where the arguments are numbered from 1..n These
+tokenized ranges do not work in sleep subroutines. In general parameters to events, menus,
+aliases, and sets are passed in the tokenized form described above.</p>
+
+<p>jIRCii also supports some other built in variables. These are available all the time.</p>
+
+<table>
+ <tr>
+  <td>$active</td>
+  <td>the current active query/target</td>
+ </tr>
+ <tr>
+  <td>$lag</td>
+  <td>your lag</td>
+ </tr>
+ <tr>
+  <td>$me</td>
+  <td>your nickname</td>
+ </tr>
+ <tr>
+  <td>$mymode</td>
+  <td>your mode on the server i.e. +i</td>
+ </tr>
+ <tr>
+  <td>$null</td>
+  <td>the empty scalar with a string value of "" and a numerical value of 0</td>
+ </tr>
+ <tr>
+  <td>$time</td>
+  <td>the current time in hh:mm format</td>
+ </tr>
+ <tr>
+  <td>%localData</td>
+  <td>local data in jIRCii consists of function parameters, event specific
+variables, set specificvariables, basically any kind of temporary
+variables. This read-only hash will contain all the local variable
+information for the current function call, alias execution, event etc..</td>
+ </tr>
+ <tr>
+  <td>%GLOBAL</td>
+  <td>the %GLOBAL hash is the same variable visible to all jIRCii server
+connections. This can be used as a place to share information between
+server sessions.</td>
+ </tr>
+</table>
+
+
+<h1>Keyboard Shortcuts</h1>
+
+<p>In jIRCii nearly any key combination can be bound to execute a script when pressed. This is
+accomplished using the bind keyword.</p>
+
+<pre>bind Escape
+{
+   call("/part $active");
+}</pre>
+
+<p>The above binds the "Escape" key to part the active channel when pressed. Whenever someone
+presses escape call("/part $active") will be executed.</p>
+
+<p>The format for specifying binds is:</p>
+
+<pre>bind <b>Modifier+Key</b> { <b>commands</b> }</pre>
+
+<p>The Modifier+ part is optional. You can just bind a Key.</p>
+
+<h2>Key Constants</h2>
+
+<p>Modifiers: Shift, Ctrl, Alt, Meta</p>
+
+<p>Keys:</p>
+
+<table width="100%">
+  <tr>
+    <td>Accept</td>
+    <td>Back_Quote</td>
+    <td>Backspace</td>
+    <td>Caps_Lock</td>
+  </tr>
+  <tr>
+    <td>Clear</td>
+    <td>Convert</td>
+    <td>Delete</td>
+    <td>Down</td>
+  </tr>
+  <tr>
+    <td>End</td>
+    <td>Enter</td>
+    <td>Escape</td>
+    <td>F1</td>
+  </tr>
+  <tr>
+    <td>F2</td>
+    <td>F3</td>
+    <td>F4</td>
+    <td>F5</td>
+  </tr>
+  <tr>
+    <td>F6</td>
+    <td>F7</td>
+    <td>F8</td>
+    <td>F9</td>
+  </tr>
+  <tr>
+    <td>F10</td>
+    <td>F11</td>
+    <td>F12</td>
+    <td>Final</td>
+  </tr>
+  <tr>
+    <td>Help</td>
+    <td>Home</td>
+    <td>Insert</td>
+    <td>Left</td>
+  </tr>
+  <tr>
+    <td>Num_Lock</td>
+    <td>NumPad_*</td>
+    <td>NumPad_+</td>
+    <td>NumPad_,</td>
+  </tr>
+  <tr>
+    <td>NumPad_-</td>
+    <td>NumPad_/</td>
+    <td>Page_Down</td>
+    <td>Page_Up</td>
+  </tr>
+  <tr>
+    <td>Pause</td>
+    <td>Period</td>
+    <td>Print_Screen</td>
+    <td>Quote</td>
+  </tr>
+  <tr>
+    <td>Right</td>
+    <td>Scroll_Lock</td>
+    <td>Space</td>
+    <td>Tab</td>
+  </tr>
+  <tr>
+    <td>Up</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<p>Also acceptable is A-Z, a-z, 0-9, and anything else. The above table is just a list of special self-
+explanatory constants for common keys you might want to bind.</P>
+
+<h1>Responding to Events</h1>
+
+<p>An event is a specifically defined occurrence. Examples of events include a user joining a
+channel, a dcc send completing, and even a window closing. It is possible to write scripts that
+respond to events when they occur. This is accomplished using the on keyword.</p>
+
+<pre>on <b>event</b> { <b>commands</b> }</pre>
+
+<p>The syntax is pretty simple: on the occurrence of some event execute these commands.
+Whenever the specified event occurs the commands in the { } curly braces will be executed.
+When an event finishes executing you can use the halt keyword to stop jIRCii scripts from further
+processing that event. The halt keyword works for most events. Halt has the same syntax as
+return except you can't return anything with a halt.</p>
+
+<pre># taken from "save the children script"
+on public
+{
+   if ("*swear*word* iswm $parms)
+   {
+      halt;
+   }
+}</pre>
+
+<p>The above example halts any public channel text that is a wildcard match for *swear*word*.
+When halt is used the event will not be processed any further and no sets will be fired.</p>
+
+<h2>List of Events</h2>
+
+<p>* = event has a special variable associated with it.
+<br>+ = event has a note associated with it.</p>
+
+<h3>DCC Events</h3>
+
+<table width="100%">
+  <tr>
+    <td>chat</td>
+    <td>chat_close</td>
+    <td>chat_open</td>
+  </tr>
+  <tr>
+    <td>send_complete</td>
+    <td>send_failed</td>
+    <td>send_start</td>
+  </tr>
+  <tr>
+    <td>receive_complete</td>
+    <td>receive_failed</td>
+    <td>receive_start</td>
+  </tr>
+</table>
+
+<h3>GUI Events</h3>
+
+<table width="100%">
+  <tr>
+    <td>active</td>
+    <td>click +</td>
+    <td>close</td>
+  </tr>
+  <tr>
+    <td>dclick +</td>
+    <td>exit</td>
+    <td>input</td>
+  </tr>
+  <tr>
+    <td>inactive</td>
+    <td>minimize</td>
+    <td>open</td>
+  </tr>
+  <tr>
+    <td>session +</td>
+    <td>sclick +</td>
+    <td>window +</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td><i>click</i></td>
+    <td>fired when a word is clicked on in a jIRCii window</td>
+  </tr>
+  <tr>
+   <td><i>dclick</i></td>
+    <td>fired when a nickname in the channel listbox is double clicked on</td>
+  </tr>
+  <tr>
+   <td><i>sclick</i></td>
+    <td>fired when a text is double clicked on in a sorted window: $0 = row; $1- = source window</td>
+  </tr>
+  <tr>
+   <td><i>session</i></td>
+    <td>fired when the current session for this script becomes active again</td>
+  </tr>
+  <tr>
+   <td><i>window</i></td>
+    <td>fired every time text is echod to a window</td>
+  </tr>
+</table>
+
+<h3>IRC Events</h3>
+
+<table width="100%">
+  <tr>
+    <td>error</td>
+    <td>invite</td>
+    <td>join</td>
+  </tr>
+  <tr>
+    <td>kick</td>
+    <td>mode</td>
+    <td>msg</td>
+  </tr>
+  <tr>
+    <td>nick</td>
+    <td><i>nnn</i> +</td>
+    <td>notice</td>
+  </tr>
+  <tr>
+    <td>part</td>
+    <td>private_action</td>
+    <td>public</td>
+  </tr>
+  <tr>
+    <td>public_action</td>
+    <td>quit</td>
+    <td>reply</td>
+  </tr>
+  <tr>
+    <td>request</td>
+    <td>signoff</td>
+    <td>signon</td>
+  </tr>
+  <tr>
+    <td>topic</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td><i>nnn</i></td>
+    <td>refers to an irc numeric i.e. 001, or 363, basically an irc numeric reply.</td>
+  </tr>
+</table>
+
+<h3>Miscellaneous Events</h3>
+
+<table width="100%">
+  <tr>
+   <td>connect</td>
+   <td>disconnect</td>
+   <td>ident</td>
+ </tr> 
+ <tr>
+   <td>raw</td>
+   <td>unload +</td>
+   <td>&nbsp;</td>
+  </tr>
+</table> 
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td>unload</td>
+    <td>fired when a script is unloaded. Event is only fired within the unloaded script. </td>
+  </tr>
+</table>
+
+<h2>Event Variables</h2>
+
+<table>
+ <tr>
+   <th>Variable</th>
+   <th>Notes</th>
+ </tr>
+  <tr>
+   <td>$address</td>
+    <td>Exists only when a user is the source of an event.. represents a user's address</td>
+  </tr>
+  <tr>
+   <td>$channels</td>
+    <td>Available in the QUIT event; a comma separated list of channels the user was on.</td>
+  </tr>
+  <tr>
+   <td>$data</td>
+    <td>Available in most sets; the string jIRCii tokenizes into $0, $1, $2- etc.</td>
+  </tr>
+  <tr>
+   <td>$event</td>
+    <td>Available in most sets; a string describing the type of event</td>
+  </tr>
+  <tr>
+   <td>$host</td>
+    <td>The host part of user@host; exists only when $address exists</td>
+  </tr>
+  <tr>
+   <td>$item</td>
+    <td>Available on click event; the actual word the user clicked on.</td>
+  </tr>
+  <tr>
+   <td>$mouse</td>
+    <td>Available in on click/dclick/sclick events; contains mouse info</td>
+  </tr>
+  <tr>
+   <td>$nick</td>
+    <td>Available in most events where you would expect $nick to be available.</td>
+  </tr>
+  <tr>
+   <td>$parms</td>
+    <td>The parameters related to the event (available in most events)</td>
+  </tr>
+  <tr>
+   <td>$raw</td>
+    <td>Available in most irc related sets, the raw text at the root of the event</td>
+  </tr>
+  <tr>
+   <td>$server</td>
+    <td>the server that was the source of the event, exists only when the event is for an irc event and a server sent the event instead of a user. To be safe use $source to get the source of an event.</td>
+  </tr>
+  <tr>
+   <td>$source</td>
+    <td>the source of the event, available in most events that have a source</td>
+  </tr>
+  <tr>
+   <td>$target</td>
+    <td>Available in events that have a target; the target of the event</td>
+  </tr>
+  <tr>
+   <td>$this</td>
+    <td>Available in dcc events; a reference to that exact dcc... can be used to get the dcc session information with the function getDCCConnection($this)</td>
+  </tr>
+  <tr>
+   <td>$user</td>
+    <td>The user part of user@host, exists only when $address exists</td>
+  </tr>
+  <tr>
+   <td>$type</td>
+    <td>Available in request and reply events; represents the type of ctcp.</td>
+  </tr>
+  <tr>
+   <td>$window</td>
+    <td>Available in most gui events; the window the event occured in</td>
+  </tr>
+</table>
+
+<p>The variables listed in the Aliases -> Built in Variables section also applies to sets as well.  Generally $0 is the target/source/focus of the event. $1- is the rest of the parameters.</p>
+
+<h2>Temporary Events</h2>
+
+<p>Along with normal event listeners jIRCii also features the ability to bind temporary event
+listeners. Temporary event listeners are for responding to an irc event once and thats it.
+Temporary events are fired before normal event listeners. Temporary events can also be halted
+stopping the normal event listeners from processing the event.</p>
+
+<p>Temporary events are bound using the wait keyword.</p>
+
+<pre>wait <b>event</b> { <b>commands</b> }</pre>
+
+<p>Temporary events can be declared nearly any where.</p>
+
+<pre>alias j
+{
+   if ($1 eq "#floods")
+   {
+      call("/msg JakieChan dude, what is the key to #floods?");
+      wait privmsg
+      {
+         call("/join #floods $1");
+      }
+   }
+   else
+   {
+      call("/join $1-");
+   }
+}</pre>
+
+<p>In the above example the alias j is declared. The alias checks to see if I'm trying to join the
+channel #floods. If I am it messages a friend of mine asking for the key. When he responds
+(presumably with the key), jIRCii joins the channel.</p>
+
+<p>Event specific variables from when the temp listeners was declared are not carried over to
+temporary events. They have there own set of variables just like any other event. Nothing inside
+of the { } curly braces is evaluated until the event occurs. As such watch out for using variables
+outside of a wait command and then expecting it to be available or be the same thing inside of it.</p>
+
+<h2>Filtered Events</h2>
+
+<p>Generally when you declare an event listener it is not very descriptive. You state the event name
+and that is all the discretion you get. To get more specificyou can specify a filter string with your
+events. i.e.</p>
+
+<pre>wait <b>event</b> "<b>*source* *target* *parameters*</b>" { <b>commands</b> }</pre>
+
+<p>An event filter string contains 3 wildcard strings separated by spaces. When an event occurs
+jIRCii will check the first wildcard against the source of the event meaning the nickname/server
+that originated the event. The second wildcard is checked against the target of the event i.e. who
+the event affects. The third wildcard is checked against the event parameters. If you don't care
+about a particular part of the filter string just specify a * which means match anything.</p>
+
+<pre>alias j
+{
+   if ($1 eq "#floods")
+   {
+      call("/msg JakieChan dude, what is the key to #floods?");
+      wait msg "JakieChan $me *"
+      {
+         call("/join #floods $1");
+      }
+   }
+   else
+   {
+      call("/join $1-");
+   }
+}</pre>
+
+<p>The above example is similar to our original example for temporary events. Except this time
+when a message happens our temporary listener will only be fired for a msg event originating
+from JakieChan sent to $me. The filter string is evaluated when you declare the event. Once the
+wait msg "filter" is declared the $variable's are immediately resolved. In the above example, if
+you change your nick before JakieChan messages you the temporary event won't trigger.</p>
+
+<h2>Descriptive Events</h2>
+
+<p>Descriptive events are similar to filtered events in the respect that they let you better describe the
+event you are looking for. To declare a descriptive event listener:</p>
+
+<pre>wait (<b>comparison</b>) { <b>commands</b> }</pre>
+
+<p>The above will declare a temporary listener that will be fired only when the comparison following
+the wait keyword is true. Think of the comparison part as being similar to an if statement. When
+an event occurs the event is checked against the specifiedcomparison to see if the event matches
+that description or not. If it does then the event is fired. If it doesn't the event is not fired.
+Descriptive events work with both normal events (on keyword) and temporary events (wait
+keyword). Descriptive events only work for events originating from the IRC server. Most GUI
+events and such won't fire under descriptive events.</p>
+
+<pre>alias j
+{
+   if ($1 eq "#floods")
+   {
+      call("/msg JakieChan dude, what is the key to #floods?");
+      wait ($event eq "PRIVMSG" && $nick eq "JakieChan")
+      {
+         call("/join #floods $1");
+      }
+   }
+   else
+   {
+      call("/join $1-");
+   }
+}</pre>
+
+<p>Beating an example to death this example is the same thing as the previous two examples.
+One difference though: the comparison is re-evaluated each time the event is checked. Variables
+specific to the original event do not carry over to the comparison.</p>
+
+<h2>Hacking Event Listeners</h2>
+
+<p><small>Note: The mechanism described in this section is more or less a hack. It is only documented as
+it may be useful to scripter's working on more advanced functionality.</small></p>
+
+<p>One downfall of the temporary event mechanism is you don't get a lot of control. Basically you
+can register an event listener and once it is fired it is done. This is simple to use and good for
+some cases such as capturing the server reply of a /USERHOST request. However it is not usable
+for things like doing a /WHO, capturing all of the output from the server, and when the server
+sends the end of who reply removing the temporary event listener.</p>
+
+<p>The following example shows how to get this type of functionality:</p>
+
+<pre>alias tempevent
+{
+   on ($event eq "315" || $event eq "352")
+   {
+      if ($event eq "352")
+      {
+         # process /who output
+         echo("Caught /who: $1-");
+         halt;
+      }
+      if ($numeric eq "315")
+      {
+         return 6; # halt and remove this event listener
+      }
+   }
+   call("/who $1");
+}</pre>
+
+<p>The above snippet creates an alias tempevent. When /tempevent is executed a descriptive event is
+registered. This descriptive event fires when a numeric reply 352 (/who data) or a numeric reply
+315 (end of /who data) is received from the server.</p>
+
+<p>If the event is the /who output we just choose to process it. If the event is the end of the /who
+data we then return a value that tells jIRCii we want to deregister the listener (4) and halt the
+event (2).</p>
+
+<p>Internally jIRCii processes event listeners based on their return value. Avalue of 4 means remove
+the event listener. A return value of 2 means halt the event. Areturn value of 1 means continue
+processing other events. Returning 5 (1 + 4) means continue processing other events but remove
+this listener. Returning 6 (2 + 4) means halt processing of other events and remove this listener.
+This form of event hacking is only effective on irc server related events. Other events such as gui
+events are processed differently.</p>
+
+<h1>Scripted Sets</h1>
+
+<p>A popular feature of scripts in the past was a built in theme system. A theme system allowed
+scripters to customize any echo inside the script without altering the functionality of the scripts
+features. jIRCii has a built in theme system that is accomplished with scripted sets. Nearly every
+echo event that is echoed to the screen is defined in a scripted set. Altering these sets allows you
+to change the way jIRCii looks completely without altering the functionality of jIRCii.</p>
+
+<p>The basic format of a set is:</p>
+
+<pre>set <b>SET_NAME</b> { return <b>"formatted echo"</b>; }</pre>
+
+<p>It is of course possible to use if statements, call functions, and anything else within a set. The
+important thing is that the set returns a string that formats the data from an event into something
+presentable (preferably cool looking).</p>
+
+<p>A set that returns nothing will simply not be echoed. It is possible to disable an echo for a set by
+having the set return nothing.</p>
+
+<h2>Time Stamping</h2>
+
+<p>If time stamping is enabled the set TIMESTAMP is automatically attached to the beginning of all
+of your set output. To disable time stamping for a specificset append an ! exclamation point to the
+set name.</p>
+
+<pre>set NOTIFY_SIGNON! { return "*** $nick has signed on at $time"; }</pre>
+
+<p>In the above set for a notify signon we already have the time in the echo. There is no point in
+adding a timestamp even if time stamping is enabled. Adding the ! exclamation point disables
+time stamping for that specific set.</p>
+
+<h2>List of Sets</h2>
+
+<p>* = set has a special variable associated with it.
+<br>+ = set has a note associated with it.</p>
+
+<h3>Channel Event Sets</h3>
+
+<table width="100%">
+  <tr>
+    <td>CHANNEL_TOPIC_CHANGED</td>
+    <td>CHANNEL_MODE</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_JOIN</td>
+    <td>CHANNEL_KICK</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_PART</td>
+    <td>USER_QUIT</td>
+  </tr>
+</table>
+
+<h3>Channel Information Sets</h3>
+
+<table width="100%">
+  <tr>
+    <td>CHANNEL_BANLIST</td>
+    <td>CHANNEL_BANLIST_END</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_CREATED *</td>
+    <td>CHANNEL_MODE_IS</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_NAMES</td>
+    <td>CHANNEL_TOPIC_IS</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_TOPIC_SETBY*</td>
+    <td>FORMATTED_NAMES * +</td>
+  </tr>
+  <tr>
+    <td>FORMATTED_NAMES_HEADER *</td>
+    <td>JOIN_SYNC *</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td>FORMATTED_NAMES</td>
+   <td>Called for each name in a /names reply. jIRCii provides special word wrapping for /names replies.</td>
+  </tr>
+</table>
+
+<h3>DCC Sets *</h3>
+
+<table width="100%">
+  <tr>
+    <td>CHAT_CLOSED</td>
+    <td>CHAT_MSG</td>
+  </tr>
+  <tr>
+    <td>CHAT_OPEN</td>
+    <td>SEND_CHAT</td>
+  </tr>
+  <tr>
+    <td>SEND_CHAT_ERROR</td>
+    <td>DCC_LIST_INFORMATION +</td>
+  </tr>
+  <tr>
+    <td>DCC_LIST_NICK +</td>
+    <td>DCC_LIST_TYPE +</td>
+  </tr>
+  <tr>
+    <td>DCC_REQUEST</td>
+    <td>SEND_COMPLETE</td>
+  </tr>
+  <tr>
+    <td>SEND_DCC</td>
+    <td>SEND_FAILED</td>
+  </tr>
+  <tr>
+    <td>SEND_START</td>
+    <td>RESUME_FAILED</td>
+  </tr>
+  <tr>
+    <td>RESUME_REQUEST</td>
+    <td>RESUME_REQUEST_ERROR</td>
+  </tr>
+  <tr>
+    <td>RESUME_SUCCEEDED</td>
+    <td>RECEIVE_COMPLETE</td>
+  </tr>
+  <tr>
+    <td>RECEIVE_FAILED</td>
+    <td>RECEIVE_START</td>
+  </tr>
+  <tr>
+    <td>RESOLVED_LOCALINFO</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td>DCC_LIST_*</td>
+   <td>These sets are used for the /dcc stats window. Each set represents a column in the window.</td>
+  </tr>
+</table>
+
+<h3>Messages Received</h3>
+
+<table width="100%">
+  <tr>
+    <td>ACTION</td>
+    <td>ACTION_INACTIVE</td>
+  </tr>
+  <tr>
+    <td>CHANNEL_TEXT</td>
+    <td>CHANNEL_TEXT_INACTIVE</td>
+  </tr>
+  <tr>
+    <td>CTCP_REPLY*</td>
+    <td>CTCP_REQUEST *</td>
+  </tr>
+  <tr>
+    <td>INVITE</td>
+    <td>NOTICE</td>
+  </tr>
+  <tr>
+    <td>PRIVACTION</td>
+    <td>PRIVMSG</td>
+  </tr>
+</table>
+
+<h3>Miscellaneous Sets</h3>
+
+<table width="100%">
+  <tr>
+    <td>NICKLIST_FORMAT* +</td>
+    <td>ON_CHANNELS</td>
+  </tr>
+  <tr>
+    <td>SBAR_LEFT *</td>
+    <td>SBAR_RIGHT *</td>
+  </tr>
+  <tr>
+    <td>SET_IGNORE</td>
+    <td>SET_NOTIFY</td>
+  </tr>
+  <tr>
+    <td>TIMESTAMP</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td>NICKLIST_FORMAT</td>
+   <td>used in the channel listbox to format the list of names; $nick and $channel are available in this set.</td>
+  </tr>
+</table>
+
+<h3>Other Events</h3>
+
+<table width="100%">
+  <tr>
+    <td>IDENT_REQUEST</td>
+    <td>IRC_ATTEMPT_CONNECT</td>
+  </tr>
+  <tr>
+    <td>IRC_CONNECT</td>
+    <td>IRC_DISCONNECT</td>
+  </tr>
+  <tr>
+    <td>IRC_RECONNECT</td>
+    <td>NUMERIC +</td>
+  </tr>
+  <tr>
+    <td>NOTIFY_SIGNON</td>
+    <td>NOTIFY_SIGNOFF</td>
+  </tr>
+  <tr>
+    <td>PROCESS_DATA+</td>
+    <td>REPL_nnn +</td>
+  </tr>
+  <tr>
+    <td>RESOLVED_HOST</td>
+    <td>SERVER_ERROR</td>
+  </tr>
+  <tr>
+    <td>USER_NICK</td>
+    <td>USER_MODE</td>
+  </tr>
+  <tr>
+    <td>WALLOPS</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<table style="padding-top: 1em; padding-left: 2em; font-size: 90%">
+  <tr>
+   <td>NUMERIC</td>
+   <td>fired for any numeric that does not have a set associated with it</td>
+  </tr>
+  <tr>
+   <td>PROCESS_DATA</td>
+   <td>data printed out by a process launched using /run or /exec</td>
+  </tr>
+  <tr>
+   <td>REPL_<i>nnn</i></td>
+   <td>a set for a specific numeric where nnn is the number of the numeric.</td>
+  </tr>
+</table>
+
+<h3>Send Messages</h3>
+
+<table width="100%">
+  <tr>
+    <td>SEND_ACTION</td>
+    <td>SEND_ACTION_INACTIVE</td>
+  </tr>
+  <tr>
+    <td>SEND_CTCP</td>
+    <td>SEND_MSG</td>
+  </tr>
+  <tr>
+    <td>SEND_NOTICE</td>
+    <td>SEND_TEXT</td>
+  </tr>
+  <tr>
+    <td>SEND_TEXT_INACTIVE</td>
+    <td>SEND_WALL</td>
+  </tr>
+  <tr>
+    <td>SEND_WALLEX</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+
+<h2>Event Variables</h2>
+
+<table>
+  <tr>
+   <th>Variable</th>
+   <th>Notes</th>
+  </tr>
+  <tr>
+   <td>$channel</td>
+    <td>Available in NICKLIST_FORMAT, for sets based on channel events use $target.</td>
+  </tr>
+  <tr>
+   <td>$created</td>
+    <td>Available in CHANNEL_CREATED set, channel creation time formatted</td>
+  </tr>
+  <tr>
+   <td>$line</td>
+    <td>Available in SBAR_LEFT, SBAR_RIGHT, equal to the line number of the statusbar starting at 0 for the first line.</td>
+  </tr>
+  <tr>
+   <td>$parms</td>
+    <td>The parameters related to the event (available in most sets)</td>
+  </tr>
+  <tr>
+   <td>$pt</td>
+    <td>Available in CTCP_REPLYset when $0 is PING, set to the ping time</td>
+  </tr>
+  <tr>
+   <td>$query</td>
+    <td>Available in SBAR_LEFT, SBAR_RIGHT - equal to the $active for the window the statusbar is in. Use instead of $active in SBAR sets..</td>
+  </tr>
+  <tr>
+   <td>$seton</td>
+    <td>Available in CHANNEL_TOPIC_SETBYset to time date stamp of when channel topic was set</td>
+  </tr>
+  <tr>
+   <td>$sync</td>
+    <td>Available in JOIN_SYNC set, set to the join sync time</td>
+  </tr>
+  <tr>
+   <td>$this</td>
+    <td>Available in DCC Related sets, used to reference the exact dcc connection using $dcc = getDCCConnection($this);</td>
+  </tr>
+  <tr>
+   <td>$total</td>
+    <td>Available in FORMATTED_NAMES and FORMATTED_NAMES_HEADER, set to the total number of users in the /names reply.</td>
+  </tr>
+  <tr>
+   <td>$window</td>
+    <td>Available in SBAR_LEFT, SBAR_RIGHT - the window the statusbar set is being fired for</td>
+  </tr>
+</table>
+
+<p>If a set is in response to an irc event then $variable's available to the event will also be available to the set.</p>
+
+<p>The variables listed in the Aliases -> Built in Variables section also applies to sets as well.  Generally $0 is the target/source of the set event. $1- are the rest of the parameters.</p>
+
+<h1>Menus</h1>
+
+<p>In jIRCii it is possible to script menus for most places in the client. Popup menus are made visible
+by right clicking in a popup menu hotspot. The popup menu hotspots in jIRCii are <i>background</i>,
+<i>channel</i>, <i>dcc</i>, <i>input</i>, <i>list</i>, <i>nicklist</i>, <i>query</i>, <i>status</i>, <i>switchbar</i>, and <i>tab</i>.</p>
+
+<p>The background hotspot refers to the background when jIRCii is using an MDI based interface.
+The tab hotspot refers to the server tab for a specificserver connection. The input hotspot refers
+to the editbox in jIRCii windows. The list hotspot refers to the /list dialog. The switchbar hotspot
+refers to the buttons in the window switchbar.</p>
+
+<p>To setup a popup menu for a hotspot you use the menu keyword:</p>
+
+<pre>menu hotspot
+{
+   item <b>"item title"</b> { <b>commands</b> }
+   menu <b>"menu title"</b> { <b>commands; more item/menu declarations</b> }
+}</pre>
+
+<p>Within the menu keyword you can use the menu keyword again to create a submenu. You can
+also use the item keyword followed by a title to add an item to the menu. Menus in jIRCii are all
+created dynamically. That is each time a popup menu is to be shown the menu scripts are
+executed. Submenu scripts are not executed until they are clicked on. Item scripts are not
+executed until they are clicked on.</p>
+
+<p>The function addSeparator() can be used inside of the menu keyword to insert a separator in the
+menu.</p>
+
+<p>The function addItem("item title", "/command args") can be used to quickly add an item to a
+menu.</p>
+
+<p>To add a menu to the nicklist:</p>
+
+<pre>menu nicklist
+{
+   item "Whois" { call("/whois $1"); }
+   item "Query" { call("/query $1"); }
+}</pre>
+
+<p>In the above example two menu items are added to the nicklist hotspot. These are "Whois" and
+"Query". Whenever "Whois" is clicked on the script inside the { } curly braces will be evaluated.
+In this case it is call("/whois $1"). In nicklist menus $1 and $snick refer to the nickname that is
+currently highlighted. $0 represents the current channel. $2- represents the nicknames of the other
+highlighted nicknames.</p>
+
+<p>When a menu item declared with the keyword item is executed the local variable $command is
+available. $command contains the item label for the executed menu item. The commands
+declared inside of a menu or item block are only executed when that menu or item is activated.
+Local variables declared outside of a menu or item block are not available when they are
+executed.</p>
+
+<p>Using the menu keyword with a menu hotspot does not erase the menus currently in place. It just
+adds your menu items to the hotspot along with other menu items already there.</p>
+
+<h2>Menubar Menus</h2>
+
+<p>Menubar menus can be scripted in jIRCii as well. In fact menubar menus work almost the same
+as popup menus. The difference is you use the menubar keyword to add an item to the menubar.</p>
+
+<pre>menubar "menu title"
+{
+   item <b>"item title"</b> { <b>commands</b> }
+   menu <b>"menu title"</b> { <b>commands; more item/menu declarations</b> }
+}</pre>
+
+<p>If a menu title already exists in the menubar then the menu will be combined with the already
+existing menu. If a menu title does not exist then the menu is added to the menubar right before
+the Window and Help menu items. You can add to the Window and Help menus using
+"&Window" or "&Help" for the menu title.</p>
+
+<p>Menubar menus are dynamic just like popup menus. Every time the "menu title" is shown the
+items and submenus are dynamically added.</p>
+
+<p>The function refreshMenubar() can be used to refresh the top-level menubar.</p>
+
+<h2>Adding a Mnemonic</h2>
+
+<p>You can use the & ampersand character in "item title" and "menu title" to set a mnemonic for the
+menu item. The focus accelerated character will be underlined. Users of your script can then use
+their platform specifickeyboard combination to access your menu item when the item's parent
+menu is showing. In Windows this combination is Alt+(focus accelerator).</p>
+
+<h1>Built-in Client Resources</h1>
+
+<p>jIRCii has a number of bundled "resource" files that make up the jIRCii experience. These
+include images that define the toolbar, the window icons, and even the jIRCii logo.
+Copies of all of these files are contained within the jerk.jar file (which is just a ZIP compressed
+archive).</p>
+
+<p>To override a jIRCii built-in "resource" with one of your own, simply create your resource and
+copy it to the .jIRC directory on your computer where jIRCii is keeping all of your settings.
+For example default.irc is the default script the drives jIRCii. To override the internal version of
+this resource:</p>
+
+<ol>
+  <li>create your own version or edits to default.irc</li>
+  <li>copy it to your .jIRC folder (on Linux, OS X /home/&lt;your user&gt;/.jIRC, on Windows c:\documents and settings\&lt;your user&gt;\.jIRC)</li>
+  <li>restart jIRCii</li>
+</ol>
+
+<p>When loading a resource jIRCii looks in the .jIRC folder first before using its own internal version of the resource.</p>
+
+<h2>Editing the Default Scripts</h2>
+
+<p>Internally jIRCii has two scripts loaded. default.irc and menus.irc default.irc contains all of the
+default sets and a few features for jIRCii. menus.irc contains all of the popup and menubar
+menus within the client.</p>
+
+<p>Copies of these two files are distributed with jIRCii under the extras/ directory in the jIRCii
+archive. The real versions of the default scripts are contained inside of the jerk.jar file.</p>
+
+<p>It is possible to force jIRCii to load modified versions of menus.irc and/or default.irc. Simply
+modify the copies of default.irc and menus.irc and save the modifications to the jIRCii settings
+directory. On UNIX the jIRCii settings directory is located in your home directory under .jIRC.
+In Windows the jIRCii settings directory is located in something like c:\documents and settings\your-username\.jIRC\.</p>
+
+<p>When jIRCii tries to load default.irc or menus.irc it will first look in the .jIRC directory before
+looking in the jerk.jar file.</p>
+
+<p>If you are creating a "full script" and want to disable the loading of default.irc and menus.irc there
+are two internal properties "load.default" and "load.menus". These two internal properties can be
+set to true or false to enable or disable the loading of the default.irc or menus.irc file. To set
+internal properties look up the setProperty() function.</p>
+
+<p>Generally any .irc file loaded takes precedence over anything in the default.irc and menus.irc. It
+should be possible to write full featured scripts without disabling the two internal scripts.
+However if you need to do it now you know how.</p>
+
+<h1>Built in Functions and Operators</h1>
+
+<h2>Conventions</h2>
+
+<pre>$ add(@array, $scalar, [index])</pre>
+
+<p>The $ to the left of the function name represents the return type of the function. Some functions
+will return an array (@), some a hash (%), and others a scalar ($). Functions marked with (?) will
+return 1 if the value is true or the empty scalar if the value is false. Functions that have no return
+value will have nothing to the left.</p>
+
+<p>Optional parameters will be enclosed in [ ] square brackets.</p>
+
+<h2>Channel Functions</h2>
+
+<p>jIRCii supports the following comparison operators for use in if statements with regards to
+channels:</p>
+
+<table width="100%">
+  <tr>
+    <td>$nick hasmode #channel </td>
+    <td>true if the specified $nick has a mode on #channel</td>
+  </tr>
+  <tr>
+    <td>$nick ison "#channel"</td>
+    <td>true if the specified $nick is on the "#channel"</td>
+  </tr>
+  <tr>
+    <td>$nick isop "#channel"</td>
+    <td>true if the specified $nick has operator status on "#channel"</td>
+  </tr>
+  <tr>
+    <td>$nick isvoice "#channel"</td>
+    <td>true if $nick has voice (+v) status on "#channel"</td>
+  </tr>
+  <tr>
+    <td>$nick ishalfop "#channel"</td>
+    <td>true if $nick has halfop (+h) status on "#channel"</td>
+  </tr>
+  <tr>
+    <td>$nick isnormal "#channel" </td>
+    <td>true if $nick has no status on "#channel"</td>
+  </tr>
+  <tr>
+    <td>"m" ismode "#channel"</td>
+    <td>true if "m" is a set mode on "#channel"</td>
+  </tr>
+  <tr>
+    <td>-ischannel "string"</td>
+    <td>true if "string" is a valid channel string i.e. #string</td>
+  </tr>
+</table>
+
+<p>jIRCii provides the following functions for retrieving channel information:</p>
+
+<table width="100%">
+  <tr>
+    <td>@ getHalfOps("#channel")</td>
+    <td>returns an array of all +h users on #channel</td>
+  </tr>
+  <tr>
+    <td>@ getNormal("#channel")</td>
+    <td>returns an array of all no status users on #channel</td>
+  </tr>
+  <tr>
+    <td>@ getOps("#channel")</td>
+    <td>returns an array of all +o users +o on #channel</td>
+  </tr>
+  <tr>
+    <td>@ getUsers("#channel")</td>
+    <td>returns an array of all the users on #channel</td>
+  </tr>
+  <tr>
+    <td>@ getVoiced("#channel")</td>
+    <td>returns an array of all +v users on #channel</td>
+  </tr>
+  <tr>
+    <td>$ getModeFor($nick, #channel)</td>
+    <td>returns the mode character of $nick on #channel</td>
+  </tr>
+  <tr>
+    <td>$ getKey("#channel")</td>
+    <td>returns the key for #channel</td>
+  </tr>
+  <tr>
+    <td>$ getLimit("#channel")</td>
+    <td>returns the user limit for #channel</td>
+  </tr>
+  <tr>
+    <td>$ getMode("#channel")</td>
+    <td>returns the mode string for #channel i.e. "+stn"</td>
+  </tr>
+  <tr>
+    <td>$ getTopic("#channel")</td>
+    <td>returns the topic for #channel</td>
+  </tr>
+</table>
+
+<h2>Colormap Functions</h2>
+
+<p>These functions are provided for manipulating the jIRCii colormap. jIRCii allows colors 17-99 to
+be user defined as any color the user wants. These colors are saved in the colormap.</p>
+
+<p>The "aarrggbb" format is a hexadecimal format for specifying a color. Similar to what you would
+use for specifying a color on a webpage. The one caveat is rather than saving this number in hex
+form jIRCii deals with colors as integers.</p>
+
+<p>To convert a number from a hex triplet to the aarrggbb format try:
+<code>formatNumber(<b>hex triplet</b>, 16, 10)</code></p>
+
+<table width="100%">
+  <tr>
+    <td>generateThemeScript("file.thm")</td>
+    <td>exports all jIRCii color information and some configuration stuff to a importable theme script</td>
+  </tr>
+  <tr>
+    <td>$ getMappedColor(index)</td>
+    <td>returns the "aarrggbb" value as an integer for the color at the specified index.</td>
+  </tr>
+  <tr>
+    <td>saveColorMap()</td>
+    <td>forces a save of the color map.</td>
+  </tr>
+  <tr>
+    <td>setMappedColor(index,&nbsp;"aarrggbb") </td>
+    <td>sets the color at index to the specified "aarrggbb" integer value.</td>
+  </tr>
+</table>
+
+<h2>Config System Functions</h2>
+
+<p>The following functions are used to interface with jIRCii's user preferences sub-system. All user
+preferences are stored using this system. These functions make it possible to test for any user
+preference or change any user preference. jIRCii preferences are generally stored in a file called
+jirc.prop in the .jIRC folder located in the users home folder.</p>
+
+<p>The configsystem supports the following comparisons for user within if statements</p>
+
+<table width="100%">
+ <tr>
+  <td>-isSetT&nbsp;"propery.key"</td> 
+  <td>Checks if the property.key is flagged to true. Using true as a default value if property.key does not exist.</td>
+ </tr>
+ <tr>
+  <td>-isSetF&nbsp;"property.key"</td>
+  <td>Checks if the property.key is flagged to false. Using false as a default value if property.key does not exist.
+ </tr>
+</table>
+
+<p>The following functions are provided for interfacing with the config system:</p>
+
+<table width="100%">
+  <tr>
+    <td>$ baseDirectory()</td>
+    <td>returns the base directory where all of the jIRCii preferences and files are stored.</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;getProperty("key",&nbsp;["default&nbsp;value"])</td>
+    <td>retrieves the specified key from the config system</td>
+  </tr>
+  <tr>
+    <td>@ getPropertyList("key")</td>
+    <td>returns a property list (a way of storing an array).</td>
+  </tr>
+  <tr>
+    <td>setProperty("key", "value")</td>
+    <td>sets the specified key to the specified value</td>
+  </tr>
+  <tr>
+    <td>setPropertyList("key", @array)</td>
+    <td>stores @array as a property list</td>
+  </tr>
+  <tr>
+    <td>$ versionString()</td>
+    <td>returns the client version string</td>
+  </tr>
+</table>
+
+<p>Setting a property via the setProperty() or setPropertyList() methods will generally take
+immediate effect in the client. The stuff being configured in jIRCii is wired to know when its
+property gets changed. For a list of *some* of the properties you can change see Appendix A-
+Client Configuration Variables.</p>
+
+<h2>Date/Time Functions</h2>
+
+<p>In general dates are represented using a scalar long that holds the number of milliseconds since the epoch. The epoch is January 1st, 1970. Some of the functions for date/time manipulation require a scalar long as a parameter. That parameter is represented as date without any " quotes.</p>
+
+<p>jIRCii provides the following functions for date/time manipulation:</p>
+
+<table width="100%">
+  <tr>
+    <td>$ ctime()</td>
+    <td>returns the number of seconds since the epoch</td>
+  </tr>
+  <tr>
+    <td>$ duration(seconds)</td>
+    <td>converts the seconds into a string describing exactly how long the time has been i.e. 3 hours 20 minutes 15 seconds</td>
+  </tr>
+  <tr>
+    <td>$ formatTime(seconds)</td>
+    <td>converts the seconds into a string describing roughly how long the time has been i.e. 3 hours or 20 minutes or 15 seconds.</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;formatTime2(seconds)</td>
+    <td>returns a string with seconds reduced to dd:hh:mm:ss form</td>
+  </tr>
+  <tr>
+    <td>$ timeDateStamp(date)</td>
+    <td>quick convienence function to turn the specified date into a time/date string.</td>
+  </tr>
+  <tr>
+    <td>$ timeStamp()</td>
+    <td>returns a timestamp for the current time. same value as $time.</td>
+  </tr>
+</table>
+
+<h2>DCC Functions</h2>
+
+<p>Many of the dcc functions return a $scalar that contains a reference to the dcc connection
+information. This reference can be queried using functions that take a $dcc_connection as a
+parameter. Its helpful to know that DCC's come in three varieties: CHAT, RECEIVE, SEND.
+DCC's can be in one of three states: CLOSED, OPEN, or WAIT.</p>
+
+<p>jIRCii provides the following comparison operator for use in if statements with regards to DCC's:</p>
+
+<table width="100%">
+ <tr>
+  <td>-isdccopen $dcc_conn</td>
+  <td>true if the dcc connection specified is in fact open.</td>
+</table>
+
+<p>jIRCii provides the following functions for getting information about the current DCC's:</p>
+
+<table width="100%">
+  <tr>
+    <td>@ getActiveConnections()</td>
+    <td>returns all of the active connections</td>
+  </tr>
+  <tr>
+    <td>@ getAllConnections()</td>
+    <td>returns all of the connections</td>
+  </tr>
+  <tr>
+    <td>@ getInactiveConnections()</td>
+    <td>returns all of the inactive connections</td>
+  </tr>
+  <tr>
+    <td>@ getWaitingConnections()</td>
+    <td>returns all of the waiting connections</td>
+  </tr>
+  <tr>
+    <td>$ getDCCConnection($this)</td>
+    <td>dcc events/sets have $this set within them. You can use this function to resolve a $dcc_conn from a $this.</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;getSpecificConnection("nick",&nbsp;type)</td>
+    <td>returns a $dcc_conn by nickname and type of connection</td>
+  </tr>
+  <tr>
+    <td>closeDCC($dcc_conn)</td>
+    <td>closes the specified dcc</td>
+  </tr>
+  <tr>
+    <td>$ getConnectionState($dcc_conn)</td>
+    <td>returns the state for the specified connection</td>
+  </tr>
+  <tr>
+    <td>$ getConnectionType($dcc_conn)</td>
+    <td>returns the type of the specifiedconnection</td>
+  </tr>
+  <tr>
+    <td>$ getLocalPort($dcc_conn)</td>
+    <td>returns the local port of the dcc connection</td>
+  </tr>
+  <tr>
+    <td>$ getRemotePort($dcc_conn)</td>
+    <td>returns the remote port of the dcc connection</td>
+  </tr>
+  <tr>
+    <td>$ getDCCAddress($dcc_conn)</td>
+    <td>returns the remote ip address of the dcc.</td>
+  </tr>
+  <tr>
+    <td>$ getDCCIdleTime($dcc_conn)</td>
+    <td>returns the idle time of the dcc in milliseconds</td>
+  </tr>
+  <tr>
+    <td>$ getDCCNickname($dcc_conn)</td>
+    <td>returns the nickname for the dcc</td>
+  </tr>
+  <tr>
+    <td>$ getDCCStartTime($dcc_conn)</td>
+    <td>returns the start time as a scalar long</td>
+  </tr>
+  <tr>
+    <td>$ getDCCTotalTime($dcc_conn)</td>
+    <td>returns the total time the dcc has been active in seconds</td>
+  </tr>
+  <tr>
+    <td>$ getNextPort()</td>
+    <td>returns the next dcc port that will be used</td>
+  </tr>
+  <tr>
+    <td>$ localip()</td>
+    <td>returns your localip as determined by jIRCii</td>
+  </tr>
+</table>
+
+<h3>Send and Get Specific</h3>
+
+<table width="100%">
+  <tr>
+    <td>$ getDCCFileName($dcc_conn)</td>
+    <td>returns the filename associated with tihs dcc</td>
+  </tr>
+  <tr>
+    <td>$ getDCCFilePath($dcc_conn)</td>
+    <td>returns the full path to the file for this dcc</td>
+  </tr>
+  <tr>
+    <td>$ getFileSizeOffset($dcc_conn)</td>
+    <td>returns the file size offset in case the file was resumed.</td>
+  </tr>
+  <tr>
+    <td>$ getTimeRemaining($dcc_conn)</td>
+    <td>returns the estimated time left for this transfer (in seconds)</td>
+  </tr>
+  <tr>
+    <td>$ getTransferRate($dcc_conn)</td>
+    <td>returns the total transfer rate in bytes/second</td>
+  </tr>
+</table>
+
+<h3>Get Specific</h3>
+
+<table width="100%">
+  <tr>
+    <td>$ getBytesReceived($dcc_conn)</td>
+    <td>returns the total number of bytes received</td>
+  </tr>
+  <tr>
+    <td>$ getExpectedSize($dcc_con)</td>
+    <td>returns the total expected size for the file</td>
+  </tr>
+</table>
+
+<h3>Send Specific</h3>
+
+<table width="100%">
+  <tr>
+    <td>$ getAcknowledgedSize($dcc_conn)</td>
+    <td>returns the number of bytes acknowledged</td>
+  </tr>
+  <tr>
+    <td>$ getBytesSent($dcc_conn)</td>
+    <td>returns the total number of bytes sent</td>
+  </tr>
+</table>
+
+<h2>Dialog Functions</h2>
+
+<table width="100%">
+  <tr>
+    <td>showAboutDialog()</td>
+    <td>shows the about dialog</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;showDirectoryDialog("title",&nbsp;["initial"],&nbsp;["ok&nbsp;text"]) </td>
+    <td>shows a directory chooser dialog</td>
+  </tr>
+  <tr>
+    <td>$ showFileDialog("title", ["initial"], ["ok text"])</td>
+    <td>shows a file chooser dialog</td>
+  </tr>
+  <tr>
+    <td>showHelpDialog()</td>
+    <td>shows the help dialog</td>
+  </tr>
+  <tr>
+    <td>$ showInputDialog("text", "title")</td>
+    <td>shows an input dialog</td>
+  </tr>
+  <tr>
+    <td>showOptionDialog(["option item"])</td>
+    <td>shows the option dialog</td>
+  </tr>
+  <tr>
+    <td>showSearchDialog([window])</td>
+    <td>opens up the search dialog for the specifiedwindow</td>
+  </tr>
+  <tr>
+    <td>refreshData($dialog)</td>
+    <td>refreshes the contents of the specified sorted $dialog.</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;showSortedList("title",&nbsp;"__menu",&nbsp;@data,&nbsp;"col",&nbsp;...) </td>
+    <td>returns a $dialog and opens a sorted list window similiar to the /list -gui or /dcc stats windows. the "__menu" option specifies the toplevel popup hook name.
+it must begin with "__". @data is an array containing all of the data inside of the sorted list. each row is represented by one element of @data. each column is
+separated by the "\t" special character. it is important that each row has column data separated by "\t" for each specified column. the parameters after @data are the
+columns in the sorted list window. one argument for each column. if the contents of @data change use refreshData to tell the window that it's contents have
+changed.</td>
+  </tr></table>
+
+<h2>Echo Functions</h2>
+
+<table width="100%">
+  <tr>
+    <td>echo("text")</td>
+    <td>echoes text to the active window</td>
+  </tr>
+  <tr>
+    <td>echo("target", "text")</td>
+    <td>echoes text to the specified target</td>
+  </tr>
+  <tr>
+    <td>echo("target", "text", 1|2)</td>
+    <td>specifying a 1 echoes text to all relevant windows for the specified target. specifying a 2 does the same thing but guarantees the text will also go to the status window</td>
+  </tr>
+  <tr>
+    <td>echoAll("text")</td>
+    <td>echoes text to all the windows</td>
+  </tr>
+  <tr>
+    <td>echoColumns("target",&nbsp;"cols",&nbsp;0.5)</td>
+    <td>echoes text as formatted columns. The "cols" parameter is a string of columns separated by the \t (tab) character. The double parameter at the end specifies a percentage of the screen the wordwrapped columns can take up. Think of this as a function that lets you control the wordwrapping. Wrapping happens at the specified percentage of the window. The tabbed columns each represent one wrappable unit. Rather than breaking the string up by spaces as normal.</td>
+  </tr>
+  <tr>
+    <td>echoRaw("target", "text")</td>
+    <td>echoes text to the specified target except there is no event processing (i.e. on window is not called). Use this if you want to echo text from the on window event.</td>
+  </tr>
+  <tr>
+    <td>echoStatus("text")</td>
+    <td>echoes text to the status window</td>
+  </tr>
+</table>
+
+<h2>GUI Functions</h2>
+
+<p>The string "window" refers to the name of a window you want to access. The Status window has a
+special name: %STATUS%.</p>
+
+<p>jIRCii provides the following comparison operator for use in if statements with regards to its UI:</p>
+
+<table width="100%">
+  <tr>
+   <td>-isspecial&nbsp;"window"</td>
+   <td>true if the specified window is considered special i.e. the /list window or the dcc sessions window.</td>
+  </tr>
+  <tr>
+   <td>-iswindow&nbsp;"target"</td>
+   <td>true if the specified target has a window associated with it.</td>
+  </tr>
+</table>
+
+<p>jIRCii provides the following functions for manipulating its user interface:</p>
+
+<h3>GUI General</h3>
+
+<table width="100%">
+  <tr>
+    <td>@ getClipboardText()</td>
+    <td>returns the clipboard text</td>
+  </tr>
+  <tr>
+    <td>setClipboardText("string")</td>
+    <td>puts "string" into the system clipboard</td>
+  </tr>
+  <tr>
+    <td>openCommand("some&nbsp;file/url")</td>
+    <td>uses the open command for the users platform to open the specified url or file with the app meant to handle it.</td>
+  </tr>
+  <tr>
+    <td>loadFont("/path-to/fontfile.ttf")</td>
+    <td>loads the specified font file into the java virtual machine. Unable to verify that this works so it might go away one day.</td>
+  </tr>
+  <tr>
+    <td>refreshMenubar()</td>
+    <td>forces jIRCii to refresh the top level menus for the menubar</td>
+  </tr>
+</table>
+
+<h3>Individual Windows</h3>
+
+<table width="100%">
+  <tr>
+    <td>copySelectedText()</td>
+    <td>copies selected text from the editbox in current window to the clipboard</td>
+  </tr>
+  <tr>
+    <td>cutSelectedText()</td>
+    <td>cuts and copies selected text in the current window editbox</td>
+  </tr>
+  <tr>
+    <td>$ getButtonColor(target)</td>
+    <td>returns the color of the switchbar button text</td>
+  </tr>
+  <tr>
+    <td>$ getCursorPosition(target)</td>
+    <td>returns the position of the editbox cursor</td>
+  </tr>
+  <tr>
+    <td>$ getInputText(target)</td>
+    <td>returns the text in the editbox for the target</td>
+  </tr>
+  <tr>
+    <td>$ getSelectedText("target")</td>
+    <td>returns the selected text from the editbox in the specified window</td>
+  </tr>
+  <tr>
+    <td>@ getSelectedUsers("target")</td>
+    <td>returns all of the selected users in the target channel window listbox.</td>
+  </tr>
+  <tr>
+    <td>$ getWindowPrompt(target)</td>
+    <td>returns the text for the targets window prompt</td>
+  </tr>
+  <tr>
+    <td>getWindowSize(target)</td>
+    <td>returns the with of the specified window in pixels</td>
+  </tr>
+  <tr>
+    <td>$ getWindowTitle([target])</td>
+    <td>returns the titlebar text for the specified window. If target is not specified returns the text of the jIRCii titlebar.</td>
+  </tr>
+  <tr>
+    <td>pasteText()</td>
+    <td>pastes text from clipboard</td>
+  </tr>
+  <tr>
+    <td>refreshWindow(target)</td>
+    <td>updates the statusbar and repaint the window immediately.</td>
+  </tr>
+  <tr>
+    <td>removeSelectedText()</td>
+    <td>clears selected text from the editbox in the current window</td>
+  </tr>
+  <tr>
+    <td>renameWindow(target, title)</td>
+    <td>renames target to specified title, right now this works only on query windows</td>
+  </tr>
+  <tr>
+    <td>scrollWindow(target, +/-n)</td>
+    <td>scrolls the text up (-n) or down (+n) some lines</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;setButtonColor(target,&nbsp;aarrggbb)</td>
+    <td>sets the color of the switchbar button text</td>
+  </tr>
+  <tr>
+    <td>setCursorPosition(target, n)</td>
+    <td>sets the position of the editbox cursor</td>
+  </tr>
+  <tr>
+    <td>setInputText(target, text)</td>
+    <td>sets the editbox text for the specified target</td>
+  </tr>
+  <tr>
+    <td>$ getSelectedUser("target")</td>
+    <td>returns the selected nickname in the target channel window listbox</td>
+  </tr>
+  <tr>
+    <td>setWindowPrompt(target, text)</td>
+    <td>sets the window prompt for the specified window</td>
+  </tr>
+  <tr>
+    <td>setWindowTitle([target], text)</td>
+    <td>sets the titlebar text for the specified window. Defaults to setting text for the jIRCii titlebar.</td>
+  </tr>
+</table>
+
+<h3>Window Management</h3>
+
+<table width="100%">
+  <tr>
+    <td>activateWindow(target)</td>
+    <td>makes the target window active </td>
+  </tr>
+  <tr>
+    <td>cascadeWindows() </td>
+    <td>cascades all the windows (works in MDI only)</td>
+  </tr>
+  <tr>
+    <td>closeWindow(target)</td>
+    <td>closes the specified window</td>
+  </tr>
+  <tr>
+    <td>$ getActiveWindow()</td>
+    <td>returns the title of the real active window</td>
+  </tr>
+  <tr>
+    <td>$ getCurrentWindow()</td>
+    <td>returns the title of the current window that is safe to echo text too. Uses the active window if the active window isnt a special window, returns the status window otherwise.</td>
+  </tr>
+  <tr>
+    <td>@ getWindows()</td>
+    <td>returns an array of all the windows</td>
+  </tr>
+  <tr>
+    <td>openWindow(target, [1])</td>
+    <td>opens a window for the specified target, the optional second parameter forces jIRCii to open a non-channel window as inactive.</td>
+  </tr>
+  <tr>
+    <td>tileWindows()</td>
+    <td>tiles all the windows (works in MDI only)</td>
+  </tr>
+  <tr>
+    <td>$ getWindowState([target])</td>
+    <td>returns the state of the target window. Not specifying a target window will return the state of the main jIRCii window</td>
+  </tr>
+  <tr>
+    <td>setWindowState([target],&nbsp;state)</td>
+    <td>sets the target windows state to either MINIMIZED, MAXIMIZED, or NORMAL. Not specifying a target will set the state of the main jIRCii window</td>
+  </tr>
+</table>
+
+<h2>IRC Command Functions</h2>
+
+<table width="100%">
+  <tr>
+    <td>call(/command parms, [1])</td>
+    <td>Tells jIRCii to execute the specified command. Specifying a 1 for the second parameter forces jIRCii to use the built in command and avoid the scripted aliases.</td>
+  </tr>
+  <tr>
+    <td>exit()</td>
+    <td>perhaps the only command you will ever need.</td>
+  </tr>
+  <tr>
+    <td>fireEvent(irc data string)</td>
+    <td>processes irc data string as if it came from the irc server. You can use this to fire custom events.</td>
+  </tr>
+  <tr>
+    <td>fireEvent(EVENT, %data)</td>
+    <td>fires the custom event named EVENT with %data as the variables for the event. Each $key inside of %data will be available to the listening events.</td>
+  </tr>
+  <tr>
+    <td>@ getAliasList()</td>
+    <td>returns a list of all aliases in the client, lowercase means a built in alias, UPPERCASE means a scripted alias.</td>
+  </tr>
+  <tr>
+    <td>$ getServerHost()</td>
+    <td>returns the hostname of the current server</td>
+  </tr>
+  <tr>
+    <td>$ getServerNetwork()</td>
+    <td>returns the network of the current server</td>
+  </tr>
+  <tr>
+    <td>$ getServerPassword()</td>
+    <td>returns the password used on the current server</td>
+  </tr>
+  <tr>
+    <td>$ getServerPort()</td>
+    <td>returns the port number for the current server</td>
+  </tr>
+  <tr>
+    <td>% getSupportHints()</td>
+    <td>returns a hash of all 005 ISUPPORT hints specified by the current server</td>
+  </tr>
+  <tr>
+    <td>? isServerConnected()</td>
+    <td>returns 1 if the server is connected, 0 otherwise</td>
+  </tr>
+  <tr>
+    <td>? isServerSecure()</td>
+    <td>returns 1 is the connection is SSL, 0 otherwise</td>
+  </tr>
+  <tr>
+    <td>processInput(text)</td>
+    <td>processes text as if it was typed in the active window</td>
+  </tr>
+  <tr>
+    <td>sendRaw(raw text)</td>
+    <td>sends raw text directly to the server</td>
+  </tr>
+  <tr>
+    <td>say(message)</td>
+    <td>sends message to the active target</td>
+  </tr>
+  <tr>
+    <td>sendAction(target, message)</td>
+    <td>sends an action to the specified target</td>
+  </tr>
+  <tr>
+    <td>sendMessage(target, message)</td>
+    <td>sends a message to the specified target</td>
+  </tr>
+  <tr>
+    <td>sendNotice(target, message)</td>
+    <td>sends a notice to the specified target</td>
+  </tr>
+  <tr>
+    <td>sendReply(target, type, message)</td>
+    <td>sends a ctcp reply to the specified target</td>
+  </tr>
+  <tr>
+    <td>sendRequest(target,&nbsp;type,&nbsp;message) </td>
+    <td>sends a ctcp request to the specified target</td>
+  </tr>
+  <tr>
+    <td>cycleQuery()</td>
+    <td>forces jIRCii to cycle the /query for the status window to the next non /windowd channel</td>
+  </tr>
+  <tr>
+    <td>setQuery(target)</td>
+    <td>sets the target as the active query for the status window</td>
+  </tr>
+</table>
+
+<h2>Internal Data List</h2>
+
+<p>The internal data list in jIRCii stores all of the channel and address information for users.
+jIRCii supports the following comparison operator for use in if statements with regards to the
+internal data list:</p>
+
+<table width="100%">
+ <tr>
+  <td>-isidle nick</td>
+  <td>true if the specified nickname has been idle for 5 minutes or more</td>
+ </tr>
+</table>
+
+<p>The following functions are also available:</p>
+
+<table width="100%">
+  <tr>
+    <td>$ getAddress([nick])</td>
+    <td>returns the address of the specified nick in nick@address format. Blue-elf is a punk.</td>
+  </tr>
+  <tr>
+    <td>@ getChannels([nick])</td>
+    <td>returns all of the channels the specified nick is on that you are also on</td>
+  </tr>
+  <tr>
+    <td>$ getIdleTime([nick])</td>
+    <td>returns the total idle time of the specified nick in seconds</td>
+  </tr>
+  <tr>
+    <td>$ nickComplete(pnick, #channel)</td>
+    <td>uses built-in nick completion routine to resolve p(artial)nick to a full nickname from #channel</td>
+  </tr>
+  <tr>
+    <td>@&nbsp;nickCompleteAll(pnick,&nbsp;#channel) </td>
+    <td>same as above function except returns an array of all matches in order of relevance</td>
+  </tr>
+  <tr>
+    <td>@ searchAddressList(*!*@*)</td>
+    <td>returns an array of nicknames that have addresses that match the specified wildcard string</td>
+  </tr>
+</table>
+
+<h2>Logger Functions</h2>
+
+<p>The following functions are provided for querying and accessing the jIRCii built-in logging
+functionality.</p>
+
+<table width="100%">
+  <tr>
+    <td>$ getLogFile(window)</td>
+    <td>returns the full path to the file where messages for the specified window are being logged.</td>
+  </tr>
+  <tr>
+    <td>logMessage(window,&nbsp;text) </td>
+    <td>writes a message to the log file for the specified window if and only if the user has logging enabled</td>
+  </tr>
+</table>
+
+<h2>Multiserver Session Manipulation</h2>
+
+<p>The following functions are provided for manipulating the multiserver aspect of jIRCii. Each
+session in jIRCii has a session id. The first session is 0, the second is 1, etc. Most of these
+functions are related to manipulating the tab for the session in jIRCiis UI.</p>
+
+<table width="100%">
+  <tr>
+    <td>activateSession(n)</td>
+    <td>activate the specified session number</td>
+  </tr>
+  <tr>
+    <td>callInSession(n, /cmd)</td>
+    <td>executes the specified command as if it was typed in session number n</td>
+  </tr>
+  <tr>
+    <td>$ getActiveSessionId()</td>
+    <td>returns the session id of the current active session</td>
+  </tr>
+  <tr>
+    <td>$ getSessionId()</td>
+    <td>returns the session id of the session executing this script.</td>
+  </tr>
+  <tr>
+    <td>$ getTotalSessions()</td>
+    <td>returns the total number of sessions</td>
+  </tr>
+  <tr>
+    <td>$ getSessionColor([n])</td>
+    <td>returns the session color for session n in aarrggbb format, defaults to this session if n isnt specified.</td>
+  </tr>
+  <tr>
+    <td>setSessionColor(aarrggbb)</td>
+    <td>sets the session color for this session to the specified color.</td>
+  </tr>
+  <tr>
+    <td>$ getSessionText([n])</td>
+    <td>returns the session text for session n or this session</td>
+  </tr>
+  <tr>
+    <td>setSessionText(text)</td>
+    <td>sets the session text for this session</td>
+  </tr>
+</table>
+
+<h2>Notify Functions</h2>
+
+<p>The notify feature in jIRCii works much like an instant messaging buddy list. It tells you when
+someone is online or not.</p>
+
+<p>jIRCii provides the following comparison operators for use in if statements with regard to the
+notify list.</p>
+
+<table width="100%">
+  <tr>
+    <td>-isnotify nick</td>
+    <td>true if the specified nick is in the notify list</td>
+  </tr>
+  <tr>
+    <td>-issignedoff nick </td>
+    <td>true if the specified nick is signed off</td>
+  </tr>
+  <tr>
+    <td>-issignedon nick </td>
+    <td>true if the specified nick is signed on</td>
+  </tr>
+</table>
+
+<p>jIRCii provides the following functions for accessing the notify list:</p>
+
+<table width="100%">
+  <tr>
+    <td>$ getAddressFromNotify(nick) </td>
+    <td>returns address of the user from the notify address list</td>
+  </tr>
+  <tr>
+    <td>@ getNotifyUsers()</td>
+    <td>returns all of the users in the notify list</td>
+  </tr>
+  <tr>
+    <td>@ getSignedOnUsers()</td>
+    <td>returns all of the signed on users in the notify list</td>
+  </tr>
+  <tr>
+    <td>@ getSignedOffUsers()</td>
+    <td>returns all of the signed off users in the notify list</td>
+  </tr>
+  <tr>
+    <td>$ onlineFor(nick)</td>
+    <td>returns the number of milliseconds the user has been online for.</td>
+  </tr>
+</table>
+
+<h2>Servers.ini Functions</h2>
+
+<p>The file servers.ini is used by jIRCii to keep track of irc servers the user may want to connect to.
+The following functions are used for accessing this list of servers. The functions that return arrays
+return read-only arrays.</p>
+
+<table width="100%">
+  <tr>
+    <td>@ getAllServers()</td>
+    <td>returns an array of data strings representing all of the irc servers in the servers.ini file</td>
+  </tr>
+  <tr>
+    <td>@ getAllNetworks()</td>
+    <td>returns an array of network names</td>
+  </tr>
+  <tr>
+    <td>@&nbsp;getServersForNetwork(network) </td>
+    <td>returns all of the server data strings for the specified irc network</td>
+  </tr>
+  <tr>
+    <td>$ getServerInfo(irc.server.com)</td>
+    <td>returns the data string for the specified server</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoCommand(data)</td>
+    <td>formats the specified server data into a ready to use /server command reflecting the server settings</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoHost(data)</td>
+    <td>extracts the hostname from the data string</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoPortRange(data)</td>
+    <td>extracts the port range from the data string</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoNetwork(data)</td>
+    <td>extracts the network from the data string</td>
+  </tr>
+  <tr>
+    <td>? serverInfoIsSecure(data)</td>
+    <td>extracts wether or not the specified server is specified as an SSL enabled server</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoPassword(data)</td>
+    <td>extracts the server password from the data</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoDescription(data)</td>
+    <td>extracts the description from the data string</td>
+  </tr>
+  <tr>
+    <td>$ serverInfoConnectPort(data)</td>
+    <td>extracts the port jIRCii would use to connect to the server specified in the data string</td>
+  </tr>
+</table>
+
+<h2>Sound Functions</h2>
+
+<table width="100%">
+  <tr>
+    <td>$&nbsp;loadSound(filename) </td>
+    <td>loads and returns an audio clip $sound, accepteable sound file types include: .wav,.au, and .mid</td>
+  </tr>
+  <tr>
+    <td>soundLoop($sound)</td>
+    <td>plays $sound continuously</td>
+  </tr>
+  <tr>
+    <td>soundPlay($sound)</td>
+    <td>plays $sound once</td>
+  </tr>
+  <tr>
+    <td>soundStop($sound)</td>
+    <td>stops the playing of $sound</td>
+  </tr>
+</table>
+
+<h2>String Formatting Codes</h2>
+
+<p>Sleep has a feature called parsed literals. Parsed literals are strings contained inside of double
+quotes. A feature of parsed literals is that certain escapes can be applied. An escape is started
+with a \ backslash and followed by a character. Sleep replaces some escapes with a specifictype
+of text. jIRCii uses this feature of sleep to make it easy to insert text formatting codes into your
+scripts. A \ backslash followed by a \ backslash is just a backslash.</p>
+
+<table width="100%">
+ <tr>
+  <th colspan="2">Escape Code</th>
+  <th>Example</th>
+  <th>Result</th>
+ </tr>
+ <tr>
+  <td>\b</td>
+  <td>bold</td>
+  <td>\bthis text is bold\b</td>
+  <td><b>this text is bold</b></td>
+ </tr>
+ <tr>
+  <td>\c</td>
+  <td>color</td>
+  <td>\c15,5this text is colored</td>
+  <td><span style="color: #999999; background-color: darkred">this text is colored</span></td>
+ </tr>
+ <tr>
+  <td>\u</td>
+  <td>underline</td> 
+  <td>this \uword\u is underlined</td>
+  <td>this <u>word</u> is underlined</td>
+ </tr>
+ <tr>
+  <td>\o</td>
+  <td>cancel</td>
+  <td>\\o \b\ucancels\o \\b and \\u</td>
+  <td>\o <u><b>cancels</b></u> \b and \u</td>
+ </tr>
+ <tr>
+  <td>\r</td>
+  <td>reverse</td>
+  <td>this \rword\r is reversed</td>
+  <td>this <span style="background-color: black; color: white">word</span> is reversed</td>
+ </tr>
+</table>
+
+<p>The \b escape is equivalent to using Ctrl+B, \c is equivalent to using Ctrl+K etc. Also in jIRCii
+bold is a brighter version of the current color while reverse is a darker version of the current color.</p>
+
+<p>Remember these escapes only work within double quoted strings</p>
+
+<h2>String Functions (Miscellaneous)</h2>
+
+<table width="100%">
+  <tr>
+    <td>$ buildCP437String(text)</td>
+    <td>takes specifiedtext and remaps characters 128-255 to characters specifiedin the CP437 charset. The CP437 charset is the default mapping for fonts like Terminal, Lucida Console, and other ansi fonts.</td>
+  </tr>
+  <tr>
+    <td>@&nbsp;fileCompleteAll(partial-file-name)</td>
+    <td>returns an array of all files matching partial-file-name in partial-file-names directory.</td>
+  </tr>
+  <tr>
+    <td>$ formatBytes(n)</td>
+    <td>returns a string with n reduced to the appropriate units i.e. 3mb or 4kb</td>
+  </tr>
+  <tr>
+    <td>$ formatDecimal(n)</td>
+    <td>returns a string with a decimal number going to the thousandths place.</td>
+  </tr>
+  <tr>
+    <td>$ getScriptPath(script.irc)</td>
+    <td>returns the location of the specified loaded script.</td>
+  </tr>
+  <tr>
+    <td>$ getScriptResource(script.irc, file)</td>
+    <td>returns the full-path to a file in the same directory as script.irc.</td>
+  </tr>
+  <tr>
+    <td>@ groupNicks(@array, n)</td>
+    <td>breaks @array into an array of comma separated nickname groups of n size.</td>
+  </tr>
+  <tr>
+    <td>$ longip(ip)</td>
+    <td>if input is an ip address in ip.ip.ip.ip format this will convert it to a long ip. If input is an ip address in long ip format this will covert it to an ip address in ip.ip.ip.ip format.</td>
+  </tr>
+  <tr>
+    <td>$ mask(nick!user@host.domain, 0-9) </td>
+    <td>converts the passed in address into a masked format. The type of mask depends on the second parameter:
+
+<p><small>0: *!user@host.domain
+<br>1: *!*user@host.domain
+<br>2: *!*@host.domain
+<br>3: *!*u@*.domain
+<br>4: *!*@*.domain
+<br>5: nick!user@host.domain
+<br>6: nick!*user@host.domain
+<br>7: nick!*@host.domain
+<br>8: nick!*user@*.domain
+<br>9: nick!*@*.domain</small></p>
+
+</td>
+  </tr>
+  <tr>
+    <td>$ parseSet(SET, target, parms)</td>
+    <td>fires the custom SET with $0 = to the target and $1- = to the parameters.</td>
+  </tr>
+  <tr>
+    <td>$ parseSet(SET, %data)</td>
+    <td>fires the custom/real SET with $variables being specified in the %data hashmap.</td>
+  </tr>
+  <tr>
+    <td>$ strip(text)</td>
+    <td>returns a copy of text with all of the formatting codes stripped out.</td>
+  </tr>
+  <tr>
+    <td>$ strwidth(text)</td>
+    <td>returns the width of text in pixels.</td>
+  </tr>
+</table>
+
+<h2>String Functions (Tokenizing)</h2>
+
+<p>jIRCii features a powerful built in string tokenizer. Strings are tokenized using the tokenize()
+function. A tokenized string is a string that is split up into parts (called tokens) by a specified
+delimiter. The return value of the tokenize function is referred to as $tokens.</p>
+
+<p>jIRCii supports the following comparison operator for working with tokenized strings:
+string istoken $tokens true if string is a token inside of the tokenized string</p>
+
+<table width="100%">
+  <tr>
+   <td>string istoken $tokens</td>
+   <td>true if string is a token inside of the tokenized string</td>
+  </tr>
+</table>
+
+<p>The following functions exist for working with tokenized strings:</p>
+
+<table width="100%">
+  <tr>
+    <td>$ findToken($tokens, string)</td>
+    <td>returns the index of token string</td>
+  </tr>
+  <tr>
+    <td>@ getAllTokens($tokens)</td>
+    <td>returns an array of all the tokens</td>
+  </tr>
+  <tr>
+    <td>$ getToken($tokens, n)</td>
+    <td>returns the token at index n</td>
+  </tr>
+  <tr>
+    <td>$ getTokenFrom($tokens, n)</td>
+    <td>returns all tokens starting at index n (preserving the delimeter)</td>
+  </tr>
+  <tr>
+    <td>$&nbsp;getTokenRange($tokens,&nbsp;n,&nbsp;m)</td>
+    <td>returns a range of tokens from index n to m (preserving the delimiter)</td>
+  </tr>
+  <tr>
+    <td>$ getTokenTo($tokens, n)</td>
+    <td>returns all tokens from the beginning up to index n (preserving the delimiter)</td>
+  </tr>
+  <tr>
+    <td>$ getTotalTokens($tokens)</td>
+    <td>returns the total number of tokens in this string</td>
+  </tr>
+  <tr>
+    <td>$ tokenize(string, [delimeter]) </td>
+    <td>converts string into a series of tokens split apart by the specified delimiter. The default delimiter is a space . Returns $tokens</td>
+  </tr>
+</table>
+
+<h2>Timers</h2>
+
+<p>A timer in jIRCii is a way of executing a set of commands when a certain interval of time has passed.</p>
+
+<table width="100%">
+  <tr>
+    <td>$&nbsp;addTimer(&closure,&nbsp;n,&nbsp;[r],&nbsp;[$scalar])</td>
+    <td>adds a timer that executes &closure in an on going manner, it executes every n milliseconds and repeats r times. The $timer scalar return is a reference to this specifictimer. If specified, $scalar is passed as an argument to &closure each time the timer is executed.</td>
+  </tr>
+  <tr>
+    <td>setTimerResolution(n)</td>
+    <td>Sets the overall timer resolution to n milliseconds. The timer resolution is how often jIRCii checks to see if there is a timer that needs to be fired. Obviously lower timerresolutions can mean poorer performance on a slower computer.</td>
+  </tr>
+  <tr>
+    <td>stopTimer($timer)</td>
+    <td>stops the specified timer.</td>
+  </tr>
+</table>
+
+<h1>Client Configuration Variables</h1>
+
+<p>This list is by no means a comprehensive list of all the configuration variables within jIRCii. The
+best thing to do is view the file jirc.prop after youve played around with the options for awhile.
+All configoptions in jIRCii have default values. These default values are not automatically saved
+to the configfile.</p>
+
+<p>You can set these values from within jIRCii using: <code>/eval setProperty(<b>property</b>, <b>value</b>)</code></p>
+
+<table width="100%">
+  <tr>
+    <td>active.*</td>
+    <td>true, false; determines wether messages are echoed to active. The * portion refers to: ctcp, notice, notify, reply, query, whois</td>
+  </tr>
+  <tr>
+    <td>auto.*</td>
+    <td>true, false; auto /window options. The * refers to: chat, chatclose, hide, join, part, query</td>
+  </tr>
+  <tr>
+    <td>auto.connect</td>
+    <td>@list of servers that are automatically connected to on client startup</td>
+  </tr>
+  <tr>
+    <td>client.encoding</td>
+    <td>name of charset encoding jIRCii uses for text coming from irc server</td>
+  </tr>
+  <tr>
+    <td>current.theme</td>
+    <td>set this variable to the "name" of your color theme</td>
+  </tr>    
+  <tr>
+    <td>dcc.exists</td>
+    <td>0, 1, 2, 3; what to do when a dcc send occurs and the file exists [0 = Ask, 1 = Overwrite, 2 = Resume, 3 = Ignore]</td>
+  </tr>
+  <tr>
+    <td>dcc.high</td>
+    <td>integer; the high port in the dcc port range</td>
+  </tr>
+  <tr>
+    <td>dcc.localinfo</td>
+    <td>Set to: "Server Method", "Normal Method", or an ip address. How to resolve or what ip address is to be used for dcc local info</td>
+  </tr>
+  <tr>
+    <td>dcc.low</td>
+    <td>integer; the low port in the dcc port range</td>
+  </tr>
+  <tr>
+    <td>dcc.onchat</td>
+    <td>0, 1, 2; what to do when a dcc chat request comes in [0 = Ask, 1 = Auto Accept, 2 = Ignore]</td>
+  </tr>
+  <tr>
+    <td>dcc.onsend</td>
+    <td>0, 1, 2; what to do when a dcc send request comes in [0 = Ask, 1 = Auto Accept, 2 = Ignore]</td>
+  </tr>
+  <tr>
+    <td>dcc.saveto</td>
+    <td>the directory received files are saved to</td>
+  </tr>
+  <tr>
+    <td>ident.system</td>
+    <td>the reply returned by the ident server for specifying your OS</td>
+  </tr>
+  <tr>
+    <td>ident.userid</td>
+    <td>the userid for the ident server</td>
+  </tr>
+  <tr>
+    <td>ident.port</td>
+    <td>integer; the port number for the ident server</td>
+  </tr>
+  <tr>
+    <td>ignore.masks</td>
+    <td>@list; all of the masks in the ignore list</td>
+  </tr>
+  <tr>
+    <td>jirc.icon</td>
+    <td>icon image to use for jIRCii</td>
+  </tr>
+  <tr>
+    <td>jirc.toolbar</td>
+    <td>toolbar image to use for jIRCii (pixel for pixel compat with mIRCs)</td>
+  </tr>
+  <tr>
+    <td>kick.message</td>
+    <td>the default kick reason</td>
+  </tr>
+  <tr>
+    <td>listbox.enabled</td>
+    <td>true, false; enable / disable the channel nickname listbox</td>
+  </tr>
+  <tr>
+    <td>listbox.position</td>
+    <td>0, 1; set the position of the channel listbox 0 = left, 1 = right</td>
+  </tr>
+  <tr>
+    <td>load.default</td>
+    <td>true, false; enable / disable loading of the default script</td>
+  </tr>
+  <tr>
+    <td>load.menus</td>
+    <td>true, false; enable / disable loading of the menus script</td>
+  </tr>
+  <tr>
+    <td>log.enabled</td>
+    <td>true, false; enable / disable logging of irc chats</td>
+  </tr>
+  <tr>
+    <td>log.saveto</td>
+    <td>the directory log files are saved to</td>
+  </tr>
+  <tr>
+    <td>log.strip</td>
+    <td>true, false; enable / disable stripping of text attributes from logged text.</td>
+  </tr>
+  <tr>
+    <td>log.timestamp</td>
+    <td>true, false; enable / disable time stamping of all logged text.</td>
+  </tr>
+  <tr>
+    <td>message.quit</td>
+    <td>the default quit message</td>
+  </tr>
+  <tr>
+    <td>notabs.border</td>
+    <td>int; size (px) of border around jIRCii with server tabs disabled</td>
+  </tr>
+  <tr>
+    <td>notify.users</td>
+    <td>@list; all of the users on the notify list</td>
+  </tr>
+  <tr>
+    <td>option.reconnect</td>
+    <td>true, false; enable / disable auto reconnect</td>
+  </tr>
+  <tr>
+    <td>option.showmotd</td>
+    <td>true, false; enable /disable the /MOTD output</td>
+  </tr>
+  <tr>
+    <td>option.timestamp</td>
+    <td>true, false; enable / disable timestamping</td>
+  </tr>
+  <tr>
+    <td>perform.enabled</td>
+    <td>true, false; enable / disable the perform on connect feature</td>
+  </tr>
+  <tr>
+    <td>reconnect.time</td>
+    <td>int; number of seconds to sleep between reconnect attempts</td>
+  </tr>
+  <tr>
+    <td>script.files</td>
+    <td>@list; all of the current loaded scripts with full pathnames</td>
+  </tr>
+  <tr>
+    <td>switchbar.enabled </td>
+    <td>true, false; enable / disable the switchbar</td>
+  </tr>
+  <tr>
+    <td>switchbar.hilight</td>
+    <td>true, false; enable / disable switchbar highlighting on activity</td>
+  </tr>
+  <tr>
+    <td>switchbar.fixed</td>
+    <td>true, false; enable / disable fixed width buttons in the switchbar</td>
+  </tr>
+  <tr>
+    <td>switchbar.position </td>
+    <td>0, 1; set the position of the switchbar 0 = top, 1 = bottom</td>
+  </tr>
+  <tr>
+    <td>switchbar.sort</td>
+    <td>true, false; enable / disable auto-sorted switchbar buttons</td>
+  </tr>
+  <tr>
+    <td>ui.buffersize</td>
+    <td>int; maximum size of jIRCii scrollback buffer</td>
+  </tr>
+  <tr>
+    <td>ui.font</td>
+    <td>FontName-PLAIN-FontSize; font used by jIRCii</td>
+  </tr>
+  <tr>
+    <td>ui.native</td>
+    <td>true, false; enable / disable the native look and feel does not take immediate effect.. jIRCii must be restarted</td>
+  </tr>
+  <tr>
+    <td>ui.openfiles</td>
+    <td>the application to use when opening files on the users specificOS</td>
+  </tr>
+  <tr>
+    <td>ui.sbarlines</td>
+    <td>integer; number of lines for the statusbar</td>
+  </tr>
+  <tr>
+    <td>ui.sdi</td>
+    <td>true, false; enable / disable the single document interface mode does not take immediate effect. jIRCii must be restarted</td>
+  </tr>
+  <tr>
+    <td>ui.showbar</td>
+    <td>true, false; show the menubar be careful about disabling this</td>
+  </tr>
+  <tr>
+    <td>ui.showsbar</td>
+    <td>true, false; show the statusbar.. setting ui.sbarlines to 0 does the same thing.</td>
+  </tr>
+  <tr>
+    <td>ui.showtabs</td>
+    <td>true, false; show the server tabs</td>
+  </tr>
+  <tr>
+    <td>ui.usetoolbar</td>
+    <td>true, false; shows the lame newbie toolbar</td>
+  </tr>
+  <tr>
+    <td>update.ial</td>
+    <td>true, false; update internal address list when joining a channel (done by performing a /who #channel when joining)</td>
+  </tr>
+  <tr>
+    <td>user.altnick</td>
+    <td>the users altnick from the setup dialog</td>
+  </tr>
+  <tr>
+    <td>user.email</td>
+    <td>the users email address from the setup dialog</td>
+  </tr>
+  <tr>
+    <td>user.nick</td>
+    <td>the users nickname from the setup dialog</td>
+  </tr>
+  <tr>
+    <td>user.rname</td>
+    <td>the users real name from the setup dialog</td>
+  </tr>
+  <tr>
+    <td>version.addons</td>
+    <td>if set the contents of this variable will be reported with jIRCiis version information rather than a goofy tagline</td>
+  </tr>
+  <tr>
+    <td>version.string</td>
+    <td>setting this variable will alter the internal version string for the client</td>
+  </tr>
+  <tr>
+    <td>*.bgtype</td>
+    <td>(* = desktop, window, or statusbar) the type of background for *: values 0 = Default; 1= Solid color 2 = transparent; 3= image</td>
+  </tr>
+  <tr>
+    <td>*.color</td>
+    <td>(* = desktop, window, or statusbar) the solid color for background *</td>
+  </tr>
+  <tr>
+    <td>*.tint</td>
+    <td>(* = desktop, window, or statusbar) the specified transparency tint for background *; specified as a percentage between 0 and 1</td>
+  </tr>
+  <tr>
+    <td>*.style</td>
+    <td>(* = desktop, window, or statusbar) image drawing style for *: styles are 0 = Tile; 1 = Center; 2 = Fill; 3 = Stretched</td>
+  </tr>
+  <tr>
+    <td>*.relative</td>
+    <td>(* = desktop, window, or statusbar); true, false should background image for * should be drawn relative to the desktop</td>
+  </tr>
+</table>
+
+ </body>
+</html>

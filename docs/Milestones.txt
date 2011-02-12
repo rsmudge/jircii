@@ -1,0 +1,45 @@
+jIRC RERO
+=========
+
+     End of Week 2 
+
+M1 - Goal: IRC Client Basics with scripting tied in from the beginning.
+
+ x    Basic command line irc client.        
+ x    IRC Framework
+ x    Event Bridge (with variables)
+ x    Alias Bridge
+
+ x    Script loading / unloading / rehashing (build more into scripting 
+        fw)
+
+     End of Week 3
+
+M2 - Goal: add in DCC protocol in its entirety. (file send/recv + direct chat w/o server link)
+
+     DCC Framework
+     Define data structures for DCC
+ x    Implement DCC Chat
+ x    Implement DCC Receive     
+
+
+M3 - Goal: add key elements of client functionality and customization
+
+     sets framework
+     Client Features framework
+     Client System - starts tieing all of it together
+     add notify feature 
+     add built in "commands" written in Java
+
+     End of Week 5
+
+M4 - 
+
+     End of Week 6
+
+
+
+Sleep Optimizations
+========
+
+Reduce calls to API's within sleep atoms i.e. Get is a good candidate since it calls getScalar so many freaking times

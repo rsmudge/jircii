@@ -1,0 +1,90 @@
+------------------------------------------------------------------------------
+IRC Client System             rero - released early, released often irc client
+------------------------------------------------------------------------------
+
+Import Capabilities
+------
+connect to server
+disconnect from server
+send message to server
+
+Export Capabilities
+------
+call an alias
+
+Import Data Structures
+------
+network status
+
+
+Export Data Structures
+------
+Channel data
+user data (all users encountered)
+client data
+
+Import Events
+------
+disconnected from server
+connected to server
+message read
+user input read
+
+Export Events
+------
+any irc related event
+
+
+User Input 
+^^^^^^^^^^^^^^
+Desc...: keyboard input from the user
+Action.: notify IRCClient
+Src....: external class connecting to IRC Client class.
+
+Data Read In
+^^^^^^^^^^^^^^^
+Desc...: data read in by the server
+Action.: notify IRCClient so it can tell other clients
+Src....: TextSocket class
+
+
+IRCClientTestSuite 
+----- 
+
+Test suite for irc client system.  Contains a main method.  Essentially
+works as an IRC Client without any of the GUI attached.
+
+Mantains:
+* globals (nickname, realname etc.)
+
+Steps:
+1. initialize IRCClient instance
+2. start reading input from console
+3. send input to client (/blah recognized as a command)
+
+
+
+IRCClient
+----
+mantains ServerHandler, AliasHandler, and IRCClientData
+
+ServerHandler
+----
+1. mantains an instance of TextSockt and ProtocolHandler
+2. passes events from TextSocket to ProtocolHandler
+
+ProtocolHandler
+----
+1. Takes text from event handler and parses the text 
+
+
+
+
+AliasHandler
+-----
+1. listens for input events
+2. executes a given command.
+3. mantains an instance of IRCClient
+
+
+

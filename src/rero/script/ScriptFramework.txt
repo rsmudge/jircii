@@ -1,0 +1,31 @@
+Scripting Framework - this is the *core* of the scripting stuff
+------------------
+The purpose of the scripting framework is to provide a simple interface
+to the sleep scripting stuff.  
+
+Exported Capabilities
+--------------------
+- Call a function
+- load a script
+- unload a script
+
+Exported Events
+---------------
+none so far.
+
+Exported Data Structures
+---------------
+loaded scripts
+variables
+
+Anything and everything should be imported eventually.  This file here is the simplest abstraction
+of the sleep stuff (to it).
+
+Notes of Import
+---------------
+The ScriptCore utilizes a client state variable "loaded.scripts".  This is used to signal a change
+to components that a script has been loaded or unloaded in the "internal" sense.  The value loaded.scripts
+does not actually contain anything it is just used for global signalling purposes.  
+
+The script files that we have loaded are contained in a variable called script.files and that variable
+is dealt with and managed by rero.client.script.ScriptManager.   Fun fun fun.

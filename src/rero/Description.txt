@@ -1,0 +1,64 @@
+Design Philosophy:
+- If a mechanism exists elsewere in the system, use it.  
+
+IRC FW Event Firing
+===================
+
+raw irc event stage
+  -> client features  -- ignore system maybe?
+  -> scripting system -- on raw event { ... }
+
+temporary event stage -> in order of who asked for it.
+  client features: /who for a channel? to update IAL
+  temporary listeners: wait <event> { ... }
+
+  any part of the client can request a temporary event.
+
+normal event stage
+  -> client features  -- normal client feature type stuff, notify list etc.
+  -> scripting system -- normal scripting stuff: on <event> { ... }
+
+process as a set
+  -> client features  -- picked up by client features
+  
+
+- event dispatching will be handled by the IRC FW classes.  A temporary listener will be dispatched
+  by the IRC FW classes.  A system requesting to listen will just do what it must do.   
+
+- client feature events will be wired in prior to script loading
+- scripting event dispatcher bridge will have a method for requesting an event fire.
+  all events will be listened to by a event listener class that communicates with the 
+  scripting event dispatcher
+- client features will define and pick up on normal "sets".  sets are from the scripting but the
+  client features system will parse events and ask for a specific set.
+
+SocketSystem
+============
+Accessed via: rero.net.SocketSystem
+
+Data Structures: 
+socketInformation - 
+
+Capabilities:
+println
+connect
+disconnect
+
+Events:
+addSocketDataListener
+addSocketStatusListener
+
+Chat Framework
+=============
+Accessed via: rero.ircfw.ChatFramework
+
+Data Structures:
+clientInformation - rero.ircfw.InteralDataList
+  contains all server gathered information on users, channels, and self
+
+Events:
+addTemporaryListener
+addChatListener
+
+Imports:
+Event - SocketSystem - addSocketDataListener
