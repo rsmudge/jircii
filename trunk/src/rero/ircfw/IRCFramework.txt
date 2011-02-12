@@ -1,0 +1,218 @@
+IRC Framework
+-------------
+Sole purpose of parsing a message, updating data structures, and
+dispatching events.
+
+Exported Capabilities
+========
+add temporary listener
+inject protocol
+
+Imported Capabilities
+========
+
+Exported Data Structures
+========
+channel information (modes, topic, users)
+irc data (my nick, server, port, network?)
+IUL (global registry of all visible users)
+     {nick, idle, address, channel status, ircop}
+
+
+
+Data Tree for an IRC Framework
+------
+
+network
+my nick
+server
+port
+
+User Info (User class)
+   nick
+   address (if known)
+   channels (Hashmap with mode string for channel referenced here) - a call to syncronize will check the mode string for the 
+        most relevant mode and put the user into that bracket (and remove the user from all other brackets).  Fair enough?
+   
+   idle
+
+Channel Info (Channel class)
+   channel mode
+   channel topic
+   channel users               (keep information in a sorted list, yeah I know this can get ugly)
+      ops     (Set of ops)             Use a TreeMap to store keys.
+      voice   (Set of voiced users)
+      halfops (Set of halfops)
+      users   (Set of users)
+   key
+   limit
+
+
+Classes handling what is happening -
+   DataEventAction    - interface
+      MyJoinDEA
+      ChannelModeDEA 
+
+   ModeUtilities      - a utilities class for the mode stuff to handle
+
+   FwDataManager      - holds references of various DEA's, on an event processes each of the DEA's
+                        passing in IUL and ICL
+ 
+                        holds a reference to IUL and ICL
+
+                        methods for getting those references and clearing (i.e. resetting) them.
+
+Classes in Data Structure Portion -
+
+InternalDataList      - Pub
+   contains methods for editing en masse the User and Channel data structures.  These two structures are so
+   closely interrelated it only makes sense to combine all of this editing into one class.  I had it split two
+   ways and then gave up on it.
+  
+
+Channel               - Pub
+
+User                  - Pub
+
+
+Actions Based on Events -
+
+MY JOIN:
+   create channel entry in ICL
+
+MY PART:
+   remove channel entry from ICL
+
+PRIVMSG/ACTION/CTCP
+   get nickname entry from IUL if null then ignore
+   touch user (update last spoke time)
+
+JOIN:
+
+   IUL.JoinNick(nickname, ICL.getChannel(#channel))
+     if nickname entry does not exist then create it   
+     if channel entry does not exist then create it (everything pretty much nullified)
+     if user is already in channel do nothing
+   
+     add Channel reference to IUL entry for nick's channels reference
+     add User reference to Channel object
+
+NICK:
+   
+    grab User object, alter entry in Hashmap
+    remove User object from all channels (listed in User object)
+    readd User object to all channels
+
+CHANNEL MODE:   (figure out how to handle later)
+    (special note: no code reuse, separate mode parser for channels and nicks)
+    run parser, if setting a mode (besides ovh) flag mode string (mode will be a string)
+    if giving mode 
+       flag user as op for channel
+       synchronize user to channel
+       request repaint
+
+    if taking mode
+       unflag user mode for channel
+       synchronize user to channel
+       request repaint
+ 
+*** You have gained new and exciting superpowers! 
+
+
+
+PART:
+  
+   IUL.PartNick(nickname, ICL.getChannel(#channel))
+     remove nickname from Channel reference
+     remove channel reference from User
+     if channel references == 0 then remove nickname from IUL
+     
+
+QUIT:
+
+   IUL.QuitNick(nickname, ICL.getChannel(#channel))
+     foreach channel reference for nickname
+        remove nickname from Channel reference
+        remove channel reference from User
+
+All:
+   if an address exists in event, lookup nick in IUL, if exists place event address to nick.
+
+
+Imported Data Structures
+========
+
+Exported Events
+========
+anything and everything IRC related
+
+Imported Events
+========
+read message (from SocketSystem)
+connected (wipe data structures)
+
+
+Paths
+=====
+
+Message Received 
+        |
+        |
+        \|
+ProtocolHandler
+    1. instantiate a Parsed1459 object
+       a. Parsed1459 breaks down the string completely
+          determines it's type etc.
+    2. fringe parsing of data from 1459 should be handled in particular
+       a. detect CTCP requests
+       b. detect CTCP replies
+    3. FwDataHandler should then process IRC event to update InternalDataList
+       a. extract any address information for IUL
+       b. if it is a MODE event update channel/nick
+       c. if it is a NICK event update channels/IUL
+       d. suck all information dry and keep what we can
+    3. determine event type and dispatch to EventHandler
+        |
+        |
+        \|
+EventHandler
+    1. dispatch event to all temporary listeners
+       a. loop through registered temp listeners, match event description
+          to appropriate listener.  Mechanism is TBD
+       b. halt processing if temporary listener says to halt processing
+    2. dispatch event to all normal listeners       
+       a. loop through all registered listeners, deliver event
+       b. halt processing if registered listener says to stop
+  
+
+===
+
+Connected 
+         |
+         |
+         \|
+IRC Client Data
+    1. rebuild all data structures from scratch
+
+
+
+===
+
+More depth on the FwDataManager Processing order...
+
+0:
+  AddressSucker
+     grabs addresses and updates IDL (no dependencies, nick change might mess it up though - so let it run first)
+
+1:
+  MyInformationTracker
+     keeps track of any relevant information related to "me"
+
+  ChannelInformationTracker
+     keeps track of channel related information (topic, /names etc..)
+     refactoring may be a possibility in the future.
+
+  ChannelUserWatch
+     keeps track of channel user information based on joins, parts, quits, nicks, and kicks
+     keeping track of my nick change, or me joining a channel etc.. are all handled by the IDL API's
+

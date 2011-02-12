@@ -1,0 +1,34 @@
+<font color="#000099" size="+1"><b>About JIRCii</b></font>
+<br>
+<br>&lt;<font color="#666666">`butane</font>&gt My next generation IRC Client is right on schedule.
+<br>&lt;<font color="#666666">`butane</font>&gt It'll be done sometime in the next generation.
+<br>
+<br>Welcome to jIRCii. A power users irc client written in Java.  jIRCii's design philosophy is to feel like a console client while providing the advantages of a GUI client.  As an irc client jIRCii is very flexible.  The color scheme can be completely redefined without any scripting.  The client interface can emulate the feel of popular Windows clients like mIRC.  The client interface can also emulate the feel of one window UNIX console clients like ircii or BitchX.
+<br>
+<br>jIRCii can be extended via scripts written by jIRCii users.  jIRCii scripts are written in a perl-like scripting language called sleep.  The philosophy behind the jIRCii scripting interface is to provide access to the capabilities within jIRCii and to easily respond to event occurences within the client.  jIRCii's scripting is my own spin on what scripting for an application should be like.  I beleive that most other solutions are balanced towards exposing every API of the underlying platform.  I beleive this is a bar to ease of use and requires to much from the applications user community. 
+<br>
+<br>jIRCii is free software.  The source code to jIRCii and sleep are both released under the Artistic license. 
+<br>
+<br><b>Contact Information</b></font>
+<br>
+<br>My name is Raffi, I wrote jIRCii (with some help, see the Contributors section).  If you'd like to get in touch with me feel free to email me.
+<br>
+<br>email: <a href="mailto:rsmudge@gmail.com">rsmudge@gmail.com</a>
+<br>www: <a href="http://www.hick.org/~raffi/">http://www.hick.org/~raffi/</a>
+<br>
+<br>You can also stop by the jIRCii IRC channel #jircii on EFNet.
+<br>
+<br><b>Features</b></font>
+<br><b>*</b> multiserver support
+<br><b>*</b> support for CTCP and DCC protocols
+<br><b>*</b> client echo's are user redefinable
+<br><b>*</b> console like interface
+<br><b>*</b> ability to open channel/chat windows
+<br><b>*</b> idle nicknames are dimmed out
+<br><b>*</b> nick completion
+<br><b>*</b> nick completing commands (/op, /ver etc.)
+<br><b>*</b> common sense aliases (/ping, /wi etc.)
+<br><b>*</b> built in ident daemon
+<br><b>*</b> notify list / ignore list
+<br><b>*</b> clickable URL's
+<br><b>*</b> infinitely extendable via user scripts

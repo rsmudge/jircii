@@ -1,0 +1,49 @@
+:irc.Prison.NET 001 theUncle :Welcome to the internet Relay network the uncle
+:theUncle MODE theUncle :+i
+:theUncle!~apple@this.sucks.aol.com JOIN :#test
+:irc.Prison.net 353 theUncle @ #test :@theUncle @lamer +dude +ardvark blahzer @missmee
+:irc.Prison.net 366 ^butane #test :this is end of /names
+:irc.Prison.NET 324 `butang #test +stnk NLN
+
+
+:`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net MODE #test +snt-oo+o lamer missmee blahzer
+
+:cheezi!chris@some.ip.address KICK #test theUncle :die whore
+
+
+:`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net MODE #test -n+p
+
+
+:`butane MODE `butane :+i
+:`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net JOIN :#butane
+:irc.Prison.NET 353 `butane = #butane :@`butane
+:irc.Prison.NET 366 `butane #butane :End of /NAMES list.
+:`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net MODE #butane +snt-o `butane
+
+
+nter String> :`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net MODE #butane +snt-o `butane
+  *** looking at: +snt-o `butane
+  *** looking at: `butane
+Parsing message took:  19
+  user = ~a
+  data = #butane +snt-o `butane
+  target = #butane
+  host = pcp02792562pcs.roylok01.mi.comcast.net
+  address = ~a@pcp02792562pcs.roylok01.mi.comcast.net
+  event = MODE
+  source = `butane
+  nick = `butane
+  raw = :`butane!~a@pcp02792562pcs.roylok01.mi.comcast.net MODE #butane +snt-o `butane
+  parms = +snt-o `butane
+
+:`butane MODE `butane :+i
+
+Enter String> :`butane MODE `butane :+i
+  *** looking at: :+i
+Parsing message took:  2
+  data = `butane +i
+  target = `butane
+  event = MODE
+  raw = :`butane MODE `butane :+i
+  parms = +i
+

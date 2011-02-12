@@ -1,0 +1,304 @@
+##################################################################################
+# lame.irc - preserving some of the old school irc lameness
+#
+# These lame popup kick/ban insults and slaps were not written by me.  The credit 
+# for these goes to a guy who went by BioToXiN probably 10 years ago.  I included
+# his popup menues as kind of a way to pay hommage to how lame irc'rs can be, 
+# really.  I included them spelling errors and all.  I secured his permission to 
+# use them in a script years ago; I'm hoping he lets that permission carry over 
+# to this client.  These slaps/insults really are in here as a joke.
+#
+##################################################################################
+
+menu nicklist
+{
+   &addSeparator();
+
+   menu "&Slapz"
+   {
+      &addItem("UNIX", "/me slaps an 80 lbs UNIX manual on $1" . "'s head... but were theres no sense theres no feeling");
+      &addItem("POP-A-CAP", "/me pulls out his gloch 9...  aims at $1 and busts a cap in his ass...");
+      &addItem("BEER",  "/me reaches over and grabs a BEER  <TM>");
+      &addItem("SLEEP", "/me falls asleep in the middle of IRC <ZZZZZZzzzzzz.....>");
+   }
+
+   menu "&Insults"
+   {
+      item Homosexual
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"homosexual\"]           "); 
+         &say("  1. Ho-mo-sex-u-al (adjective)          ");
+         &say("     : oriented towards one's own sex    ");
+         &say("  2. Ho-mo-sex-u-al (noun)               ");
+         &say("     : $1                                ");
+      }
+      item Masturbater
+      {
+         &say("[Webster's Online Dictionary : Port 2251]"); 
+         &say("[Definition of \"masturbate\"]           ");
+         &say("  1. Mas-tur-ba-tion (noun)              ");
+         &say("     : stimulation of sex organs by hand "); 
+         &say("  2. Mas-tur-ba-tor (noun)               ");
+         &say("     : $1                                ");
+      }
+      item "Anal Sex"
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"anal sex\"]             ");
+         &say("  1. An-al Sex (noun)                    ");
+         &say("     : Copulation involving the anus     ");
+         &say("     : How $1 was concieved              ");
+      }
+      item "Oral Sex"
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"oral sex\"]             "); 
+         &say("  1. Or-al Sex (noun)                    ");
+         &say("     : Copulation involving the mouth    ");
+         &say("     : A favorite sport of $1" . "'s at family picnics");
+      }
+      item "Kindergardner"
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"kindergarten\"]         ");
+         &say("  1. kin-der-gar-ten (noun)              ");
+         &say("     : class for young children          ");
+         &say("     : A location that has a restraining order against $1");
+      }
+      item Asshole
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"asshole\"]              ");
+         &say("  1. Ass-hole (noun)                     ");
+         &say("     : a sphincter used for excreting waste");
+         &say("     : $1 on a good day");
+      }
+      item Retard
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"retard\"]");
+         &say("  1. re-tard (noun)");
+         &say("     : someone who is mentally or physically disabled");
+         &say("     : $1  ");
+      }
+      item Lamer
+      {
+         &say("[Webster's Online Dictionary : Port 2251]");
+         &say("[Definition of \"lame\"]");
+         &say("  1. lame (adjective)");
+         &say("     : someone who is stupid, annoying, or ignorant");
+         &say("     : $1  ");
+      }
+   }
+
+   if ($me isop $0)
+   {
+      kickBanInsults();
+   }
+} 
+
+sub kickBanInsults
+{
+   menu "&Kick Insults"
+   {
+      item Asshole 
+      { 
+         &say('*******************  ASSHOLE ALERT!!!!  *******************');
+         &say('********  ' . $1 . ' Has Been Spotted Being A Complete Asshole  ********');
+         wait kick
+         {
+            sub temps
+            {
+               &say("******************  \BAsshole\B Taken Care Of  ******************");
+            }
+            addTimer(&temps, 0, 1);
+         }   
+         &call("/kick $active $1 \BNo Assholes\B (Usually)");
+      }
+      item Faggot
+      {
+         &say("$1 @#M4M @#pedophiles @#gayboygifs @#smalldogsex  @#oldmenaresexy");
+         &say("WHAT A \BFAGGOT\B!!!");
+         &call("/kick $active $1 \BNo Faggots\B");
+         wait kick
+         {
+            sub temps
+            {
+               &say("We'll Have None Of \BThat\B Around Here.");
+            }
+            addTimer(&temps, 0, 1);
+         }
+      }
+      item Racist
+      {
+         &say("$1 @#KKK @#nazi @#killniggers @#skinheads");
+         &say("GET \BOUT\B OF HERE YOU RACiST SON OF A BiTCH!!!");
+         &call("/kick $active $1  FUCKiNG RACiST BASTARD!!! ");
+      }
+      item 'Stupid Nick'
+      {
+         &say("$1" . "?!?!? What Kind Of Nick is That!?!?!");
+         &call("/kick $active $1  Come Back When You Have A REAL Nick");
+      }
+      item Lamer
+      {  
+         &say("AOL = Army Of Lamers");
+         &call("/kick $active $1 Come Back When You Have A REAL Provider");
+      }
+      item Lamer2
+      {
+         &say("-  - -=]+[=- -  -  LAMER DETECTED!!!  -  - -=|+|=- -  -");
+         &say("-  - -=|+|=- -  -  TARGETiNG " . $1 . "  -  - -=|+|=- -  -");
+         &say("-  - -=|+|=- -  -  LAUNCHING WEAPON  -  - -=|+|=- -  -");
+         &call("/kick $active $1 LAMERS = 0 " . $me . " = 1");
+         wait kick
+         {
+            sub temps
+            {
+               &say("-  - -=|+|=- -  -  LAMER ELiMiNATED  -  - -=]+[=- -  -");
+            }
+            addTimer(&temps, 0, 1);
+         }
+      }
+      item 'Cock Sucker'
+      {  
+         &call("msg $active $1" . ", You Suck");
+         &call("msg $active $1" . ", You Suck");
+         &call("msg $active $1" . ", You Suck");
+         &call("msg $active $1" . ", You Suck");
+         &call("msg $active $1" . ", You Suck");
+         &call("msg $active $1" . ", You Suck");
+         &call("/kick $active $1 Get The Picture Yet?.. You SUCK");
+      }
+      item "You Stink"
+      {
+         &say("What the Hell is That Stench?!?!");
+         &call("/kick $active $1 Is it You?");
+         wait kick
+         {
+            sub temps
+            {
+               &say("Nevermind... I Got Rid Of it...");
+            }
+            addTimer(&temps, 0, 1);
+         }
+      }
+      item Meanie
+      {
+         &say("WARNiNG: $1 is a MEANiE");
+         &say("I'll Take Care Of That");
+         &call("/kick $active $1 MEAN PEOPLE SUCK");
+         &call("/msg $1 MEAN PEOPLE SUCK");
+         &call("/ctcp $1 MEAN PEOPLE SUCK");
+         &call("/notice $1 MEAN PEOPLE SUCK");
+         &call("/msg $1 MEAN PEOPLE SUCK");
+         &call("/ctcp $1 MEAN PEOPLE SUCK");
+         &call("/notice $1 MEAN PEOPLE SUCK");
+      }
+      item Kid 
+      { 
+         &say("Once Apon a Time There Was a Little Kid...");
+         &call("/kick $active $1  ...But The Kid Soon Left.  <THE END>");
+      }
+      item door
+      {
+         &say("Oh.. and $1" . "?");
+         &call("/kick $active $1 DON'T LET THE DOOR HiT YOUR ASS ON THE WAY OUT!!!");
+      }
+      item door2
+      {
+         &say("What's Wrong $1" . "? Can't Find The Door?");
+         &call("/kick $active $1 LET ME SHOW YOU iT!!!");
+      }
+      item math
+      { 
+         &call("/me Decides to Use Calculus on $1" . ".");
+         &call("/me Takes The Second Derivative of $1" . ".");
+         &call("/me is Astonished!!  He Has Just Disproved $1" . "'s Existence!!!");
+         &call("/kick $active $1 Hey, I Got an A in Math.. Don't Screw With Me..");
+      }
+      item "Time Travel"
+      {
+         &call("/me Jumps Through a Time Warp That Has Somehow Manifested in his Garage...");
+         &call("/me Notices a Bird Fly by...");
+         &call("/me Steps on a Worm That The Bird Should Have Gotten...");
+         &say("The Bird Sees an Old Man Sitting on a Rock Next to the Tree Where his Nest is.");
+         &say("The Bird Pecks the Old Man to Death.");
+         &say("It Just Turns Out That the Old Man is One of $1" . "'s Ancestors...");
+         &say("Upon This Paradox of the Space/Time Continium, $1 Pops Out of Existence...");
+         &call("/kick $active $1 POOF!!!");
+      }
+      item "Metal head"
+      { 
+         &call("/me takes $1 to a Pantera concert");
+         &call("/me nudges $1 into the pit");
+         &call("/kick $active $1 is this your tooth?");
+      }
+      item "Metal Head2"
+      {
+         &call("/me takes $1 to a Slayer concert");
+         &call("/me throws $1 onto the stage");
+         &call("/me watches the band dismember $1");
+         &call("/kick $active $1 hey dude, need a band aid?");
+      }
+      item "kiss-my-ass"
+      {
+         &call("/msg $1 Kiss my ass  (_|_)");
+         &call("/kick $active $1 Pucker up BIATCH!!! (_!_) ");
+    
+      }
+   }
+   menu "&Ban Insults"
+   {
+      item "Shut Up"
+      { 
+         &call("/me thinks that $1 should shut there mouth");
+         &call("/mode $active +b $1");
+         &say("now try talking");
+         &call("/kick $active $1 oh well... at least I don't have to put up with your whining");
+      }
+      item Warning
+      {
+         &say("$1 keep your shit up and I'll kick\ban ya!");
+         &call("/kb $active $1 so.. I changed my mind");
+      }
+      item lamer
+      {
+         &say("these lamers just keep coming back eh $1");
+         &call("/kb $1 hmm maybe this one will stay away");
+      }
+      item flooder
+      {
+         &say("$1" . ", you can't flood for shit... but ya know what, I'm gonna let you practice...");
+         &say("sound good?");
+         &say("so I'm gonna let you flood..."); 
+         &call("/kb $1 ... in another channel");
+      }
+      item boaster
+      {
+         &say("hmmm...");
+         &say("that is prettty neat...");
+         &say("but I know of somthing better,");
+         &call("/kb $1 its the classic ol' kick\ban");
+      }
+      item "Op Begger"
+      {
+         &say("okay $1 heres your ops");
+         &call("/kb $1 is it +b or +o");
+      }
+      item "net sex"
+      {
+         &say("look...");
+         &say("yo $1 this is $active not #littlegirlsex or #oldwomenpics");
+         &call("/kb $1 get a women net sex is ^^^^^^^^^^^^^^^^^^^^^^^LAME^^^^^^^^^^^^^^^^^^^^");
+         &call("/ctcp $1 now say it with me...");
+         &call("/ctcp $1 ECHO NET SEX IS LAME");
+         &call("/ctcp $1 ECHO NET SEX IS LAME");
+         &call("/ctcp $1 I can't hear you");
+         &call("/ctcp $1 PING");
+         &call("/ctcp $1 ECHO NET SEX IS LAME");
+      }
+   }
+}
+

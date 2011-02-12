@@ -1,0 +1,88 @@
+<font color="#000099" size="+1"><b>Keyboard Shortcuts</b></font>
+<br>
+<br>Besides the plethora of built in /commands jIRC also offers a few other built in command features.
+<br>
+<br><b>Edit the Color Scheme</b></font>
+<br>
+<br>In jIRCii you can easily edit the colormap (colors 1-99) by holding the shift key and clicking on colored text you want to edit.  Most event echos have there own color assigned to them.  The statusbar can be shift+click'd on as well.  To edit colors inside of the nicklist use shift+control+click.  Background colors can be edited outside of the nicklist using shift+control+click.
+<br>
+<br><b>Nick Completion</b></font>
+<br>
+<br>When having a conversation in a channel sometimes you want to direct a message at a specific person.  In jIRC you can simply specifypart of a nickname followed by a : colon and then your message.  jIRC will then complete the entire nickname for you.  For directing a message to Tijiez I'd simply type:
+<br>
+<br><font color="red" face="Monospaced"><small>Tij: rock on homeZ&lt;ENTER&gt;</small></font>
+<br>
+<br>The above would be sent to the active channel as:
+<br><font color="blue" face="Monospaced"><small>Tijiez: rock on homeZ.</small></font>
+<br>
+<br><b>Tab Nick Completion</b></font>
+<br>
+<br>Another popular style of nick completion supported by jIRC is Tab key nick completion.  This is where you type part of a nick and then hit the Tab key.  The last word in the editbox will then be completed to a full nickname.  If the editbox is empty hitting tab will bring up /msg &lt;last person to msg you&gt; in the editbox.  
+<br>
+<br><b>Tab File Completion</b></font>
+<br>
+<br>If you are using /dcc send, /send, /load, etc. it is possible to tab complete the filename as well.  Just type the first few characters of the path, hit tab, and jIRCii will expand it for you.  Keep hitting tab to cycle through your options.
+<br>
+<br><b>Tab Channel Completion</b></font>
+<br>
+<br>By now you probably realized jIRCii tab completes nearly everything.  To tab-complete the current channel type #&lt;TAB&gt; and the current channel will appear in the editbox.
+<br>
+<br><b>Quickly Edit a Topic</b></font>
+<br>
+<br>To quickly edit a channel topic simply type /topic in the editbox and then hit the Tab key.  This will bring the channel topic up in the editbox ready for quick editing.
+<br>
+<br><b>Clear the Editbox Quickly</b></font>
+<br>
+<br>Pressing the escape key will clear the contents of the current editbox.
+<br>
+<br><b>Control the Input Cursor</b></font>
+<br>
+<br>Pressing the Home key will place the cursor at the beginning of the input box.  Pressing the End key will place the text cursor at the end of the text in the input box.
+<br>
+<br><b>Recall Command/Message History</b></font>
+<br>
+<br>In any jIRCii window with an editbox you can recall the text you typed previously using the up arrow and down arrow.  The up arrow will scroll through all of the text you've typed.  You can use the down arrow to go backwards through the history of text in that editbox.
+<br>
+<br><b>Create a New Server</b></font>
+<br>
+<br>It is possible to quickly create a new server session using Ctrl+N or Cmd+N (if your system has a Command key).
+<br>
+<br><b>Create/Close Windows</b></font>
+<br>
+<br>It is possible to quickly create a /window for a query using Ctrl+W
+<br>
+<br>To close the current /window use Ctrl+D.  Windows can also be closed by holding down shift and clicking on the switchbar button for the window you want to close.
+<br>
+<br><b>Navigate Channel/Query Windows</b></font>
+<br>
+<br>You can activate the windows in the switchbar for the current session using Alt+1 through Alt+9.  Alt+1 identifies the Status window, Alt+2 identifies the next window and so on.
+<br>
+<br>Another option is to use Alt+Left Arrow to activate the previous window and Alt+Right Arrow to activate the next window.
+<br>
+<br><b>Navigate Multiserver Sessions</b></font>
+<br>
+<br>You can navigate through each of the server sessions you have open using Ctrl+1 through Ctrl+9.  Ctrl+1 represents the first session you have open, Ctrl+2 represents the second session and so on.
+<br>
+<br>Ctrl+Left Arrow will activate the previous server session and Ctrl+Right Arrow will activate the next server session.
+<br>
+<br><b>Changing Queries</b></font>
+<br>
+<br>If you use irc primarily through your status window then you can use the keyboard shortcut Ctrl+Z to cycle through all of the non /window'd channels your on.
+<br>
+<br><b>Open the Options Dialog</b></font>
+<br>
+<br>You can quickly open the options dialog using Alt+O
+<br>
+<br><b>Open the Help Dialog</b></font>
+<br>
+<br>You can quickly open the help dialog using Alt+H
+<br>
+<br><b>Quickly Scroll Up/Down</b></font>
+<br>
+<br>Scrolling through the contents of a window can be accomplished using Page Up and Page down.
+<br>
+<br><b>Search Scrollback Buffer</b></font>
+<br>
+<br>Searching through the scrollback buffer of a window can be accomplished using Alt+F, Ctrl+F, or Meta+F.  The window can be closed with the Escape key.
+<br>
+

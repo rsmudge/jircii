@@ -1,0 +1,68 @@
+<project name="sleep" default="all" basedir=".">
+  <property name="project.src"   location="src" />
+  <property name="project.build" location="bin" />
+  <property name="project.compiler" value="" />
+
+  <property name="project.path"  value="rero" />
+
+  <target name="all" depends="init, compile" />
+
+  <target name="init">
+    <tstamp />
+    <mkdir dir="${project.build}" />
+  </target>
+
+  <target name="compile" description="compile the source " >
+    <javac srcdir="${project.src}/" 
+           destdir="${project.build}"
+           nowarn="yes"
+           depend="yes"
+           source="1.4"
+           target="1.4"
+           debug="true"
+           optimize="yes"
+    >
+       <classpath path="./lib/sleep.jar" />
+    </javac>
+  </target>
+
+  <target name="apple-specific" depends="compile" description="Compile Apple specific files">
+    <javac srcdir="src-apple/" 
+           destdir="${project.build}"
+           nowarn="yes"
+           source="1.4"
+           target="1.4"
+           depend="yes"
+           debug="no" 
+           optimize="yes"
+    >
+       <classpath path="./lib/sleep.jar" />
+    </javac>
+    
+  </target>
+
+  <target name="clean" description="clean up" >
+    <delete dir="${project.build}"/>
+  </target>
+
+  <target name="docs" description="generate java documentation">
+     <javadoc packagenames="rero.*"
+              sourcepath="src"
+              destdir="docs/api"
+              windowtitle="jIRC RERO API">
+       <classpath path="./lib/sleep.jar" />
+     </javadoc>
+  </target>
+
+  <target name="jar" depends="compile">
+     <jar destfile="jerk.jar"
+         basedir="bin"
+         includes="**/*">
+       <manifest>
+         <attribute name="Built-By" value="${user.name}"/>
+         <attribute name="Main-Class" value="rero.test.WindowTest"/>
+      </manifest>
+     </jar>
+   </target>
+</project>
+

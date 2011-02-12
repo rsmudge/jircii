@@ -1,0 +1,734 @@
+##################################################################################
+# menu.irc - Default jIRC Menu Items and Keyboard Shortcuts
+##################################################################################
+
+bind Alt+F
+{
+   showSearchDialog(getActiveWindow());
+}
+
+bind Ctrl+F
+{
+   showSearchDialog(getActiveWindow());
+}
+
+bind Meta+F
+{
+   showSearchDialog(getActiveWindow());
+}
+
+bind Ctrl+Z
+{
+   cycleQuery();
+}
+
+bind Ctrl+X
+{
+   cutSelectedText();
+}
+
+bind Ctrl+W
+{
+   if (strlen($active) > 0)
+   {
+      call("/window $active");
+   }
+}
+
+bind Ctrl+D
+{
+   closeWindow(getActiveWindow());
+}
+
+bind Ctrl+N
+{
+   call("/newserver");
+}
+
+bind Alt+H
+{
+   showHelpDialog("");
+}
+
+bind Home
+{
+   setCursorPosition(getActiveWindow(), 0);
+}
+
+bind End
+{
+   setCursorPosition(getActiveWindow(), strlen(getInputText(getActiveWindow())));
+}
+
+bind Meta+N
+{
+   call("/newserver");
+}
+
+bind Meta+T
+{
+   call("/newserver");
+}
+
+bind Alt+O
+{
+   showOptionDialog("");
+}
+
+bind Meta+O
+{
+   showOptionDialog("");
+}   
+
+bind Meta+H
+{
+   showHelpDialog("");
+}
+
+bind Escape
+{
+   setInputText($active, "");
+#    setWindowState(getActiveWindow(), "MINIMIZED");
+}
+
+bind Page_Up
+{
+   scrollWindow(getActiveWindow(), -5);
+}
+
+bind Page_Down
+{
+   scrollWindow(getActiveWindow(), 5);
+}
+
+
+sub generateCommandString
+{
+   local('$string');
+   $string = "/server";
+
+   if (isServerSecure())
+   {
+      $string = "$string -ssl";
+   }
+
+   if (getServerPassword() ne $null)
+   {
+      $string = "$string -pass " . getServerPassword();
+   }
+
+   $string = "$string " . getServerHost() . " " . getServerPort();
+
+   return $string;
+}
+
+on connect
+{
+   local('@server_list');
+   @server_list = getPropertyList("saved.servers");
+
+   # note to /luser: $server !isin @server_list only works because @server_list is converted to a string as isin
+   #      is a string comparison operator.
+   if ($server !isin @server_list)
+   {
+      push(@server_list, $server . " " . generateCommandString());
+   }
+
+   while (size(@server_list) > 5)
+   {
+      shift(@server_list);
+   }
+   setPropertyList("saved.servers", @server_list);
+}
+
+menubar "&Connection"
+{
+   item "&New Server"
+   {
+      call("/newserver");
+   }
+
+   addSeparator();
+
+   menu "&Connect"
+   {
+      local('@saved_servers $x @stemp $v');
+      @saved_servers = getPropertyList("saved.servers");
+
+      $x = 0;
+      foreach $var (@saved_servers)
+      {
+         @stemp = split(" ", $var);
+         $v = @stemp[0];
+        
+         item "& $+ $x $v"
+         {
+            local('@server_list $var $tokens $temp');
+
+            $temp        = substr($command, 2);
+            @server_list = getPropertyList("saved.servers");
+            $tokens      = tokenize($var);
+
+            foreach $var (@server_list)
+            {
+               if (getToken($tokens, 0) eq $temp && getTotalTokens($tokens) > 1)
+               {
+                  call(getTokenFrom(tokenize($var), 1));
+                  return;
+               }
+            }
+
+            call("/server $temp"); # just in case we didn't find the server
+         }
+
+         $x++;
+      }      
+
+      if (size(@saved_servers) > 0)
+      {
+         addSeparator();
+      }
+
+      item "&Servers..."
+      {
+         showOptionDialog("jIRCii Setup");
+      }
+   }
+
+   item "&Disconnect" 
+   { 
+      call("/quit");
+   }
+ 
+   addSeparator();
+
+   item "&Close"
+   {
+      closeWindow("%STATUS%");
+   }
+
+   item "&Exit"
+   {
+     exit();
+   }
+}
+
+menubar "&View"
+{
+   item "&DCC Sessions"
+   {
+      call("/dcc stats");
+   }
+
+   item "&Options"
+   {
+      showOptionDialog("");
+   }
+}
+
+menubar "C&ommands"
+{
+   awayMenu();
+   joinMenu();
+   listMenu();
+   serverMenu();
+}
+
+sub awayMenu
+{
+   menu "&Away"
+   {
+      item "&Set Away..."
+      {
+         $reason = showInputDialog("Away message:", "Away");
+         &call("/away $reason");
+      }
+
+      item "&Set Back"
+      {
+         &call("/back");
+      }
+   }
+}
+
+sub joinMenu
+{
+   menu "&Join"
+   {
+      @channel_list = getPropertyList("channel.list");
+
+      foreach $var (@channel_list)
+      {
+         item "$var"
+         {
+            call("/join $command");
+         }
+      }
+
+      if (size(@channel_list) > 0)
+      {
+         addSeparator();
+      }
+
+      item "Add..."
+      {
+         $filter = showInputDialog("Name of channel:", "Add to Join List");
+         push(@channel_list, $filter);
+         setPropertyList("channel.list", @channel_list);
+      }
+
+      if (size(@channel_list) > 0)
+      {
+         menu "&Remove"
+         {
+             foreach $var (@channel_list)
+             {
+                item "$var"
+                {
+                   remove(@channel_list, $command);
+                   setPropertyList("channel.list", @channel_list);
+                }
+             }
+         }
+      }
+   }
+}
+
+sub listMenu
+{
+   item "&List"
+   {
+     call("/list -gui");
+   }
+}
+
+menubar "&Window"
+{
+   item "&Tile"
+   {
+      tileWindows();
+   }
+
+   item "&Cascade"
+   {
+      cascadeWindows();
+   }
+
+   addSeparator();
+
+   item "&1 Status"
+   {
+      activateWindow("%STATUS%");
+   }
+
+   @windows = subarray(getWindows(), 1);
+
+   $x = 2;
+   foreach $var (@windows)
+   {
+      item "& $+ $x $var"
+      {
+         $temp = substr($command, indexOf($command, " ") + 1);
+         activateWindow($temp);
+      }
+      $x++;
+   }
+}
+
+menubar "&Help"
+{
+   item "&Help"
+   {
+      showHelpDialog("");
+   }
+
+   item "&About"
+   {
+      showAboutDialog();
+   }
+}
+
+sub ctcpDccMenu
+{
+   menu "&Ctcp"
+   {
+      item "&Ping"
+      {
+        call("/ctcp $1 PING");
+      }
+
+      item "&Time"
+      {
+        call("/ctcp $1 TIME");
+      }
+
+      item "&Version"
+      {
+        call("/ctcp $1 VERSION");
+      }
+   }
+
+   menu "&DCC"
+   {
+      item "&Chat"
+      {
+        call("/dcc chat $1");
+      }
+
+      item "&Send"
+      {
+        call("/dcc send $1");
+      }
+   }
+
+}
+
+menu channel
+{
+   item "Show &Names"
+   {
+      call("/sc");
+   }
+}
+
+menu query
+{
+   &addItem("&Whois", "/whois $1 $1");
+   ctcpDccMenu();
+}
+
+menu chat
+{
+   item "&Close Chat"
+   {
+      call("/dcc close " . substr($active, 1, strlen($active)));
+   }
+}
+
+menu nicklist
+{
+   &addItem("&Whois", "/whois $1 $1");
+   &addItem("&Query", "/window $1");
+
+   &addSeparator();
+
+   if ($me isop $0 || 1 == 1)
+   {
+      menu "&Control"
+      {
+         menu "&Give"
+         {
+            &addItem("+&o", "/op $1-");
+            &addItem("+&v", "/v $1-");
+            &addItem("+&h", "/ho $1-");
+         }
+         menu "&Take"
+         {
+            &addItem("-&o", "/do $1-");
+            &addItem("-&v", "/dv $1-");
+            &addItem("-&h", "/dh $1-");
+         }
+      }
+   }
+
+   ctcpDccMenu();
+} 
+
+menu input
+{
+   item "&Cut"
+   {
+      cutSelectedText();
+   }
+
+   item "&Copy"
+   {
+      copySelectedText();
+   }
+
+   item "&Paste"
+   {
+      pasteText();
+   }
+
+   item "&Clear"
+   {
+      setInputText($active, "");
+   }
+}
+
+menu status
+{
+   if ($me ison $active)
+   {
+      menu "$active"
+      {
+         item "&Window" { &call("/window $active"); }
+         &addSeparator();
+         item "&Part" { &call("/part $active"); }
+         item "&Cycle" { &call("/cycle"); }
+      }
+      &addSeparator();
+   }
+
+   awayMenu();
+   joinMenu();
+   listMenu();
+   serverMenu();
+}
+
+sub serverMenu
+{
+   menu "&Server"
+   {
+      item "&links" { &call("links"); }
+      item "l&users" { &call("lusers"); }
+      item "&motd" { &call("motd"); }
+      item "&time" { &call("time"); }
+   }
+}
+
+menu tab
+{
+   item "&Close Session"
+   {
+      closeWindow("%STATUS%");
+   }
+}
+
+bind Alt+1
+{
+   activateWindow("%STATUS%");
+   halt;
+}
+
+bind Alt+2
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 1)
+   {
+      activateWindow(@windows[1]);
+      halt;
+   }
+}
+
+bind Alt+3
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 2)
+   {
+      activateWindow(@windows[2]);
+      halt;
+   }
+}
+
+bind Alt+4
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 3)
+   {
+      activateWindow(@windows[3]);
+      halt;
+   }
+}
+
+bind Alt+5
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 4)
+   {
+      activateWindow(@windows[4]);
+      halt;
+   }
+}
+
+bind Alt+6
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 5)
+   {
+      activateWindow(@windows[5]);
+      halt;
+   }
+}
+
+
+bind Alt+7
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 6)
+   {
+      activateWindow(@windows[6]);
+      halt;
+   }
+}
+
+
+bind Alt+8
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 7)
+   {
+      activateWindow(@windows[7]);
+      halt;
+   }
+}
+
+
+bind Alt+9
+{
+   local('@windows');
+   @windows = getWindows();
+   if (size(@windows) > 8)
+   {
+      activateWindow(@windows[8]);
+      halt;
+   }
+}
+
+bind Alt+Left
+{
+   local('@windows $x');
+   @windows = copy(getWindows()); # pop is destructive and won't work on a r/o array
+
+   for ($x = 0; @windows[$x] ne getActiveWindow() && $x < size(@windows); $x++) { }
+
+   if ($x == 0)
+   {
+      activateWindow(pop(@windows));
+   }
+   else
+   {
+      activateWindow(@windows[($x - 1) % size(@windows)]);
+   }
+}
+
+bind Alt+Right
+{
+   local('@windows $x');
+   @windows = getWindows();
+
+   for ($x = 0; @windows[$x] ne getActiveWindow() && $x < size(@windows); $x++) { }
+
+   activateWindow(@windows[($x + 1) % size(@windows)]);
+}
+
+bind Ctrl+Tab
+{
+   local('@windows $x');
+   @windows = getWindows();
+
+   for ($x = 0; @windows[$x] ne getActiveWindow() && $x < size(@windows); $x++) { }
+
+   activateWindow(@windows[($x + 1) % size(@windows)]);
+}
+
+bind Ctrl+Left
+{
+   if (getActiveSessionId() == 0)
+   {
+      activateSession(getTotalSessions() - 1);
+   }
+   else
+   {
+      activateSession((getActiveSessionId() - 1) % getTotalSessions());
+   }
+}
+
+bind Ctrl+Right
+{
+   activateSession((getActiveSessionId() + 1) % getTotalSessions());
+}
+
+bind Ctrl+1
+{
+   activateSession(0);
+}
+
+bind Ctrl+2
+{
+   if (getTotalSessions() > 1)
+   {     
+      activateSession(1);
+   }
+}
+
+bind Ctrl+3
+{
+   if (getTotalSessions() > 2)
+   {     
+      activateSession(2);
+   }
+}
+
+bind Ctrl+4
+{
+   if (getTotalSessions() > 3)
+   {     
+      activateSession(3);
+   }
+}
+
+bind Ctrl+5
+{
+   if (getTotalSessions() > 4)
+   {     
+      activateSession(4);
+   }
+}
+
+bind Ctrl+6
+{
+   if (getTotalSessions() > 5)
+   {     
+      activateSession(5);
+   }
+}
+
+bind Ctrl+7
+{
+   if (getTotalSessions() > 6)
+   {     
+      activateSession(6);
+   }
+}
+
+bind Ctrl+8
+{
+   if (getTotalSessions() > 7)
+   {     
+      activateSession(7);
+   }
+}
+
+bind Ctrl+9
+{
+   if (getTotalSessions() > 8)
+   {     
+      activateSession(8);
+   }
+}
+
+menu dcc
+{
+   item "&Close"
+   {
+     closeDCC(getDCCConnection($this));
+   }
+}
+
+menu switchbar
+{
+   item "&Close Window"
+   {
+      closeWindow($parms);
+   }
+}
+

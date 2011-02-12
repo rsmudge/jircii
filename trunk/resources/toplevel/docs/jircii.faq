@@ -1,0 +1,948 @@
+jircii - frequently asked questions:
+
+               .sS$$Ss.                           .sS$$Ss. .sS$$Ss.
+               $$$$$$$$                           $$$$$$$$ $$$$$$$$
+               $$$$$$$$                           $$$$$$$$ $$$$$$$$
+               `?$$$$P'                           `?$$$$P' `?$$$$P'
+
+         $$$Ss. $$$$$$ """""""$$$Ss. """""""$$$Ss. $$$$$$   $$$$$$
+         $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$   $$$$$$
+         $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$        $$$$$$   $$$$$$
+  """""" $$$$$$ $$$$$$ $$$$$$        $$$$$$ $$$$$$ $$$$$$   $$$$$$
+  $$$$$$ $$$$$$ $$$$$$ $$$$$$ 092209 $$$$$$ $$$$$$ $$$$$$   $$$$$$
+  $$$$$$ $$$$$$ $$$$$$ $$$$$$        `?$$$$s$$$$P' $$$$$$   $$$$$$
+  `?$$$$s$$$$P'                                        
+
+
+Questions:
+
+ 1. What is jIRCii?
+ 2. Where can I get jIRCii?
+
+ 3. How do I create a shortcut for jIRCii on Windows?
+ 4. How do I get rid of the DOS Window when running jIRCii on Windows? 
+ 5. I'm having trouble opening some URL's on Windows.
+
+ 6. Why does jIRCii use Internet Explorer by default on Windows?
+ 7. Is there any way to minimize jIRCii to the system tray?
+ 8. How do I make Windows web browsers use jIRCii for irc:// links?
+
+ 9. What do the faded nicknames in the channel listbox mean?
+10. What is a jIRCii theme?
+11. How do I copy and paste in jIRCii?
+12. How do I cycle channels in the status window?
+13. Where does jIRCii store its settings?
+14. How do I edit the jIRCii color scheme?
+15. How can I change ________ in the default jIRCii script?
+16. Is it possible to assign keyboard shortcuts in jIRCii?
+17. How do I get 24-hour format time stamps?
+
+18. What is the difference between a .THM and a .IRC file?
+19. How do I reload jIRCii scripts?
+
+20. What options need to be filled in to connect to an irc server?
+21. How do I connect to multiple servers?  What command do I use?
+22. How do I close the current IRC session?
+23. How do I connect to an SSL server?
+
+24. How do I create a list of channels to automatically join?
+25. How do I set jIRCii to automatically connect to a server on startup?
+26. How can I make the server tabs get my attention when something happens?
+
+27. How do I specify my own local IP address information for DCCs?
+28. What is Ident?  Do I have to use it?
+
+29. How do I use a different Java look and feel with jIRCii?
+30. How do I make my statusbar transparent?
+31. How do I change the statusbar color?
+32. How can I set a background image in jIRCii?
+33. Can I make jIRCii windows transparent?
+34. How do I strip jIRCii's GUI to only the essentials?
+
+35. Why don't you allow plugins written in Java, C, Python, Visual Basic etc.?
+
+36. Will you ever charge money for jIRCii?
+37. Can I get the jIRCii source code?
+38. Can I use portions of jIRCii's source code in my GPL project?
+39. What do the release designations (stable, beta) mean?
+40. How do I embed jIRCii into my website?
+
+41. What development environment do you use?
+42. Why write another Java IRC Client?
+43. What clients did you rip^H^H^H receive inspiration from?
+44. How long has jIRCii been in development?
+45. Why don't you wait until you have more changes to do a release?
+
+46. I disabled my jircii menubar, how do I get it back?
+47. How do I reset the jIRCii settings?
+48. My jIRCii window flashes or acts crazy occasionally, what's wrong?
+
+49. How do I pronounce jIRCii?
+50. How do I report bugs, feature requests, etc.?
+51. Where can I find you on IRC?
+
+52. Why can't I use Terminal and other fonts in jIRCii?
+53. Can I use old school terminal-style box drawing characters in my script?
+54. Can jIRCii display ANSI colors?
+
+55. This script __________ doesn't work in the latest jIRCii, what happened?
+
+If a question you would like answered is not here then email rsmudge@gmail.com
+
+Begin jIRCii FAQ:
+
+ 1. What is jIRCii?
+   
+    jIRCii is a client for the Internet Relay Chat (IRC) protocol.  IRC is
+    a chat protocol (duh!).  
+ 
+    jIRCii is more than just a bare bones IRC Client though.  jIRCii 
+    includes most of the features of an advanced IRC script.  Features
+    such as advanced tab-key completion, over 70 common sense aliases,
+    notify list, ignore list, etc.
+   
+    jIRCii is very adaptable i.e. you can IRC through multiple windows 
+    with an interface that resembles mIRC, or you can IRC through a 
+    single window with an interface that resembles ircii.
+
+    It is also possible to customize jIRCii by writing scripts in the 
+    perl-like language sleep.  Other clients have an awkward interface for
+    interfacing scripts with their software.  Sleep is directly integrated
+    with jIRCii in a common sense manner.  It is powerful enough to keep
+    the advanced coder happy and easy enough to learn that first time 
+    scripters can customize the client to their hearts content. 
+
+    As a side note, jIRCii is written in Java, but don't let that fool 
+    you.  This client was written with speed in mind.
+ 
+    If your an old school IRC user looking for a solid modern client, 
+    that isn't lame, then jIRCii is the IRC client you have been waiting 
+    for.
+ 
+ 2. Where can I get jIRCii?
+
+    You can download jIRCii addons, scripts, and themes
+    at: http://jircii.dashnine.org/
+
+ 3. How do I create a shortcut for jIRCii on Windows?
+
+    a. Right click on the desktop, select New, then select Create Shortcut
+    b. In the location field fill in something resembling the following:
+       c:\path-to\jircii.exe
+    c. After clicking next, type whatever you want for the shortcut name.
+       jIRCii usually suffices.
+    
+ 4. How do I get rid of the DOS Window when running jIRCii on Windows? 
+
+    When running jIRCii use javaw.exe or jrew.exe instead of java.exe or 
+    jre.exe to launch jIRCii.
+  
+    Or simply launch jIRCii with jircii.exe.
+
+ 5. I'm having trouble opening some URL's on Windows.
+
+    The clickable URL's feature does work.  However URL's containing an =
+    sign will not open properly with jIRCii on Windows.  This is actually
+    due to the way internet explorer parses command line arguments.  
+
+    If you want all URL's to open properly try selecting a better browser
+    for jIRCii to open URL's with.  You can change this setting under
+    View -> Options -> Applications (at the bottom).
+
+ 6. Why does jIRCii use Internet Explorer by default on Windows?
+
+    URL's in jIRCii are opened by executing a command.  The command is 
+    dependent on what operating system your using.  If you use Windows,
+    jIRCii will assume that the command to open URL's with it explorer.exe.
+ 
+    To use a different application to open URL's and other files with go to
+    View -> Options -> Applications (at the bottom).
+
+ 7. Is there any way to minimize jIRCii to the system tray?
+
+    [Serge] has written an addon script called jIRCii-tray.zip and it is
+    available at: http://jircii.dashnine.org/scripts.html
+
+ 8. How do I make Windows web browsers use jIRCii for irc:// links?
+
+    To do this create a new file called jircweb.reg and open it in 
+    notepad.  Then paste in the following:
+
+    REGEDIT4
+
+    [-HKEY_CLASSES_ROOT\irc]
+
+    [HKEY_CLASSES_ROOT\irc]
+    @="URL:IRC Protocol"
+    "URL Protocol"=""
+
+    [HKEY_CLASSES_ROOT\irc\DefaultIcon]
+    @="c:\\jircii\\jircii.exe"
+
+    [HKEY_CLASSES_ROOT\irc\shell\open\command]  
+    @="\"c:\\Program Files\\Java\\jre1.5.0\\bin\\javaw.exe\" -jar c:\\jircii\\jerk.jar %1"
+
+    The above example assumes jIRCii is installed in c:\jircii.  You
+    may have to edit it if you put jIRCii elsewhere on your system.
+
+    Once the file is edited just save it as a .reg file and double click 
+    it.  Windows will ask you if you want to import the information into 
+    the registry.  Click Yes and then you should be all set.
+
+ 9. What do the faded nicknames in the channel listbox mean?
+
+    If a nickname is faded in the channel listbox then that means the user
+    is idle.
+
+10. What is a jIRCii theme?
+
+    A jIRCii theme is simply the current colormap settings exported to a 
+    script file.  jIRCii has up to 99 preset colors for displaying things
+    like channel joins, private messages etc.  In jIRCii it is easy to 
+    edit the preset colormap by simply holding down shift and clicking on 
+    text in the display area.  
+
+    Using the import / export theme feature under View -> Options -> Theme 
+    Manager will allow you to share themes with your friends and use 
+    themes your friends made.
+  
+11. How do I copy and paste in jIRCii?
+
+    Someone did ask this, don't laugh.  Any text selected in the display 
+    area will automatically be copied to the clipboard.
+
+    Otherwise to paste text you can right click in the input box and select
+    paste.  Or you can use the cut, copy, paste keyboard shortcuts specific
+    to your operating system.
+
+12. How do I cycle channels in the status window?
+
+    In the past, jIRCii bound Ctrl+X to do this ala BitchX.  Many Windows 
+    users complained that they could not cut text and rogue contributors
+    removed this feature.  
+
+    To try to ease the pain, Ctrl+Z has been bound to the previous behavior
+    of Ctrl+X.  jIRCii binds Ctrl+Z by default to switch the current active 
+    query in case you are IRC'ing out of your status window (i.e. all auto 
+    /window options turned off).  
+
+    If you would like Ctrl+X to provide the service of cycling active channels, 
+    paste the following into notepad, save it, and load it into jIRCii:
+
+    bind Ctrl+X
+    {
+       cycleQuery();
+    }
+
+13. Where does jIRCii store its settings?
+
+    jIRCii creates a folder called ".jIRC" in your home directory.  On UNIX
+    systems your home directory should be kind of obvious.  On Windows your
+    home directory will be something like:
+    c:\documents and settings\your username\
+
+    All of your settings are saved to this directory.  
+
+14. How do I edit the jIRCii color scheme?
+
+    First off you don't have to script a single line of code to do this.  
+    Most of jIRCii colors can be edited by holding down shift and clicking 
+    on text whose color you want to change.  
+
+    To edit the colors in the nicklist you may have to hold down control, 
+    shift, and middle click on the text whose color you want to change.
+
+    To edit background colors in the text display hold down control, 
+    shift, and click on the text whose background color you want to 
+    change.
+ 
+    Editing the color for the editbox text can be done under:
+    View -> Options -> Windows UI
+
+    Window background color options can be edited to your hearts content 
+    under:
+    View -> Options -> Backgrounds
+
+    You may also download a jIRCii theme file and import it using the theme 
+    manager to quickly edit the color scheme.
+
+    If you come up with a cool theme on your own it is possible to export it
+    using the theme manager so you can share your color settings with 
+    others.
+      
+15. How can I change ________ in the default jIRCii script?
+
+    jIRCii internally has two scripts loaded.  default.irc contains all of
+    the default sets and a few commands.  menus.irc contains the popup and
+    menubar menus.  
+
+    Copies of these two files are distributed with jIRCii under the 
+    extras/ directory.
+
+    Feel free to edit the copies of these files in the extras/ directory. 
+    To force jIRCii to load them simply place your edited copies in the 
+    .jIRC/ directory located in your home directory then restart jIRCii.
+
+    jIRCii always attempts to load internal resources from the .jIRC/ 
+    directory before attempting to load them from its internal 
+    distribution.
+
+    For more information on this feature see the file scriptjirc.pdf 
+    located in the docs/ directory of the jIRCii archive.
+    
+16. Is it possible to assign keyboard shortcuts in jIRCii?
+
+    It is possible to do this.  However you must use jIRCii's scripting
+    interface.  Just about any key combination can be turned into a keyboard
+    shortcut via jIRCii's scripting interface.  An example to get you
+    started:
+
+    bind Ctrl+J
+    {
+       call('/join #jIRCii');
+    }
+
+    The above is an example of a scripted keyboard shortcut.  Pressing
+    Control and J at the same time will cause jIRCii to execute the command
+    /join #jIRCii.  To use this simply create a text file and name it
+    myscript.irc.  You can then load this file using the jIRCii script
+    manager.
+
+17. How do I get 24-hour format time stamps?
+
+    To change the timestamp format you will have to do a little bit of 
+    scripting.  Open up your favorite text editor and enter in the following:
+
+    set TIMESTAMP
+    {
+       return formatDate('HH:mm');
+    }
+
+    Then save the file as something .IRC.  You can then load this file via
+    the jIRCii Script Manager (View -> Options -> Script Manager).
+
+    In the code snippet above 'HH:mm' is a format string describing what
+    the current date should look like.  HH in caps means the current hour
+    in 24 hour format.  mm of course means the minutes. 
+  
+    For more information about the time/date format of formatDate() check out
+    the Sleep 2.1 Manual: http://sleep.dashnine.org/
+
+18. What is the difference between a .THM and a .IRC file?
+
+    A .THM file is a jIRCii theme script.  These are created with the jIRCii
+    theme manager under View->Options->Theme Manager.  A .thm file is the 
+    format jIRCii uses to export a users color settings.  Theme files are
+    loaded with the /theme command or via the Theme Manager.
+
+    A .IRC file is a jIRCii script.  jIRCii scripts usually add new features
+    to jIRCii.  These are created by users.  A jIRCii script is loaded with
+    the /load command or via the Script Manager.
+
+19. How do I reload jIRCii scripts?
+
+    To reload a jIRCii script use the /reload command i.e.:
+    /reload myscript.irc
+
+    When reloading scripts you do not specify the full path to the script. 
+    Once a script is loaded jIRCii knows where the script is located and will
+    manage that detail for you.
+
+20. What options need to be filled in to connect to an irc server?
+
+    When you first launch jIRCii the options dialog will be open.  To 
+    connect to an IRC server you merely need to fill in the User 
+    Information stuff which includes your Real Name, Email Address, 
+    Nickname, and Alternate Nickname.
+
+    Real Name does not have to be your actual full name.  Some people put 
+    in a witty quote or something cool.  This information is displayed
+    when people /whois you.
+
+    Likewise Email Address does not have to be your actual email address.
+    Just put in something that looks like an email address and we'll be
+    square.
+
+    With this information filled in you should be ready to connect to an
+    irc server.
+ 
+21. How do I connect to multiple servers?  What command do I use?
+
+    jIRCii is a multiserver IRC client.  To create a new server connection
+    you can use the /newserver command.
+
+22. How do I close the current IRC session?
+
+    To close the current IRC session simply close the "Status" window. 
+
+23. How do I connect to an SSL server?
+
+    To connect to an SSL (Secure Socket Layer) with jIRCii simply
+    use:
+
+    /server -ssl server.hostname portnumber
+
+24. How do I create a list of channels to automatically join?
+
+    It is possible to set jIRCii to execute commands upon connecting to
+    a server using the Perform on Connect feature.  You can define
+    a list of commands to be executed for each network you connect to.
+
+    To configure the Perform on Connect feature:
+   
+    a. Click View -> Options
+    b. Select the Perform dialog in the listbox to the left
+    c. Enable "Perform these commands when connecting"
+    d. Click the "Add" button and add whatever network you want to setup 
+       commands to perform on connecting for.
+    e. Select that network in the network listbox.
+    f. Enter in commands you want to execute whenever you connect to a server 
+       on that irc network. For example:
+      
+       /join #jIRCii
+       /join #mychannel
+
+    The perform on connect feature can be used to execute any commands you
+    want when connecting to a server.
+
+25. How do I set jIRCii to automatically connect to a server on startup?
+
+    a. Go to View -> Options -> jIRCii Setup.
+    b. Select the server you want to automatically connect to on startup.
+    c. Click Edit.
+    d. Another dialog will come up.  Click Edit again.
+    e. Check the box that says "Connect to server on client startup"
+    f. Click Ok
+
+    You'll notice that the server you just edited is now colored blue in the
+    server list.  Any servers configured to be connected to on startup
+    will be blue.
+
+26. How can I make the server tabs get my attention when something happens?
+
+   The normal answer I give to a feature request like this is to script
+   it.  Fortunately it has already been scripted.  You can download 
+   flash.irc, an addon script that adds this functionality at:
+
+   http://jircii.dashnine.org/scripts.html
+
+27. How do I specify my own local IP address information for DCCs?
+
+    If you would like to set a specific IP address that others use to 
+    connect to you to receive files via DCC then:
+    a. Go to View -> Options -> DCC Options
+
+    In the field that says "DCC IP Address" type in the IP address you
+    want jIRCii to use for your local information.
+
+    You can also set jIRCii to use two automatic options.  Normal method
+    obtains your IP address from your computer.
+
+    Server method uses the IP address that the IRC server your on saw you 
+    connect from.
+
+    Having your dcc ip address setup correctly is very important.  When 
+    sending a file to a user, jIRCii will send your dcc ip address to the 
+    users irc client, and their irc client will connect to you at that dcc
+    ip address to receive the file.
+
+    If you have any doubts on what to use then set jIRCii to use the
+    Server method.
+ 
+28. What is Ident?  Do I have to use it?
+
+    Ident is an outdated protocol that many IRC servers expect your computer
+    to respond to.  Essentially it is an Identification server.
+
+    When you connect to a server, the server connects to your computers
+    ident server to ask it which user on your computer is connecting to 
+    their irc server.   
+
+    This is from the old days when most people connecting to IRC used UNIX.
+    Since UNIX is a multi-user system many users from the same machine could
+    be connecting to the irc server at once.  IRC admins wanted to know 
+    which user from the UNIX machine was connecting so they knew who to 
+    complain about if a user was misbehaving.
+
+    Since Windows isn't a multi-user system or even a server system for that 
+    matter, it is very likely that your system does not have an ident server 
+    running.   In this case you will want to leave the ident server built 
+    into jIRCii running.
+
+    Many UNIX systems don't enable ident by default any more.  Mainly for a 
+    security issue.  The good news is this doesn't matter to you because if
+    you are using a UNIX system as any user other than root, the system 
+    won't let jIRCii run the ident server.  
+
+    Short answer, if your using Windows leave ident running.  It is setup
+    for you by default.
+
+    If your using MacOS X, Linux, or any other *NIX variant then you don't
+    need to enable ident.  In fact don't enable it.
+ 
+29. How do I use a different Java look and feel with jIRCii?
+
+    For those that don't know look and feels are a skinnining mechanism 
+    for Java.  An update to date selection of look and feels can be found
+    at: http://javootoo.com
+
+    To use a look in feel in jIRCii simply download the look and feel and
+    extract from the look and feel archive a .jar file.  As an example
+    we'll use the liquid look and feel, the jar is liquidlnf.jar
+
+    Next you will have to find out the class name for the look and feel.
+    In the case of liquid look and feel the class name is:
+    com.birosoft.liquid.LiquidLookAndFeel
+
+    With this information gathered you will just execute jIRCii using the
+    following command line:
+
+    MacOS X, Linux, and other UNIX OS's:
+    java -classpath /path-to/jerk.jar:/path-to/liquidlnf.jar 
+                    rero.test.WindowTest 
+                    -lnf com.birosoft.liquid.LiquidLookAndFeel
+
+    Windows (you can't use jircii.exe to do this):
+    javaw -classpath c:\path-to\jerk.jar;c:\path-to\liquidlnf.jar 
+                     rero.test.WindowTest 
+                     -lnf com.birosoft.liquid.LiquidLookAndFeel
+
+30. How do I make my statusbar transparent?
+
+    a. Go to View -> Options -> Backgrounds.
+    b. Click on the statusbar in the preview thing in the top half of the 
+       dialog.
+    c. For type of background select "Transparent"
+    d. Select the Setup tab to change the tint color of the transparency
+    e. Select the Tint tab to adjust the level of transparency
+
+31. How do I change the statusbar color?
+
+    a. Go to View -> Options -> Backgrounds.
+    b. Click on the statusbar in the preview thing in the top half of the 
+       dialog.
+    c. For type of background select "Solid Color"
+    d. Select the Setup tab to change the color of the statusbar
+    
+    Feel free to experiment with different combinations of background 
+    options.  
+  
+32. How can I set a background image in jIRCii?
+
+    a. Go to View -> Options -> Backgrounds
+    b. Click on the window in the preview thing.  The window is the inner 
+       most rectangle.  
+    c. For type of background select "Image"
+    d. Select the Setup tab to change the image used in the background.
+
+    You can also set background images for the statusbar or MDI desktop.
+    Just click on which element of the display you want to edit in the 
+    preview thing.  The label in the middle of the dialog will reflect
+    which element of the display your editing background properties for.
+
+33. Can I make jIRCii windows transparent?
+
+    You can't make jIRCii windows themselves transparent.  However you
+    can setup an effect known as pseudotransprency. 
+
+    The psuedotransparent effect is acheived by using the same image for
+    a background in jIRCii as you use on the desktop.
+
+    a. Go to View -> Options -> Backgrounds
+    b. Click on the window in the preview thing.  The window is the inner
+       most rectangle.  
+    c. For the typ of background select "Image"
+    d. Select the Setup tab to set the image used for the Window background
+    e. Choose the same image you use for your desktop wallpaper.
+    f. Select the Transform tab to set how the image should be displayed.
+    g. Check the box that says "Align image with Desktop" 
+    h. repeat steps b thru g for the statusbar and the desktop background
+
+    Selecting align image with desktop will force jIRCii to anchor the image
+    to the corner of your desktop rather than the corner of the jIRCii 
+    window.  If you use the same image transform in jIRCii as you used for
+    your desktop wallpaper then the backgrounds in jIRCii should line up
+    perfectly with your desktop wallpaper.
+   
+    You can also do some further background customization here.  For example
+    you may want to make the background image in the jIRCii windows darker
+    than your desktop wallpaper.  This can be accomplished by adjusting the
+    alpha tint under the Tint tab.
+
+    In short the jIRCii Background Images dialog is confusing at first 
+    however it is also very powerful offering a large number of possible
+    configurations for your window backgrounds.  This is the only eye candy
+    you'll get so enjoy it.
+
+34. How do I strip jIRCii's GUI to only the essentials?
+
+    Yes, the true power of jIRCii is you can have a GUI client that feels like
+    mIRC or you can strip it down to the bare essentials so you feel like you
+    are irc'ing out of a terminal window.  The choice of which extreme and to
+    which extent is yours.  
+
+    To disable all of the GUI elements in jIRCii:
+    a. Select View->Options->Auto /Window
+    b. Disable auto /window for everything (you can reenable this stuff later
+       but ideally, I assume you want to IRC out of one window, correct?)
+    c. Select the "GUI Setup" item from the left hand side tree control.
+    d. Uncheck all items under "Interface Elements"
+    e. Select the ""Switchbar" item from the left hand side tree control.
+    f. Uncheck "Enable Switchbar"
+    g. Click "Ok".
+
+    Now on some operating systems, upon restarting jIRCii, you will notice
+    a 1 pixel border around the jIRCii window.  If you want to get rid of this
+    (afterall, every pixel is valuable) then type the following in a jIRCii
+    window:
+
+    h. /eval setProperty("notabs.border", 0)
+
+    Now comes the final step:
+
+    i. restart jIRCii for everything to take effect.
+
+    Before you know it, you'll be irc'ing console style.  pHEAR!
+
+35. Why don't you allow plugins written in Java, C, Python, Visual Basic etc.?
+
+    Some people have asked me why I use sleep and not some masterpeice of 
+    a language like Python.  Short answer is this:
+
+    Generally scripting languages written on top of Java take advantage of 
+    a neat Java mechanism known as reflection.  This mechanism makes 
+    potentially every function and object in Java available to the 
+    scripter exactly as it would be in Java.  The benefit of this is a lot 
+    of power.  The disadvantage is you get a scripting language that had 
+    no thought put into the design of its own interfaces with the 
+    application environment.  The end result is usally something that is 
+    not very easy for new programmers to pick up on.  If you already know
+    the Java API insid and out along with the applications internal API
+    why not just modify the source code?    
+
+    Sleep on the other hand is flexible about how it integrates into an
+    application.  Using sleep it is simple to make the language feel like
+    it fits into the application.  The interfaces with the application (in
+    this case jIRCii) are thought out.  The end result is something that
+    is better integrated and easier to use, especially for new 
+    programmers.
+
+    As for plugins and such.  Why not just modify the source code?
+
+36. Will you ever charge money for jIRCii?
+
+    No.  jIRCii is my gift to the IRC community.  Therefor I can't charge
+    money for the client.  However I may charge for shipping and handling.
+
+37. Can I get the jIRCii source code?
+
+    Yes!  jIRCii is an open source client.  jIRCii source code and 
+    binaries are released under the artistic license.  
+
+    You can download the source code at:
+    http://jircii.dashnine.org/
+
+    The Sleep source code is available for download as well at the 
+    Sleep Scripting Project:
+
+    http://sleep.dashnine.org/
+
+    Sleep is now released under the LGPL.  
+
+    See license.txt for more information on what freedoms the artistic 
+    license grants you.  
+
+    The artistic license apparently isn't GPL compatible by default.  It 
+    is my intention that pieces of my source code can be used in any open
+    source project so long as I receive some form of credit for the code
+    I wrote.  If you modify it please note that too.
+
+38. Can I use portions of jIRCii's source code in my GPL project?
+
+    Short answer, yes.  I grant you permission to use any jIRCii code "I
+    wrote" licensed under the artistic license in your GPL project and to
+    license your modifications under the GPL.  
+
+    I personally choose not to use the GPL for jIRCii as the viral nature 
+    of the license feels like a bit of a lock-in to me.  However feel 
+    free to do what you need to do.  :)
+
+39. What do the release designations (stable, beta) mean?
+
+    No one has asked me this yet. However I'm going to answer because I'm 
+    sure someone is curious. 
+
+    In general a stable release doesn't have much new in it. I like to 
+    release betas that contain a ton of changes and new features. Betas 
+    are usually tested primarily by me before being released. A stable 
+    release usually contains one or two bug fixes and is based off of a 
+    recently released beta. As such stable releases are considered stable 
+    since they've been tested by people other than me. 
+
+40. How do I embed jIRCii into my website?
+
+    jIRCii is coded to be packaged and deployed via Java Webstart.  I used
+    to provide a signed jerk.jar file and hosting for this purpose.
+
+    At this time my hosting is a bit of a mess and my free certificate has
+    expired.  If there is demand for this feature email me and maybe we
+    can work something out.   rsmudge@gmail.com
+
+    If you want to embed jIRCii into your website on your own then follow
+    these steps:
+
+    1. obtain jerk.jar
+    2. sign it (as jIRCii requires full permissions from Java webstart)
+    3. create a .JNLP file; for an example, download: 
+       http://openjdk.java.net/irc/openjdk.jnlp
+    4. post your signed jerk.jar and .JNLP file to your website.  
+
+    You are now ready to rock.  More details on Webstart can be found at:
+
+    http://java.sun.com/docs/books/tutorial/deployment/webstart/index.html
+
+    This feature does require that your web site users have Java 1.4.2 or
+    later installed.
+
+41. What development environment do you use?
+
+    Don't laugh, I use pico as my text editor.  I should be shot.  Or
+    maybe given an award for writing over 40,000 lines of code in pico.
+
+    I don't use any kind of IDE.  My mainstay right now is the KDE 
+    Konsole.  Konsole seems to be the best tabbed terminal app I've used 
+    so far.  I have one tab setup for compiles.  Another tab setup for
+    running jIRCii from the console.  All other tabs are for individual 
+    files.
+
+    For a build tool I use Apache Ant.  Ant is awesome if your doing 
+    Java programming.  I use a couple of home brew shell scripts to 
+    package jIRCii and thats about it.
+
+    This might sound kind of crude but it has worked for me.  The only
+    place I really lose is by not having a gui environment for designing
+    dialogs.  Since all RAD tools I've tried sucked, I opted just to write
+    a framework for easily creating dialogs.  Problem solved.
+  
+    Hardware wise I have a first generation 12" Powerbook running MacOS X
+    10.3.4.  jIRCii development in the past has been done on Linux using
+    the same type of environment and on Windows using editplus.  
+
+42. Why write another Java IRC Client?
+
+    I don't own a TV or a playstation and I needed something to do.
+
+43. What clients did you rip^H^H^H receive inspiration from?
+
+    Years ago back when I was an IRC scripter.  I wrote an addon called
+    mIRCii.  mIRCii was essentially a multi-server addon for mIRC.  You
+    irc'd through one window using /window to open other windows if you so
+    desired.  jIRCii to some extent is mIRCii turned into a full blown
+    client.
+
+    I stole the shift+click color editing idea from the client OpenChat.
+    OpenChat is essentially a graphical version of ircii.  I think the 
+    goals of jIRCii and the goals of OpenChat are pretty similiar.
+
+    I was heavily inspired by the client irssi in terms of tab completion.
+    That client tab completes everything.
+   
+    The scripting language sleep was of course heavily influenced by perl.
+    Some bits of the hADES and ircii scripting interfaces made there way
+    into sleep.
+
+    I learned a lot from other clients in terms of what not to do.  Many
+    clients have gone overboard on the GUI side.  IRC is a text based 
+    protocol.  As such jIRCii was heavily inspired by text based irc 
+    clients.  You may also notice that jIRCii tries to keep graphical 
+    elements to a minimum and that most things can be disabled in the 
+    options dialog.  Although I did find that usage of jIRCii didn't start 
+    picking up until I added a graphical toolbar.   Hrmmm...
+
+    mIRC gets points for heavy influence by default.  Since mIRC is the 
+    client most people use.
+
+44. How long has jIRCii been in development?
+
+    I started writing jIRCii when I was in high school.  This was mostly
+    an effort to learn Java.  jIRC was my senior project for my high school
+    "research and development" course.  This was back in 1998-1999.
+
+    I became lazy and just used jIRC as a programming playground for the 
+    longest time.  It was a fun project to try out different ideas on.
+
+    Unfortunately a high school kid who can program is not necessarily a 
+    good software engineer.  jIRCii went through a couple of rewrites as I
+    tried out different ideas for organizing my code so it would be easier 
+    to work with.  I never succeeded at the easy to work with part.
+
+    On July 28, 2001 I released jIRCii Beta 1 to a closed group of beta 
+    testers.  This beta process went all the way up to a beta 10 with 
+    several source code only releases of a beta 11.  Beta 10 was released
+    on July 19, 2002.  So about a year long beta process.
+
+    Again I had a period of laziness.  Sometime in April of 2002 I wrote
+    the core of sleep in a weekend.  I integrated sleep into jIRCii and
+    soon realized many of the shortcomings of trying to use a programming
+    language that was written in a weekend.  I knew a rewrite of sleep
+    was necessary.  
+
+    I rewrote sleep and then found I couldn't integrate it because I 
+    changed sleep to much and the old sleep API's were to far entrenched 
+    into the jIRC codebase.  Essentially my code was so damned complicated
+    that I had to stop development because even doing something simple
+    required a lot of thought and even then I usually ended up breaking 
+    stuff.
+
+    During the summer of 2003 I started brainstorming an idea for how to
+    manage the design of jIRCii.   I decided to develop individual 
+    frameworks that were each easy to test on an individual basis.  Once
+    each of these frameworks were written I would then in theory write
+    a little bit of code to tie them all together and voila a functioning
+    peice of software.
+
+    For my last semester of college I pitched the idea of completing a 
+    large software project as an independent study.  With the motivation 
+    of a grade hanging over my head I worked my ass off and arrived at
+    jIRC beta 1 sometime in January of 2004.  Fortunately the design 
+    idea I had worked out beautifully.  jIRCii and sleep were over 40,000
+    lines of code together yet adding new features and editing existing
+    functionality was pretty trivial.  Working on this project became fun
+    again.
+
+    After graduating I did work on jIRCii here and there until I arrived 
+    at what your now using today.  This is now a pretty complete irc
+    client.
+    
+    Short answer:  I've been working on this client for a looong freaking
+    time.  
+
+45. Why don't you wait until you have more changes to do a release?
+
+    Good question.  You may notice the main package jIRCii classes are 
+    stored in is named "rero".  I named the jIRCii package this because
+    I wanted to remind myself of Eric Raymond's advice for creating a 
+    successful open source project: "release early, release often".  
+
+    As such I've been releasing jIRCii quite often.  In fact any time
+    I've either temporarily exhausted my todo list or made a mass of
+    changes I do a release.  This benefits jIRCii and its users in a 
+    big way.  The quick turn around allows me to gather near realtime
+    user feedback on choices I make with jIRCii's development.  With
+    this feedback I can identify and fix problem areas, avoid having 
+    a bad release in the wild for to long, and really develop the 
+    client I want to write and that users want to use.
+
+    In short, I feel each change I make is another step towards
+    making jIRCii into an awesome IRC client.  I feel it is worth
+    letting users keep up if they choose to do so.
+
+    If you don't like the fast turn around time of jIRCii releases
+    then I recommend downloading a released labeled stable and just
+    waiting until the next stable release ignoring betas in between.  
+
+46. I disabled my jircii menubar, how do I get it back?
+
+    Open up the options dialog using Alt+O.  From there navigate to 
+    "GUI Setup" near the bottom.  Make sure the box "Show menubar" is
+    checked.   Press OK and your menubar should be back.  
+
+    If this doesn't work it may mean jIRCii is not loading menus.irc.  
+    This could be due to a rogue script that got loaded.  The best thing 
+    to do in this case is to reset your jIRCii settings.
+
+47. How do I reset the jIRCii settings?
+
+    You should only need to do this if your jIRCii settings become really 
+    messed up.  Symptoms of messed up settings include nothing happening
+    when jIRCii starts up, a blank statusbar, menus not working or showing
+    etc.
+
+    To reset the jIRCii settings you'll need to locate and delete the .jIRC
+    folder.  The .jIRC folder is where jIRCii stores all of your settings.
+
+    MacOS X, Linux, *NIX:
+    The .jIRC folder is located in your home directory.  By default it is a
+    hidden directory.  To delete it just open a terminal and type:
+
+    rm -rf ~/.jIRC
+
+    Windows:
+    The .jIRC folder is located in something similiar to:
+    c:\documents and settings\your user name\
+ 
+    Do a file search for .jIRC and delete it.   
+
+48. My jIRCii window flashes or acts crazy occasionally, what's wrong?
+
+    Java uses a lot of video card hardware tricks to enhance performance.
+    Unfortunately buggy video card drivers can cause problems with the
+    way Java apps render stuff on the screen.  One option is to update
+    your video card driver.
+
+    Another option is to disable some of the hardware acceleration with
+    Java.  You can do this by launching jIRCii with the following options:
+
+    java -Dsun.java2d.ddoffscreen=false 
+         -Dsun.java2d.pmoffscreen=false
+         -Dsun.java2d.d3d=false     
+         -Dsun.java2d.noddraw=true 
+         -jar jerk.jar
+
+    The above is actually one line of text, I've broken it up for the sake
+    of readability.
+ 
+49. How do I pronounce jIRCii?
+
+    jIRCii is named after the infamous UNIX IRC client: ircii.  I pronounce
+    it jay-eye-are-cee-two.  
+
+50. How do I report bugs, feature requests, etc.?
+
+    At this time we don't have a message board or issue tracker.  Your best
+    option is to email me: rsmudge@gmail.com
+
+    Another option is to come to #jIRCii on EFNet.  A number of jIRCii users
+    idle on this channel and complain about what I haven't fixed yet.  They
+    are sort of a support group for users with complaints.  You might like
+    them.
+
+51. Where can I find you on IRC?
+
+    I'm on EFNet (irc.prison.net, irc.mzima.net, etc.) in #jIRCii.  
+
+52. Why can't I use Terminal and other fonts in jIRCii?
+
+    Java supports only true type fonts (.ttf) files.  This is a disadvantage
+    because yes, you can't use fonts such as Terminal.
+
+    However it is also a major advantage.  Many ttf fonts support much of the
+    unicode character set.  Meaning, if you have the write mapping any 
+    true type font can be used to display any character you would like.
+
+53. Can I use old school terminal-style box drawing characters in my script?
+
+    Yes.  Since jIRCii displays text in unicode it is possible to display
+    Cp437 (IBM Codepage 437) terminal style box drawing chars in your 
+    script.
+
+    There are two options for this.  1) you can find a unicode character
+    table and just specify the individual characters with \uNNNN to use
+    them in your script.  2) you could simply use the buildCp437String()
+    function built into jIRCii to remap a string of characters into
+    the what you would expect if you were using a Terminal font.  
+
+54. Can jIRCii display ANSI colors?
+
+    At this time, the answer is no.  However this capability can be
+    scripted.  I have no intention to add this support to jIRCii at this
+    time.
+
+55. This script __________ doesn't work in the latest jIRCii, what happened?
+
+    The newest version of jIRCii uses the newest version of Sleep.  Overall
+    Sleep has had outstanding backwards compatability with old jIRCii scripts.
+    However the new version is much better about reporting errors.  If Sleep
+    is catching something now, chances are it was a bug or weird side effect
+    waiting to happen.  If you need help fixing these issues pop by #jIRCii
+    on EFNet.  We'll try to to help you out.

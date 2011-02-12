@@ -1,0 +1,20 @@
+For text area pre render a glyph vector and draw that.
+
+Theres a new way to get the bounds of a string within a font render 
+context
+
+find out how to get font render context.
+
+consider possibly using suns classes for wordwrapping.  May have to 
+resort to my own classes as they carry over text attributes.  But if 
+suns classes can handle text attributes then why not.
+
+java.awt.font is your friend
+
+my own code can be trusted over suns architecture still.
+
+have a safe bounds optimization i.e. no wordwrapping needed as length
+ of this string is x pixels.
+
+use chapter 14 of Java2D book to test FPS of component.  Keep testing
+until I end up with something I like.

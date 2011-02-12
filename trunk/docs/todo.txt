@@ -1,0 +1,25 @@
+Sleep todo
+-----------
+1. create a BridgeUtilities class that makes writing bridges easier.
+   i.e. BridgeUtilities.registerEnvironment(ScriptEnvironment, "keyword", Environment)
+
+2. rename Block class to ExecutableCode and move to runtime package.
+   Make it easier to use Block.  Move Scalar to runtime package as 
+   well.
+
+3. possibly look at the utility of having Environment extend Function
+
+4. add <keyword> (<predicate>) <block>
+
+jIRC TODO
+-----------
+1. wait event:target/*:source/* { code }
+or
+1. wait <predicate> { code } i.e.
+   wait ($event eq "JOIN" && $nick eq $me) { code; }
+
+2. add a method for selectively enabling / disabling certain syntax within sleep
+   i.e. turn off function predicates
+   i.e. turn off done / halt return values etc.
+
+3. fix bug with /names, causing an empty stack exception

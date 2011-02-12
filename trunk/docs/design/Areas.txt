@@ -1,0 +1,119 @@
+Areas of Development
+
+* DCC System
+* Dialogs
+* IRC Client (aliases, events, features) + client itself
+* Sleep-Core
+* Sleep+RERO 
+* GUI
+* Configuration System
+* Identd Server
+
+IRCClientTestSuite
+-----
+- mantain globals (nickname, realname etc.)
+
+1. initialize IRCClient instance
+2. start reading input from console
+3. send input to client (/blah recognized as a command)
+
+IRCClient
+----
+mantains ServerHandler, AliasHandler, and IRCClientData
+
+ServerHandler
+----
+1. mantains an instance of TextSockt and ProtocolHandler
+2. passes events from TextSocket to ProtocolHandler
+
+ProtocolHandler
+----
+1. Takes text from event handler and parses the text 
+
+
+
+
+AliasHandler
+-----
+1. listens for input events
+2. executes a given command.
+3. mantains an instance of IRCClient
+
+
+
+----
+
+#0001. Fade Nicknames on Idle
+       * keep track of idle information for each nickname
+         - involves having a object with information for each user
+       * Listboxes in the channel object need to display User objects
+         rather than just Strings (so they can be smart about it).
+
+#0002. Notify List
+       * a timer mechanism
+       * access to saved notify list
+       * ability from timer to call an alias/event
+
+#0003. Multiserver
+       * everything an object
+       * ability to mantain which "IRCClient" is active globally
+
+
+Features:
+Notify List
+DCC (Send/Recieve/Resume/TSend/TReceive)
+RERO Server
+Flexible GUI (with /window feature)
+Statusbars
+Listboxes
+Fade nicknames on idle
+Auto reconnect
+ident
+multiserver
+
+
+
+
+
+IRCClient
+-----------
+mantains Server and Client side of the irc client. 
+
+Client Side interactions include handling aliases.
+
+Server side include mantaining the socket and handling events from the 
+   protocol.
+
+Also mantains a data structure for the following features:
+  Internal Address List (Hashtable to reference a *User* object by address)
+  A set of User objects (which include idle time, address, channels etc.)
+  A set of Channel objects (which include users etc.)
+  
+
+
+ClientInstanceUI
+-----
+Manages the switchbar and the JDesktopPane with this ClientInstance.
+
+Data Structures (mantained):
+Methods:
+
+
+ClientInstance
+-----
+Mantains an instance of the client for a given server connection.  Manages
+the Windows, the IRC Client itself, and the socket for the client instance.
+
+Also contains access to the instance GUI which includes the statusbar and the
+desktop pane for the GUI.
+
+Created by: ClientInstanceFactory
+
+Window
+-----
+A hierarchy of Window classes that will include ChannelWindow, QueryWindow,
+StatusWindow, and DCCChatWindow.  Contains methods for operating on the window
+itself and its components, however this is very strictly limited to the Window
+itself.  
+
+

@@ -1,0 +1,50 @@
+<font color="#000099" size="+1"><b>Colors and Text Emphasis</b></font>
+<br>
+<br>jIRCii features the ability to type text with various attributes.  These attributes include bold, underline, reverse, and even color.  
+<br>
+<br>Using this feature your writing goes from plain old boring grey to ultra lame and <FONT COLOR="#FF0000">c</FONT><FONT COLOR="#0000F0">o</FONT><FONT COLOR="#8000FF">l</FONT><FONT COLOR="#808000">o</FONT><FONT COLOR="#008080">r</FONT><FONT COLOR="#FF00FF">f</FONT><FONT COLOR="#C0C0C0">u</FONT><FONT COLOR="#008000">l</FONT>
+<br>
+<br>There are a few built in commands related to typing formatted text.  These are:
+<br>
+<br><b>*</b> Control + K is used for <font color="green">colored text</font>
+<br><b>*</b> Control + B is used for <b>bold</b> text
+<br><b>*</b> Control + U is used for <u>underlined</u> text
+<br><b>*</b> Control + R is used for reverse
+<br><b>*</b> Control + O is used to cancel other formatting
+<br>
+<br><small><i>In jIRCii bold shows up as a brighter version of the current color.  Reverse (Ctrl + R) shows up as a darker version of the current color.</i></small>
+<br>
+<br><b>Typing with Colors</b></font>
+<br>
+<br>To type with colors you simply press Control + K followed by a number specifying the color you want.  jIRCii supports built in colors 1 - 99.  Other irc clients though take advantage of colors 1 - 16.  Therefor when typing text to a channel you'll want to stick with colors 1 - 16.  The colors 1 - 16 are: 
+<br>
+<blockquote>
+<FONT COLOR="#000000">1 - Black</FONT><BR>
+<FONT COLOR="#000080">2 - Dark Blue</FONT><BR>
+<FONT COLOR="#008000">3 - Green</FONT><BR>
+<FONT COLOR="#FF0000">4 - Red</FONT><BR>
+<FONT COLOR="#804040">5 - Brown</FONT><BR>
+<FONT COLOR="#8000FF">6 - Purple</FONT><BR>
+<FONT COLOR="#808000">7 - Orange</FONT><BR>
+<FONT COLOR="#FFFF00">8 - Yellow</FONT><BR>
+<FONT COLOR="#00FF00">9 - Lime Green</FONT><BR>
+<FONT COLOR="#008080">10 - Teal</FONT><BR>
+<FONT COLOR="#00FFFF">11 - Bright Blue</FONT><BR>
+<FONT COLOR="#0000FF">12 - Blue</FONT><BR>
+<FONT COLOR="#FF00FF">13 - Hot Pink</FONT><BR>
+<FONT COLOR="#808080">14 - Dark Gray</FONT><BR>
+<FONT COLOR="#C0C0C0">15 - Light Gray</FONT><BR>
+<FONT COLOR="#CCCCCC">16 - White</FONT>
+</blockquote>
+<br>
+<br>Typing Control+K13pink is my new obsession will show up as:
+<br>
+<br><font color="#FF00FF">pink is my new obsession</font>
+<br>
+<br><b>Background Colors</b></font>
+<br>
+<br>You can also specify background colors to really get the point across.  To specify a background color use Control + K followed by the number of the foreground color, followed by a ',' comma, followed by a number for the background color.
+<br>
+<br>Typing Control+K4,2Blue and Red will yield:
+<br>
+<table bgcolor="#000080"><tr><td><font color="red">Blue and Red</font></td></tr></table>

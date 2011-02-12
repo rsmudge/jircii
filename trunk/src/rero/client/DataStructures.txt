@@ -1,0 +1,30 @@
+This file is a list of the data structures referenced in the central
+data repository hashmap.
+
+
+key                     type                                     source
+---------------------+-----------------------------------------+------------------------------
+scriptVariables        sleep.runtime.ScriptVariables             rero.script.ScriptCore
+loadedScripts          LinkedList                                rero.script.ScriptCore
+aliasBridge            rero.bridges.alias.AliasEnvironment       rero.bridges.BridgeKeeper
+setBridge              rero.bridges.set.SetEnvironment           rero.bridges.BridgeKeeper
+clientInformation      rero.ircfw.InternalDataList               rero.ircfw.ChatFramework
+socketInformation      rero.net.SocketInformation                rero.net.SocketFramework
+commands               rero.client.user.UserHandler              feature
+active                 rero.client.user.ActiveQuery              rero.client.UserHandler
+dcc                    rero.dcc.DataDCC                          rero.client.dcc.FeatureDCC
+
+scriptVariables   - all of the variables in the scripting environment
+loadedScripts     - the scripts that are currently loaded
+aliasBridge       - user defined aliases
+setBridge         - user defined sets
+clientInformation - irc related data structures for channels and users etc.
+socketInformation - information about the current connection
+commands          - interface to call a client command, also to send text to the client for processing
+
+ScriptCore
+  instantiates BridgeKeeper
+
+ChatFramework
+
+SocketFramework

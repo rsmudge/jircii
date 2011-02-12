@@ -1,0 +1,227 @@
+<font color="#000099" size="+1"><b>Scripting Introduction</b></font>
+<br>
+<br><a name="toc"><font size="+1" color="#000099"><b>Table of Contents</b></font></a>
+<br>
+<br>1. <a href="http://www/#part1">Introduction</a>
+<br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.1. <a href="http://www/#sub11">Loading a Script</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2. <a href="http://www/#sub12">Unloading and Reloading a Script</a>
+<br>
+<br>2. <a href="http://www/#part2">Scripting Basic Aliases</a>
+<br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1. <a href="http://www/#sub21">Aliases with Parameters</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.2. <a href="http://www/#sub22">Creating Keyboard Shortcuts</a>
+<br>
+<br>3. <a href="http://www/#part3">Events </a>
+<br>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.1. <a href="http://www/#sub31">Example: A file request script</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.2. <a href="http://www/#sub32">Example: The Swear Kicker</a>
+<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.3. <a href="http://www/#sub33">Defining your own output</a>
+<br>
+<br>4. <a href="http://www/#part4">Where to go from here</a>
+<br>
+<br><b><a name="part1"><font color="#000099" size="+1">1. Introduction</font></a></b>
+<br>
+<br>Hello, this is just a quick tutorial to give you an idea of what jIRCii scripting is about.  You may be asking yourself, what is a script?  A script is a little mini-program that users like you can write.  These little mini-programs can further customize jIRCii to your personal preference, change the look of jIRCii, and even add new features.
+<br>
+<br><b><a name="sub11"><font color="#000099">1.1 Loading a Script</font></a></b>
+<br>
+<br>To load a script you have two options.  You can use the Script Manager found in the jIRCii Options dialog (View -&gt; Options -&gt; Script Manager).  You can also use the /load command i.e.:
+<br>
+<br><font color="blue" face="Monospaced"><small>/load c:\jircii\myscript.irc</small></font>
+<br>
+<br>The above loads the script myscript.irc into jIRCii.  If myscript.irc loaded successfully you should see something like the following message:
+<br>
+<br><font color="red" face="Monospaced"><small>Successfully loaded script myscript.irc</small></font>
+<br>
+<br><b><a name="sub12"><font color="#000099">1.2 Unloading and Reloading a Script</font></a></b>
+<br>
+<br>Scripts can be unloaded using the Script Manager in the jIRCii Options dialog.  You can also use the /unload command.
+<br>
+<br><font color="blue" face="Monospaced"><small>/unload myscript.irc</small></font>
+<br>
+<br>The above unloads the script myscript.irc.  Notice that you don't have to specify the full path to it.  You just type the script name.
+<br>
+<br>Lets say you are writing a script and you make a modification while jIRCii is running.  For the changes to take effect you need to reload the script.   To reload a script use:
+<br>
+<br><font color="blue" face="Monospaced"><small>/reload myscript.irc</small></font>
+<br>
+<br>The above unloads and loads myscript.irc.  Again notice that you don't have to specify the full path to the script.  Just the script name.
+<br>
+<br><center><small>[ <a href="http://www/#toc">contents</a> | <a href="http://www/#part1">1</a> | <a href="http://www/#part2">2</a> | <a href="http://www/#part3">3</a> | <a href="http://www/#part4">4</a> ]</small></center></p>
+<br>
+<br><b><a name="part2"><font color="#000099" size="+1">2. Scripting Basic Aliases</font></a></b>
+<br>
+<br>One of the most basic scripts you can make is an alias.  An alias is a user defined /command.  To define an alias create a text file called myscript.irc.  You can use any editor you want, notepad, TextEdit.app, vi, etc.  Within this editor type the following:
+<br>
+<br><font face="Monospaced"><small>alias sleep {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; call("/me falls asleep on irc Zz...");</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>Go ahead and save your file myscript.irc and load it into jIRCii.  If you saw the "Successfully loaded script myscript.irc" in your Status window then you are on track so far.  If not make sure you didn't miss anything when typing the above alias.
+<br>
+<br>So what did that script do?  It added a new command to jIRCii called /sleep.  The /sleep command performs an action in a channel using the already defined /me command.  Lets go through this line by line to help you understand.
+<br>
+<br>The first line you have the alias keyword.  The alias keyword tells jIRCii that you want to define a new /command.  The next word sleep is the name of the new /command.  In this case we are adding the command /sleep.  The curly brackets { } are used to group all of statements of the alias together.
+<br>
+<br>You may notice on the second line there is call("some stuff").  call() is actually a function built into jIRCii that calls a /command as if you typed it into an editbox.  The "/me falls alseep on irc Zz..." is the parameter to the call function.  You may notice the "/me falls asleep.." text is enclosed in double quotes.  jIRCii scripts require text to be enclosed inside of single ' or double " quotes.  Text enclosed in these quotes is referred to as a string.  The semicolon ; at the end of the second line signifies the end of the statement.
+<br>
+<br>Aliases can execute more than one statement.  For example lets add on to our sleep alias.
+<br>
+<br><font face="Monospaced"><small>alias sleep {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; say("boy am I tired *yawn*");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; call("/me falls asleep on irc Zz...");</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>You may notice I've added a new line to the alias.  The second line now calls the function say().  The say function takes the string parameter and sends it to the current channel.  If you typed:
+<br>
+<br><font color="blue" face="Monospaced"><small>/sleep</small></font>
+<br>
+<br>Users would now see:
+<br>
+<br><font color="red" face="Monospaced"><small>&lt;YourNick&gt; boy am I tired *yawn*</small></font>
+<br><font color="red" face="Monospaced"><small>* YourNick falls asleep on irc Zz...</small></font>
+<br>
+<br><b><a name="sub21"><font color="#000099">2.1 Aliases with Parameters</font></a></b>
+<br>
+<br>Aliases can take parameters as well.  For example lets make an alias that bonks a user on the head.
+<br>
+<br><font face="Monospaced"><small>alias bonk {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;  call("/me bonks $1 on the head");</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The alias above defines a command /bonk.  You may notice the $1 inside of the parameter to the call function.  In jIRCii variables usually begin with the $ dollar sign.  Parameters to aliases are available as variables named $1 for the first parameter, $2 for the second parameter, etc.
+<br>
+<br>To bonk blue-elf on the head you would simply type:
+<br>
+<br><font color="blue" face="Monospaced"><small>/bonk blue-elf</small></font>
+<br>
+<br>The channel would see:
+<br>
+<br><font color="red" face="Monospaced"><small>* YourNick bonks blue-elf on the head</small></font>
+<br>
+<br><b><a name="sub22"><font color="#000099">2.2 Creating Keyboard Shortcuts</font></a></b>
+<br>
+<br>Now that you know how to create an alias I'll show you how to create a keyboard shortcut.  Creating a keyboard shortcut is very similar to creating an alias that takes no parameters.
+<br>
+<br>For example lets take the /sleep alias and make it execute when you press F1.
+<br>
+<br><font face="Monospaced"><small>bind F1 {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; say("boy am I tired *yawn*");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; call("/me falls asleep on irc Zz...");</small></font>
+<br><font face="Monospaced"><small>} </small></font>
+<br>
+<br>The second, third, and fourth lines of the above script are exactly the same as the /sleep alias.  The first line is the only difference.  The keyword bind tells jIRCii that you want to bind the specified key to the following script.  The specified key in this case is F1 as in the F1 key on the keyboard.
+<br>
+<br>Other keys and key combinations can be bound to as well.  For example lets bind some code to require Control and S to be pressed at the same time:
+<br>
+<br><font face="Monospaced"><small>bind Ctrl+S {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; say("boy am I tired *yawn*");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; call("/me falls asleep on irc Zz...");</small></font>
+<br><font face="Monospaced"><small>} </small></font>
+<br>
+<br>In the above example Ctrl represents the control key.  The + means both keys have to be pressed at the same time in this case the second key is S.  
+<br>
+<br>Numerous shortcut combinations can be made using +.  Ctrl and Alt represent the Control and Alt keys respectively.  Nearly any key combination A-Z, F1-F12, enter, home etc. can be bound.  See the <a href="http://jircii.dashnine.org/download/scriptjirc.pdf">jIRCii Scripting Reference</a> for more details.
+<br>
+<br><center><small>[ <a href="http://www/#toc">contents</a> | <a href="http://www/#part1">1</a> | <a href="http://www/#part2">2</a> | <a href="http://www/#part3">3</a> | <a href="http://www/#part4">4</a> ]</small></center></p>
+<br>
+<br><b><a name="part3"><font color="#000099" size="+1">3. Events </font></a></b>
+<br>
+<br>The next logical topic to write about is scripting your own event listeners.  In jIRCii many things happen.  People join a channel, people leave a channel, you type text, people type text etc.   It is possible to write scripts that respond to nearly any occurrence on IRC or within jIRCii itself. 
+<br>
+<br><font face="Monospaced"><small>on receive {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;call("/notice $nick Thanks for the file $nick $+ !");</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The example above responds to the "receive" event.  The receive event is triggered when you finish receiving a file from someone.  In the snippet above the keyword on tells jIRCii that you want to execute the script inside of the curly braces { } when the  specified event occurs.  
+<br>
+<br>This example sends a notice thanking a user for sending you a file.  You'll notice the variable $nick.  Certain variables are available when an event occurs.  In the case of on receive $nick is the name of the user who sent you the file.   
+<br>
+<br>You will also notice the $+ inside of the parameter string.  The variable $+ is a special variable used only inside of double quoted strings.  The variable $+ joins the stuff on the left of it with the stuff on the right of it.  
+<br>
+<br>When you finish receiving a file from Tijiez, he should get a notice that looks like:
+<br>
+<br><font color="red" face="Monospaced"><small>-YourNick- Thanks for the file Tijiez!</small></font>
+<br>
+<br><b><a name="sub31"><font color="#000099">3.1 Example: A file request script</font></a></b>
+<br>
+<br>One common type of script is a file request script.  Lets say people are constantly asking you for a copy of your script.  You get sick of constantly sending the file to everyone and decide you want to automate this somehow.  In this case we'll write a little script that sends myscript.irc whenever someone types !script in a channel:
+<br>
+<br><font face="Monospaced"><small>on public {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; if ($1 eq "!script") {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  call("/dcc send $nick c:\jircii\myscript.irc");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; }</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The above is a simple script to automatically send myscript.irc to people who request it by typing !script in a channel.   The event named public is triggered whenever a user says something in a channel.  This only triggers when someone other than you says something though.  So you can't type !script and expect to send yourself a file.
+<br>
+<br>Another new concept in this script is the if statement.  An if statement is used for executing script inside of curly braces { } only when a certain condition is true.  In the case of the example above we are checking if the first word of text from the user is "!script".  If it is then we send $nick the myscript.irc file.
+<br>
+<br>In public events $1 is equivalent to the first word from the user, $2 is the second word, $3, is the third etc.  The value eq is a condition operator that checks if the left hand side is equal to the right hand side.  In the example above we are checking if $1 is equal to !script. 
+<br>
+<br>Variable names such as $1 do not have to be enclosed inside of double quotes.  However text used in scripts such as !script should be enclosed in quotes always.
+<br>
+<br><b><a name="sub32"><font color="#000099">3.2 Example: The Swear Kicker</font></a></b>
+<br>
+<br>A more in depth example for responding to channel events is the swear kicker.  A swear kicker script looks for swear words in channel messages.  If a user is caught swearing they are kicked from the channel.
+<br>
+<br><font face="Monospaced"><small>on public {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; if ("foo" isin $1- || "bar" isin $1- || "fee" isin $1-) {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;call("/kick $0 $nick no \bswearing\b allowed!");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; }</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The example above looks for three "swear" words in text from the user.  If someone says something with foo or bar or fee in it, then this script will kick them from the channel.
+<br>
+<br>Notice the || inside of the if statement.  The || can be read as or.  It means if foo is in the text from the user or bar is in the text from the user or fee is in the text from the user then execute the following script.
+<br>
+<br>In the case of channel events $0 represents the channel name.  You will also notice instead of $1 for the first word we are using $1-.  The variable $1- means all words from the first one on.  
+<br>
+<br>Another special thing in this script is the use of \b inside of the double quoted " string.  The character \b is a special sequence that represents the bold character.  Using \b is the same as typing Ctrl+B in jIRCii itself.   This is called an escape in Sleep (the jIRCii scripting language).  Other escapes include \c for color, \u for underline, and \r for reverse.  
+<br>
+<br>If you want to have the word \b in your text prefix it with another backslash \ i.e. \\b.
+<br>
+<br><b><a name="sub33"><font color="#000099">3.3 Defining your own output</font></a></b>
+<br>
+<br>Sometimes an event occurs and you may want to stop the processing of that event.  A case were you might want to do this is when defining your own theme.  For example lets say you want jIRCii to show user addresses when they join a channel:
+<br>
+<br><font face="Monospaced"><small>on join {</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;echo($0, "*** $nick ( $+ $address $+ ) has joined $0");</small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp;halt;</small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The example above responds to a join event.  A join event occurs whenever a user joins a channel.  You will notice on line 2 that there is a new function called echo.  The echo 
+<br>function displays text on your screen.  All functions we've dealt with up to this point have taken one parameter.  The echo function in this case is using two parameters.  Parameters to functions are separated by the , comma character.  
+<br>
+<br>$0 is the first parameter to the echo function.  The second parameter is a string formatted to say that a user has joined a channel.
+<br>
+<br>On the third line of this script is the word halt.  The halt command is used inside of events.  When a script uses the command halt the script will stop processing.  Using halt will also prevent jIRCii and other loaded scripts from processing the event.  Using halt in this way allows us to redefine how jIRCii displays an event message.
+<br>
+<br>jIRCii provides another mechanism for redefining how it displays messages for its events.  This way is easier than writing an event handler for every single event.  Let's say we want to redefine the join message when a user joins a channel:
+<br>
+<br><font face="Monospaced"><small>set CHANNEL_JOIN { </small></font>
+<br><font face="Monospaced"><small>&nbsp;&nbsp;&nbsp; return "*** $nick ( $+ $address $+ ) has joined $0"; </small></font>
+<br><font face="Monospaced"><small>}</small></font>
+<br>
+<br>The script above redefines how jIRCii displays the CHANNEL_JOIN message.  The keyword set states that we want to define the text for the specified event.
+<br>
+<br>This script uses another new command called return.  Notice the parameter to return is not enclosed in ( ) parentheses.  This is allowed because return is not a function call.  The purpose of return is to take the parameter and return it to jIRCii.  
+<br>
+<br>After all scripts have processed an event and after jIRCii has processed an event, jIRCii looks for a set that defines how the message for that event should be formatted.  jIRCii then executes the script defined with the set MESSAGE_NAME command.  
+<br>
+<br><center><small>[ <a href="http://www/#toc">contents</a> | <a href="http://www/#part1">1</a> | <a href="http://www/#part2">2</a> | <a href="http://www/#part3">3</a> | <a href="http://www/#part4">4</a> ]</small></center></p>
+<br>
+<br><b><a name="part4"><font color="#000099" size="+1">4. Where to go from here</font></a></b>
+<br>
+<br>This tutorial is merely meant to be a starting point for writing jIRCii scripts.  You now know enough to understand what a basic script is doing.  The next logical step is to learn more about sleep.  Sleep is the scripting language behind jIRCii.  The <a href="http://sleep.dashnine.org/manual">Sleep 2.1 Manual</a> has a tutorial to start with.
+<br>
+<br>Once you have an understanding of Sleep you may want to read the <a href="http://jircii.dashnine.org/download/scriptjirc.pdf">jIRCii Scripting Reference</a>.  The <a href="http://jircii.dashnine.org/download/scriptjirc.pdf">jIRCii Scripting Reference</a> covers all of the jIRCii specific stuff in Sleep.. 
+<br>
+<br>After you read these documents you can further your learning by looking at other jIRCii scripts.  Just download a script from the jIRCii homepage, open it in your favorite text editor, and start learning.  
+<br>
+<br>Hopefully this helps.  If you would like some one on one assistance stop by the jIRCii IRC Channel #jIRCii on EFNet.
+<br>
+<br>Good luck!
+<br>
+<br><center><small>[ <a href="http://www/#toc">contents</a> | <a href="http://www/#part1">1</a> | <a href="http://www/#part2">2</a> | <a href="http://www/#part3">3</a> | <a href="http://www/#part4">4</a> ]</small></center></p>

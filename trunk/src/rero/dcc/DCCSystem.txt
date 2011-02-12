@@ -1,0 +1,91 @@
+Notes:
+There is no DCC Framework class.  Right now connections are just instantiated
+and added to the dcc data structure thing.  I'll figure out a way to make this
+more of a framework class if the need arises.  Wish me luck.  These may just
+end up being support classes for a mini DCC framework.
+
+
+
+This file is a description of the DCC Architecture.  The package rero.dcc
+is not responsible for handling ircd parsing or anything.  The dcc package
+does however provide methods for setting up the dcc's and parsing the 
+protocols.  
+
+DCC Events are fired through the irc framework.  
+
+DCC Architecture
+================
+
+DCC Listener
+   General class that knows how to listen for a connection.  Fires events 
+   for a connection, disconnection, and socket error.  Also responsible
+   for updating DCC Data structure
+   
+   Creates a Socket class.
+
+   The connected Socket class is passed to a proxy class that contains an
+   implementation of a DCC Protocol, wether it be DCC Send, Receive, or
+   Chat. 
+
+DCC Connection
+   General class that knows how to connect to a specified server.  Fires
+   events for a connection, disconnection, and socket error.  Also
+   responsible for updating DCC Data Structure
+
+   Creates a Socket class
+ 
+   The connected Socket class is passed to a proxy class that contains an
+   implementation of a DCC Protocol, wether it be DCC Send, Receive, or
+   Chat. 
+
+Events
+==============
+Fired through the irc frameworks mechanism
+
+send_start
+send_complete
+send_error
+
+receive_start
+receive_complete
+receive_error
+
+chat_open
+chat
+chat_close
+
+
+TODO
+==============
+x Make DCCImplementation an abstract class, move as much functionality as possible to it.
+
+Create DataDCC class, make it so the following classes of DCC's can be iterated through
+   active dcc's
+   inactive dcc's
+   all dcc's
+   == need a way to determine when inactive dcc's are going to go bye bye
+
+x add an isConnected to DCCImplementation, possibly consider DCC states i.e.
+   DCC_WAIT
+   DCC_OPEN
+   DCC_CLOSED
+
+- Make more variables available to scripters (if possible / if time)
+
+Make each DCCImplementation hold a reference to the server they are associated with
+
+Make DataDCC reference be static
+
+Make DCC Framework be non static and only way to get DataDCC is through DCC Framework, this way
+  if we want DataDCC to be non static in the future we can do it.   The ChatFramework might make a good
+  key for now.  In the future though it is possible some sort of other client accessor class will be
+  used.  So be prepared for that change over.
+
+If DataDCC doesn't contain much, some other statistics might be cool like
+  total number of connections open
+  total amount of bandwidth in use (send / receive)
+  etc.
+  dcc stuff is all about the statistics.  
+
+  some sort of way to remove inactive connections we don't care about anymore.
+  maybe chats can remove themselves upon dieing.  I think sends / receives should as well.

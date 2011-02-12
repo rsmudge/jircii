@@ -1,0 +1,9 @@
+The documents in this directory are just a loose snapshot of some of the project related stuff.
+Buried within the source code for jIRCii are various text files spilling out design decisions
+and ideas.
+
+If you want to mess around with the source code do a find for all of the text files first.  
+
+They'll help offer some hints as to what was going on.
+
+						-- Raffi

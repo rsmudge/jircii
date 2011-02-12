@@ -1,0 +1,36 @@
+<font color="#000099" size="+1"><b>Contributors</b></font>
+<br>
+<br>jIRCii has been a work in progress for a long time now.  I originally started it as a project to learn java while in high school.  I tinkered with it as a hobby throughout college.  I didn't make that final push to create a release quality product until now though.  Anyways with such a long history as a project there are to many people to thank so I'm going to keep this list short.
+<br>
+<br><b>Development Team</b>
+<br>Raphael Mudge (<i>`butane</i>) &lt;-- me :)
+<br>Serge Baranov (<i>Serge</i>)
+<br>Andreas Ravnestad (<i>oracel</i>)
+<br>
+<br><b>Patch Contributors</b>
+<br>Mouton - found and fixed a Ctrl+K parsing bug
+<br>Elly   - built initial UnrealIRCD support, bug fixes
+<br>
+<br><b>Peter Arsoff</b></font>
+<br>I'd like to thank Peter Arsoff (aka JakieChan).  He's the one who created the jIRC logo and all of the little window icons you see.  He also hates Java.
+<br>
+<br><b>blue-elf</b></font>
+<br>I absolutely have to acknowledge the help and constant feedback provided by blue-elf.  We've been exchanging ideas and complaints on a near daily basis for months now.  His influence on the outcome of this client is huge.  If it sucks blame him, if this client is good then acknowledge me.
+<br>
+<br><b>hick.org</b></font>
+<br><a href="http://www.hick.org/">hick.org</a> is awesome. hick.org provided hosting for jIRCii and other projects I have free of charge.  I'm greatly appreciative of this.  I'm not sure if this is because they think these projects are cool or if its because they've forgotten I have an account on the machine.  One way or another the end result is the same, thanks for the hosting guys.
+<br>
+<br><b>Tijiez</b></font>
+<br>I owe a thanks as well to Tijiez for running the jIRCii mirror site at <a href="http://jircii.leenux.net">http://jircii.leenux.net</a>.  Tijiez has had a huge influence on jIRCii through a series of constant complaints and feature requests.
+<br>
+<br><b>Tjerk Vonck</b></font>
+<br>I owe a shout out to <a href="http://www.mirc.co.uk">Tjerk Vonck</a> for his excellent servers.ini file.  I wouldn't want to mantain that monster.  jIRCii uses the mIRC servers.ini format for its server list.  Thanks for mantaining that file!
+<br>
+<br><b>Targaff</b></font>
+<br>The nifty default jIRCii toolbar file was created by an mIRC user, Targaff.  jIRCii's toolbar file format is semi compatible with mIRC's.  Targaff did an excellent job and I wanted to make sure credit is given where credit is due.
+<br>
+<br><b>Claude Duguay</b></font>
+<br>Source code for the sorted table (used in the /list dialog) is (c)opyright 2002 Claude Duguay.  I was feeling lazy so I opted to use some code Carl had submitted to the magazine JavaPro.  
+<br>
+<br><b>You?</b></font>
+<br>All those folks whom I knew on IRC that feel like they didn't get greeted: You probably did, look around the client for easter eggs.

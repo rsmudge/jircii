@@ -1,0 +1,1406 @@
+Release 0.9 
+====
+- jIRCii now uses the Nimbus look and feel and Single Document Interface modes
+  on all operating systems by default. This look is much more modern.
+- Default fonts on Windows and OS X are now bolded
+- Added new status and miscellaneous window icons
+- Added some white-space to the right of the "close window" button in SDI mode
+- Options window is wider to accomodate IRC network selector on OS X
+- List windows (/list -gui and others) now use a different icon from the status
+  window.
+- Removed "Applications" configuration. jIRCii now uses Java's Desktop API to
+  launch a URL.
+- Removed "random servers" group from server connect dialog
+- jIRCii is now friendly to the latest format of mIRC's servers.ini file
+- Updated servers.ini to the latest from http://www.mirc.co.uk/servers.ini
+- join/part messages in default theme now shows addresses
+- /load can now load scripts distributed into the jerk.jar
+- Removed black-listing of GTKLookAndFeel for Linux systems (set use Native L&F
+  option to get it). After 7 years, it has matured enough to work with jIRCii
+  [See Beta 15 notes].
+
+Beta    45 release 22 Sept 09
+====
+- Fixed a bug preventing /list -gui window from being closed.  I couldn't
+  let this one wait until the next release.
+- Fixed tab command completion
+- Upgraded to Sleep 2.1u4, several bug fixes and a few new features.  
+- $mouse variable in on click/dclick events is now a java.awt.event.MouseEvent 
+  object.  You can now call Java methods on this object if you need to.
+- Ctrl+Tab now cycles jIRCii windows (similar to Ctrl+Right Arrow)
+- fixed a bug with nick changes breaking jIRCii on InspIRCd servers
+- jIRCii now supports ! and + channels.  Thanks creative IRCDs!  You're
+  really innovating now.
+- default script now shows channel part messages (when specified)
+
+Beta    44 release 7 Aug 08
+====
+- updated scripting engine to Sleep 2.1-u2.5, over 50 logged improvements
+  and feature changes.  If it doesn't break your script you are bound
+  to like it.  Here are the compatability changes to watch out for:
+
+  -- this release catches more syntax errors, beware this may affect you
+  -- &indexOf now returns $null when no matches were found, check for
+     this with the is operator i.e. if (indexOf($str, " ") is $null)
+  -- &subarray was renamed to &sublist; &subarray still works just
+     be aware that the docs will refer to &sublist
+
+- replaced jIRCii Scripting PDF with a clean HTML version.  Thanks to
+  Dan Fare for getting this started
+- fixed a Sleep bug that was causing &parseSet to freak out in certain
+  cases (this was causing the version reply not halting issue found in
+  Slurge)
+- added &getWindowSize("window name") to get the width of the specified
+  window (in pixels)
+- added &strwidth('some string') to get the width of the specified string
+  (in pixels) using the current font metrics
+- trying to connect with no server selected will now bring up a dialog
+  asking user to select a server
+- fixed Sleep bug with sublist used on read-only arrays (this was 
+  breaking /names in some jIRCii scripts)
+- reworked timer code to prevent concurrent modification exceptions
+  caused by timers making timers or stopping timers during their
+  execution
+- jircii MDI mode now opens windows maximized if the last active window
+  is maximized
+- timers now quit when an IRC session is closed
+- fixed several roadblocks preventing jIRCii from releasing memory when
+  an IRC session is closed.  this change should make jIRCii much more
+  stable when running for long periods of time.
+
+[Note to Serge: you may want to recompile your addons]
+
+Beta    43 release 9 May 08
+====
+- fixed alpha order of some aliases in the Help -> Commands menu
+- jIRCii now creates the DCC receive directory if the directory
+  does not exist.
+- replaced call to skip with in Send.java with skipFully provided by
+  nanaki at gmail.com using Find Bugs http://findbugs.sourceforge.net/
+- implemented /kill <nick> <reason> command
+- updated scripting engine to Sleep 2.1-b25.  
+- added a check to the word wrapping code to prevent infinite recursion
+  when the window becomes too small.
+
+Beta    42 release 26 Nov 07
+====
+- Fixed a MacOS X 10.5 (leopard) issue with font metrics.  This is a work
+  around to force jIRCii to use the Quartz renderer in lieu of the Sun
+  renderer.  I don't know why the Sun one is broken.  Sun: what is up?
+- Upgraded to Sleep 2.1-b20.  Lots of changes.  Again view the changelog:
+  http://sleep.hick.org/changelog.html
+- updated CTCP SOURCE reply and internal help documentation to reflect
+  current information and URLs
+- added a WALLOPS and SEND_WALLOPS sets; updated the default.irc script to
+  include these.  also fixed /wallops; per request of drakx
+- improved the menubar refresh for server switches by a small factor; 
+  ideally I'd like to eliminate this issue but it will take some code
+  restructuring to do this.  this is mostly an issue on MacOS X where
+  menubar changes take effect immediately (unlike other platforms *ahem*)
+- on disconnect the statusbar now immediately shows nick as <Unknown>
+- bound Meta+H and Meta+O to open the help and option dialogs
+- reconnect now uses the last nickname you held; not your default nick
+- fixed a bug with jIRCii's processing of config numerical data--this was
+  causing DCC receives to not work and other weird issues for users who
+  failed to visit the appropriate options dialog.
+
+Beta    41 last minute update 25 Mar 07 :)
+====
+- Small last minute update to unbreak a potential issue with script
+  debugging.  This really only affects scripters.  My apologies.
+- Added a jircii.xpm icon image for Linux users to the extra/ directory
+  submitted by mneptok, so thank him if you get a chance.
+
+Beta    41 release 24 Mar 07
+====
+- Updated to Sleep 2.1-b14 (is it even released yet?).  Lots of changes.
+  See the full changelog at: http://sleep.hick.org/changelog.html
+
+  Highlights include:
+  -- Addition of try/catch blocks and a throw command
+  -- Watch variables to assist with debugging 
+  -- an include function for including external files into a script
+  -- a profiler for seeing where your scripts spend all their time
+  -- assignment ops i.e. +=, *=, /= etc.  
+  -- performance enhancements and several bug fixes!!
+
+- Fixed a bug where a popup trigger on MacOS X could also trigger a
+  mouse clicked event (causing inadvertant creation of query windows
+  even when you don't want them).
+- Fixed a bug that caused psuedo transparency image to be recalculated 
+  with every window resize.  Resizing with psuedo transparency should feel
+  a little faster now.
+- Disabled apple.awt.showGrowBox property in Info.plist, this stops the 
+  drawing of the OS X grow box in the lower right corner (functionallity it
+  is still there, this just prevents the box itself from obscuring the client)
+- jIRCii Weblaunch/command line options to specify irc URL now allows
+  ircs:// URLs for connecting to an SSL server.  Port information is allowed
+  as well.
+
+Beta    40 release 12 Oct 06
+====
+- Improved find dialog slightly, if there's any previous search text in
+  the textfield, that text is now selected when the find dialog is opened
+  (oracel)
+- Support for Unreal IRCD extended whois ('connecting from' & 'using modes')
+  (Serge)
+- Fixed a bug with the channel list window (Serge)
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?8300256
+- Fixed a bug joining an empty channel not reflecting personal +o status (Serge)
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?7013225
+- Fixed a bug with +/% modes getting confused precedence on UnReal IRCDs
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?7056241 (Serge)
+- Clicking on a channel with an @/+ prefix now properly opens the channel
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?9936279 (Serge)
+- Fixed USERHOST parsing bug on Freenode, thanks to borked IRCD on their part
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?3984134 (Serge)
+- On perform commands are now always evaluated as if they were typed from the
+  status window. (Serge) 
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?4487090 (Serge)
+- Fixed: Nicknames do not show non-idle status after an action
+  http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?1912086 (Serge)
+- Added a naming conventions for scripts to allow a charset to be specified
+  when loading the script.  The convention is: 
+  <script_name>.<charset>.irc 
+
+  List of valid charsets: http://www.iana.org/assignments/character-sets
+- Fix for http://jirc.hick.org/cgi-bin/bitch.cgi/view.html?4225366
+  Double click is now the default to open links and channels.
+  dclick.links config option controls this behavior (Serge)
+- cclick event, fired when user clicks on empty channel window area.
+  $item is set to window name, $clicks is set to number of clicks (Serge)
+- $clicks variable added for all click events (Serge)
+- Ctrl+X now cuts text instead of cycleQuery() which is now Ctrl+Z.
+  It's a fix for http://jircii.hick.org/cgi-bin/bitch.cgi/view.html?8150450
+  (Serge)
+- Fixed pasting of multiple lines deleting current input field text (Serge)
+- Implemented automatic word wrapping of long messages if packet doesn't
+  fit 512 bytes RFC length. For details check this link:
+  http://www.resultspk.net/hackirc/irchks-chp-13-sect-3.html (Serge)
+- Fixed modes in nicklist and status bar (all possible channel modes
+  should be correctly supported now, including &, ~, .) (Serge)
+- Fixed &getModeFor returning 2 characters in some cases. According
+  to docs it should always return the highest channel mode user has
+  as a single character (Serge)
+- Added @ &getModeChars function, returns channel mode chars supported
+  by the server (@,%,+,&,~,.) (Serge)
+- Fixed modes parsing for modes not currently handled by jIRCii internal
+  data structures (this caused problems like incorrect modes for users
+  in the nicklist) (Serge)
+- Whois codes support (671 - Unreal secure connection, 310 - Unreal
+  available for help, 703 - ircd-RU translation scheme) (Serge)
+- formatTime3 function, takes time in seconds, returns something like:
+  "13 days, 23 hours, 8 minutes, 54 seconds". Default script is changed
+  to use this function for idle times (Serge)
+- Default "/whois $1" in menus is changed to "/whois $1 $1" to show idle
+  time for all users (not only users that are on the same server) (Serge)
+- Upgraded scripting engine to Sleep 2.1-b6 lots and lots of changes (Raffi)
+- Added a /debug command for setting the trace, warn flags for a script i.e.:
+  /debug xdcc.irc +trace or /debug xdcc.irc -trace  (Raffi)
+  scripts can programatically set debug flags, see the sleep docs for more
+  info
+- fixed a bug with on input event breaking setInputText, text is immediately
+  cleared from edit box prior to fireing events.  Typed text is available as
+  $1- within on input though
+
+Beta    39 release 07.30.05
+====
+- The find feature is now case insensitive (oracel)
+- Fixed bug in command history, the history was not reset when pasting
+  multiple lines of text (oracel)
+- Fixed flipped Ctrl+Click and Shift+Click behavior in the nicklist (Serge)
+- Modified the built-in /topic command to display the current topic
+  instead of unsetting it if no topic message was specified. (oracel)
+- Added the built-in command /ut to unset the topic in a given channel.
+  (oracel)
+- Both /topic and /ut now uses the currently active channel name if no
+  channel name is excplicitly given as a parameter to the respective
+  commands (oracel)
+- Fixed bug with quit message showing twice in the status (turned out to
+  be a problem with the printAll function which has been fixed).
+- Fixd bug with IRC parser not creating $PARMS$ correctly when only a
+  : is present.
+- &use (in jIRCii) now cache's the shared script instance causing any
+  loaded modules to be instantiated only once for all jIRCii sessions
+- fixed several bugs in the MDI window management routines
+- Added a workaround to keep Ctrl+Tab from freezing jIRCii on Windows.
+  Ctrl+Tab can still be binded by scripts though.
+
+Beta    38 released 07.18.05
+====
+- jIRCii command history behavior has been completely overhauled to feel
+  more like mIRC and other clients (oracel)
+- fixed pasted text being omitted from command history (oracel)
+- a bug has been fixed where jIRCii list dialogs (/list etc.) did not
+  have the appropriate row height set (Serge)
+- windows can now be closed by shift+clicking the switchbar button (Serge)
+- added better URL matching for clicked links (Serge)
+- added a check to getModeFor() to prevent a null pointer exception
+- fixed a potential deadlock issue from the listbox painting code
+- upgraded scripting library to Sleep 2.0-stable
+- fixed repainting issues with the channel listbox and statusbar under XP
+  (Serge/raffi)
+- fixed bug with auto resume option, if a file is complete, auto resume
+  will no longer pop up a dialog asking you to rename the saved file.
+  (the idea behind the auto options is to be hands off...); a message is
+  fired to indicate this case as well.
+- moved the Update IAL on Join and Auto Reconnect options to a new dialog
+  panel called Client Options
+- added an option to strip out all formatting codes from IRC messages
+- fixed /load ~/file not resolving ~
+
+Beta    37 release 07.13.05
+====
+- fixed resource loading to ensure files in .jIRC have priority over 
+  internal resources
+- updated to Sleep 2.0-b11 (from b9)
+  be aware! the behavior of single quoted strings has changed slightly.
+  '\\' is now \; this breaks fserve.irc and I recommend if you are using 
+  it that you upgrade immediately
+- rename window now does nothing if the new window name already exists...  
+  thanks to serge for the bug report (now about that text selection...)
+- unbroke Alt+1 .. Alt+n for channel switching 
+- made a jIRCii launch service change, altnick is now based on the 
+  specified primary nick iff no altnick exists and a primary nick is 
+  speciifed.  If no primary nick is specified jircii will use the 
+  lamer_nnnn nickname.  
+- made auto reconnect on disconnect an option (under IRC Options dialog)
+- on disconnect initial IRC_RECONNECT message goes to all windows, 
+  subsequent ones only go to the status window
+- fixed a bug where dcc receive was not closing file handle when an error 
+  occured.
+- added ~ expansion for tab based file completion, /dcc send, /send, 
+  /theme, and /load ~ expands to your home directory if it is the first 
+  character...  :)
+- fixed occasional switchbar button disappearing bug as reported by simple
+- added the ability to position the switchbar on the left or right side 
+  of the jIRCii window
+- fixed a startup visual artifact on OS X with the metal L&F
+
+Beta   36 release 06.18.05
+====
+- added localip() function for retrieving local ip address used for dccs
+- added getNextPort() for retrieving the next dcc port to be used
+- fixed dcc chat, actions, etc. to preserve leading spaces.
+- resynchronized the sorted users stuff
+- added an overly redunant check to prevent scripts from being loaded twice.
+- implemented a check to ensure timers don't execute closures from unloaded
+  scripts.
+- fixed the find dialog (Ctrl+F) not working in certain look and feels
+- fixed $parms in actions from retaining the word ACTION
+- upgraded to Sleep 2.0-b9 (many many cool additions/changes)
+- fixed small selection bug
+
+Beta   35 Release 06.11.05
+====
+- upgraded scripting library to Sleep 2.0-release candidate bringing 
+  several bug fixes and a few new features
+  -- foreach loops now automatically convert hash parameters into their keyset.
+  -- added a new foreach syntax:
+     foreach $index => $value (source) { }
+  -- the remove() function now takes multiple parameters for multiple items to 
+      remove.
+  -- fixed a bug parsing tuple assignments in certain cases.
+  -- added a &subarray(@array, n, [m]) function for extracting an array slice
+  -- reworked the pack/unpack format strings to make them more useful
+  -- fixed a bug with the pack/unpack format string parser not assigning the 
+     specified integer to the last format character.
+- fixed Window menubar menu showing the Status window twice.
+- fixed bug with empty ison replies echo'ing to the status window (I think)
+- setup all timer execution to happen in the swing event thread.  this 
+  has its pros and its cons.  main pro is it will mean a much more stable 
+  jIRCii (in theory) cons, heavy timer activity could cause jIRCii to take 
+  a performance hit.
+- fixed a bug with topic/mode changes by ChanServ not showing any nick as 
+  having changed the topic/mode.
+- made text selection y pt->line number translation more accurate
+- fixed bug where antialias hint was not being used to calculate font width 
+- hacked in a find dialog for searching jIRCii windows, use Ctrl+F, 
+  Alt+F, Meta+F to invoke it.
+
+Beta   34 Release 05.08.05
+====
+- users who are no longer visible to the irc session (i.e. quits, people 
+  not on a common channel with you) are removed from the internal data 
+  list on part and quit events.
+- added a switchbar option to always sort the switchbar buttons
+- &getWindows() now includes the %STATUS% window in the list
+- adjusted how jIRCii calculates text width/height metrics for the custom 
+  text display, should make serge happy.
+- added %GLOBAL, a hash whose contents is shared across scripts and across
+  servers.   Should make the blue-elf happy.
+- fixed extra character being appended to mode $parms string
+- added error detection for attempting to use foreach loop on a non
+  array value.
+- updated &use() to only instantiate dynamically loaded class once
+  other scripts loading this same class will share the instance
+
+** I updated beta 34 at 10am CET to adjust the height font metrics back
+   to the old method.  The new width calculations are staying in **
+
+Beta   33 Release 05.01.05
+====
+- added support for ISUPPORT numeric 005.  This information is available 
+  as a hash scalar via &getSupportHints();
+- PREFIX variable from ISUPPORT is used to map user modes on channels
+- added a hasmode predicate i.e. if ($nick hasmode $channel) { }
+- added a &getModeFor("nick", "#channel") to return the mode display 
+  character that nick has on #channel
+- fixed bug with perform on connect not firing on servers with no MOTD - Elly
+- added a $channels variable which is available inside of the QUIT event/set
+- /me now works in a DCC Chat
+- added an option to View -> Options -> IRC OPtions to disable auto 
+  update of internal address list on channel join
+- optimized the drawing of text selection a little bit.  you might not 
+  notice, but I did spend 3 hours on it.
+- updated &addTimer to interpret parameter as a sleep closure
+- added "reconnect.time" property (set to 5s by default).  this variable 
+  controls how long jIRCii sleeps between attempted reconnects.
+- personal idle timer is now reset even if the on input event is halted
+- fixed clickable URL's not working with "www.somesite.com"
+- array index operator can now be applied to HOES expressions i.e.
+  $var = ["this is a string" split: " "][1]
+
+Beta   32 Release 04.24.05
+=====
+- upgraded Sleep library to Sleep 2.0-b6, new scripting features galore.
+
+Stable 31 Release 03.20.05 (Maintenance Release)
+=====
+- fixed 100% cpu usage when moving the jIRCii window on Windows
+- functions tileWindows(), cascadeWindows(), activateSession(), 
+  setSessionColor(), and setSessionText() now take place on the UI thread.  
+  This is to prevent a deadlock situation.
+- window parameter in getWindowState() and setWindowState() is now optional to
+  allow accessing the state of the main jIRCii window
+
+Stable 30 Release 03.13.05
+======
+- added parseSet("SET_NAME", %hash), the old option of 
+  parseSet("SET_NAME", "target", "parameters") works as well.  This can be used
+  in conjunction with %localData to echo a built-in set from an event that 
+  halts client output.
+- ISON not enough parameters suppressed by broken ircds that can't handle empty
+  ISON lists (used for checking lag).
+- clickable channel names feature has been adjusted to not fire for channel
+  texts ending with a period.  I've been burned by this many times so I 
+  decided to fix it.
+- jIRCii window now updates background images after being moved.
+- added numeric 308 to jIRCii's internal list of whois numerics (not supported
+  in the default script though).
+- PART messages are only supressed if auto /window on join and part on window 
+  close are both enabled.
+
+Beta   29 Release 02.27.05
+======
+- fixed a bug with using fireEvent() from within an event.
+- server connect notices now always go to the status window
+- text no longer auto scrolls if you are scrolled up.
+- CHANNEL_NAMES set now goes to channel window
+- fixed a race condition with echoed text and listbox updating.
+
+Beta   28 Release 02.12.05
+======
+- Fixed race issues in Sleep parser
+- Fixed script stack conflicts caused by the global script cache 
+  mechanism
+- Removed timer synchronization (this is likely a good thing)
+- jIRCii now strips out the unreal mode "!" indicating someone
+  is a channel admin, assumes an @ in its place... *crosses fingers*
+- added a property "notabs.border" for determining the size of the
+  window border when server tabs are turned off... default is 1x
+  this is for scripters who really want to tweak things...
+- bound Alt+H to open the help dialog
+- hard coded the default behavior of double clicking a nickname in
+  a channel listbox, this behavior can be overriden with a script.
+- removed the garbaged collection call tied to /clear, /clearall
+- fixed /run, /exec threading, I was making a method call that
+  resulted in the /run, /exec being executed in the current thread.
+  this has been fixed.  try /run, /exec again, you'll like 'em.
+- on disconnect the first message will be echo'd to every window,
+  every disconnect from a reconnect attempt will thereafter be
+  echo'd to the status window.
+- lag checking is now tied in as part of the notify list requests
+  rather than sending a CTCP LAG to yourself every 60 seconds
+- temporarily removed IRC Tutorial from Help dialog
+- added property "ui.buffersize" which defines the max tolerance
+  of the scrollback buffer.  when this value is hit, the scroll
+  back buffer is trimmed down to half of the max buffer size.
+- added &getButtonColor("window") for retrieving the color of the
+  text on a switchbar button in aarrggbb format.
+- added &setButtonColor("window", color_in_aarrggbb_format) 
+  for setting the color of the text on a switchbar button
+- text echo'd using &echoRaw is now logged (if logging is 
+  enabled)
+- added "switchbar.hilight" option to enable/disable built-in 
+  hilighting a switchbar button on activity.
+- added on session { } event to signify the current irc session
+  becoming activated.
+- rewrote sleep predicate parser to allow for right hand side
+  expressions to evaluate correctly i.e.:
+  if ($x < (3 + 4) / 6) { }
+- jircii now handles empty /names replies better...
+- added a $mouse variable to on click/dclick/sclick events, this 
+  variable contains random info about the mouse event that you
+  are more than welcome to parse and do stuff with.
+
+Beta   27 Release 01.29.05
+======
+- fixed a NPE caused by sleep subroutines with no return value being used 
+  in an expression.
+- added $handle = &listen(port, [timeout], [$info]) function for creating 
+  a simple server socket.  
+- On MacOS X the Info.plist file now reflects the correct jIRCii version
+- Fixed long standing "ghosted" channel listbox bug.
+- Fixed bug with perform on connect / jIRCii Launch service not working 
+  on servers that have no MOTD
+- The jIRCii script loader now cache's parsed scripts 
+- Did more work trying to make jIRCii better about memory.
+- added an option to enable/disable text anti aliasing (thanks [Serge])
+  check out: View->Options->Font Options
+- bound the Home key to move the cursor to the beginning of the input box
+- bound the End key to move the cursor to the end of the input box
+- fixed timestamp getting the wrong am/pm value for noon.
+- clickable URL's are now case-insensitive
+- unbroke &mask() function, thanks to blue-elf for pointing this one out
+- URL's inside of parentheses (http://www.google.com) are now clickable
+
+Beta   26 Release 01.23.05
+======
+- Did some work making jIRCii let go of memory.  This will be an ongoing 
+  process.
+- Added another syntax for events: 
+
+  on event "*source* *target* *parms*" { }
+
+  Essentially the string parameter represents 3 wildcard tokens that 
+  describe what event you want to match.  See the jIRCii Scripting 
+  Reference for more details.  Descriptive events and normal events will
+  still continue to work the same.
+- Made the /clear, /cls, and /clearall commands call the garbage collector
+  to immediately reclaim memory.
+- clickable URL's now work for https:// url's.
+- perform on connect commands are now evaluated for $var's. i.e. you can 
+  now do like:
+  /mode $me +i
+- sleep hashtables now filter out all keys with $null values when 
+  returning a key set with keys().
+- fixed -isletter and -isnumber returning true with empty parameter strings.
+
+Stable 01.03.05
+======
+- fixed Meta+N, Meta+T opening a new irc server keyboard combinations
+- on "open" event now fires immediately after a window opens.
+- made the help window a "touch" wider...
+- updated jircii launch service url handler to allow the server port to be 
+  specified: irc://nick@irc.server.com:port/channel?key
+- fixed sleep bug with for loop initialization terms.  Simple stuff like 
+  for ($x = 0; ...) worked fine, stuff like for ($x = 1 + 2; ...) turned 
+  out to be broken.  Fixed.
+- added a "Scripting Tutorial" to the help window documentation
+
+Stable 12.18.04 - Christmas Maintenance Release :)
+======
+- unbroke &getClipboardText and &setClipboardText, for the longest time I 
+  was blaming this on Sun.  Turns out I installed my bridges wrong.  They 
+  work now :)
+- &getWindowTitle() w/ no args now returns the titlebar text of the 
+  jIRCii window
+- &setWindowTitle("text") w/ only one arg now sets the jIRCii window 
+  titlebar text
+- clicking a url/channel will now give a little visual cue of the hand 
+  cursor that the action has been processed.
+- reworked the built-in help window
+- reformatted a lot of the help window documentation
+- fixed a bug with Ctrl+K and no number chopping a character (patch from Mouton)
+- actions in private messages will now cause a /window to be made if auto
+  /window for messages is enabled.
+- fixed a bug where windows w/ spaces in the name weren't being closed by
+  their switchbar menu
+- added &getLogFile("window") function to retrieve the path to and name 
+  of the file messages for "window" are being logged to.
+- added &logMessage("window", "text") to hook into the message logging 
+  system and log a message (iff logging is enabled)
+- upgraded to Sleep 12.18.04 (fixes bugs and such)
+
+Stable 23 Release 11.25.04
+======
+- Removed the kick/ban/insult/slapz popup menus.  *sigh*
+- added a &duration(seconds) to format time time into days, hours, 
+  minutes, and seconds string.
+- fixed /clearall not reseting status window highlite color
+- fixed a bug with auto connect on startup not being able to find a server 
+  in the servers.ini list.
+- fixed a sleep bug with ||'s and &&'s that broke the <TAB> file 
+  completion for /theme, /load etc.
+- fixed <TAB> completion bug with /msg nickname<SPACE><TAB> putting in 
+  message box /msg nnickname
+- hardcoded and enhanced clickable URL handling.  Nice thing is now that 
+  it is hardcoded the event can be halted by an on click event.   Removed 
+  OPEN_URL set
+- fixed a null pointer exception with the mouse scroll wheel on a 
+  completely cleared window.
+- the string %STATUS% is now used to refer to the status window in certain 
+  window functions.  scripts that refer to the "Status" window will need 
+  to be updated.
+- fixed a bug where text from someone with a nick of Status would go to 
+  the status window.
+- fixed a null pointer exception closing the status window with server 
+  tabs turned off
+- bound Ctrl+D key to close about dialog for those unfortunate souls who 
+  have crappy window managers that don't put window controls on certain 
+  types of dialogs.
+- scripted a close window menu item to the switchbar buttons
+- added a printAll($handle, @array) function to sleep
+
+Beta 22 Release 11.20.04
+====
+- Congratulations jIRCii scripters, you are now sleep beta testers:
+  - fixed bug with return not working inside of while/for loops
+  - added 'break' command to sleep
+  - added a iff(condition, value_true, value_false) operator
+  - added checkError([$scalar]) which will return a error description 
+    string if an operation failed (i.e. openf, connect, exec)
+  - moved date/time functions &parseDate,&formatData,&ticks over to sleep 
+    library
+- updated getScriptResource("script.irc", "directory", "file") to take 
+  multiple parameters
+- /st #channel text will no longer attempt to set the channel topic...
+- clearing a window now resets its switchbar color (unhighlites it 
+  basically)
+
+Beta 21 Release 11.13.04   <Stable Release Candidate>
+====
+- fixed a perform on connect issue with "random" servers.
+- increased the dcc timeout to 2 minutes from 1 minute.
+- fixed a sleep bug not detecting a missing ; in return statements leaving 
+  a ; out of return statements would crash the sleep parser
+- jIRCii script loader now reports to user if the parser 'crashed' when 
+  attempting to load a script. 
+- fixed a null pointer exception occuring with proxy settings enabled (in 
+  some cases)
+- added an indicator to the default script statusbar of what server/ 
+  session id your in, when you have the server tabs disabled
+- fixed an issue with dcc local info getting messed up preventing users 
+  from sending files (triggered by viewing the dcc options)
+
+Beta 20 Release 11.11.04
+==== 
+- added an option to disable the server tabs
+- added an option to disable the jircii menubar
+- added Alt+O to open the options dialog, you'll want this after you 
+  disable the menubar and decide you want it back.
+- moved font options to their own dialog
+- added an option to 'disable' the warning message stating jircii needs 
+  to be restarted when a preference changes
+- added font size 9 to the font options dialog
+- if resolving hostname using server method fails jIRCii will now resort 
+  to using the "normal" method for local hostname lookup
+- made jIRCii bring up an error dialog for any JVM less than version 1.4.2
+- small bug fix with tab completion, fixes /command<SPACE><TAB> from 
+  bringing up //command
+- added function scrollWindow("window", +/-lines) positive value to scroll 
+  down, negative value to scroll up
+- bound the page up and page down keys to scroll up and down
+- added getCursorPosition("window") and setCursorPosition("window", n) 
+  functions
+- updated getFileProper("parent", "child", ...) to take any number of 
+  parameters to string all params together into a properly formatted 
+  pathname for the current OS.
+- renamed "Other Commands" in help dialog to "Keyboard Shortcuts"
+
+Beta 19 Release 11.06.04
+==== 
+- added a .exe front end for easily launching jIRCii on Windows
+- small UI tweak to the sorted list windows, 1px between headers and 
+  information
+- fixed: part command is no longer sent when closing a channel window for
+  a channel you are no longer present on.
+- irc framework is now "tolerant" of ultra lame Unreal IRCd & and ~ modes
+  for users.
+- on raw event is now haltable...  meaning you can catch anything that
+  comes through the irc socket and stop jIRCii from processing it.
+- updated &clear(@array/%hash) to work with hash scalars as well as array 
+  scalars.
+- added &hash('key=value', 'user=password', ...) to generate a %hash
+- added getScriptResource("script.irc", "resource.file") which returns a 
+  properly formatted pathname for the current OS that points to 
+  resource.file in the same directory as script.irc
+
+Stable 18 Release 10.31.04
+======
+- made jIRCii irc parser always match *!*@* as a nick!user@host pattern, 
+  no matter what the contents of nick, user, or host are.  (fixes some 
+  bugs for example an some irc network puts colors in the hostmask of 
+  ircops which freaked out jIRCii)
+- oops, somehow internal function fireEvent() was removed from being 
+  loaded into the script environment - fixed!
+- made the DCC list a synchronized data structure, hopefully preventing 
+  lockups when many scripts are trying to access dcc data.
+- may have fixed a focus problem w/ jIRCii MDI mode.  I noticed some code 
+  that needed to be fixed and fixed it.  
+- added a check to keep jIRCii windows from stealing the keyboard focus 
+  when a dialog is active.
+- added formatNumber(number, base) and parseNumber("number", base) to 
+  sleep for formatting a number to a certain base and parsing a number of 
+  a certain base value.
+- updated keybinding constant Number_. to be Period 
+- /dns nickname now works if nickname is in the Internal Data List
+- added a hook to the tab key binding, if $_IS_FILE_COMPLETE is set to 1 
+  then hitting tab will trigger filename completion over all else...
+
+Beta 17 Release 10.24.04
+=======
+- jIRCii now loads sleep scripts with no charset conversion.
+   [ Scripters - this change is a big deal for you.  You can now use 
+     upper-ASCII characters in your script and the way they render will be 
+     dependent on which font you use, not how Java chooses to mangle the 
+     character encoding of your file ]
+- selected charset option now works for text sent as well as text 
+  received.
+- Added what every irc client needs: A SOUND API!@#$$%^  
+  The Sound API can be summed up with the following code:
+
+  $sound = loadSound("filename");
+  soundPlay($sound);
+  soundLoop($sound);
+  soundStop($sound);
+
+  Sound files can be a MIDI file, a .WAV file, or a .AU.
+- Made Perform On Connect feature case insensitive when matching your
+  network preferences to the network you are currently on.
+- Fixed cosmetic blemish in the UI Options dialog causing charset options 
+  to not paint correctly.
+- added function &buildCP437String("string") to do a CP437 charset 
+  conversion.  will only work on characters that haven't been converted
+  yet (i.e. any text in a script file).  CP437 is the charset that defines
+  all those ansi characters everyone is so fond of.
+
+Beta 16 Release 10.16.04
+=======
+- fixed jIRCii launch service Guest_nn nickname not being random
+- tab character is now rendered as 3 spaces.
+- added printEOF($handle) function to signal end of file to an i/o output 
+  stream.
+- fixed bug with jIRCii Launch Service not connecting to servers that 
+  aren't specified in the servers.ini file
+- made default username information more friendly for lame servers 
+  (jIRCii Quick Launch)
+- logging mechanism now works for window names with weird characters 
+  i.e. |'s and such
+- fixed a null pointer exception with /st #channel when your not on #channel
+- added a "charset encoding" option to Options->GUI Setup, this allows 
+  you to set which charset should be used to interpret data coming from 
+  the irc and dcc chat connections.
+- Fixed key bindings on non-english locale machines, the fix was to 
+  hardcode descriptions for bindable keys in jIRCii's source code.  
+- small cosmetic change to options dialog (fix problem with DCC Options 
+  on Java 1.5.0)
+
+Beta 15 Release 10.03.04
+====
+- Updated to Sleep 09.26.04 library
+  -- adds use of tuples for assignment i.e. ($x, $y, $z) = @array;
+  -- removed whitespace requirement for the string concat operator .
+  -- added a strrep("string", "old", "new" for straight up string replacement.
+- Updated menus.irc to not use . as part of any variable names.  Sleep 
+  doesn't allow this anymore.  
+- added a check to prevent Sun's !!!!BROKEN!!!! GTK Look and Feel from 
+  being resolved as the native look and feel.
+- Added support for SOCKS v4/5 proxy servers
+- Updated to a new servers.ini from Tjerk Vonck (cLAN: mIRC)
+- jIRCii now executes key binding code in the "event" thread, hopefully 
+  this will prevent code bound to keys from causing any deadlock problems.
+- added a check to prevent "perform on connect" commands from being 
+  executed again after manually typing /motd
+- added support for command line argument in irc://server/channel?key 
+  format to cause jIRCii to connect to server and join #channel with 
+  specified key.  This is a necessary step to make it possible for web 
+  browsers to use jIRCii to handle irc:// links
+- updated alias help to include /away, /back, and /nick
+- updated /query to actually list all channels your on when typed by 
+  itself (the help docs listed this behavior for a long time, it just 
+  never had it).
+- made jIRCii better about letting go of some memory when closing a 
+  window 
+- window numbers in "Window" menu now match numbers used for switching 
+  windows with Alt+n keyboard shortcut.
+- Added SET_NOTIFY and SET_IGNORE for echoing something when the ignore 
+  or notify lists are modified via the /notify or /ignore commands...
+- text input events are now fired even if user is accidentally holding 
+  down shift/ctrl keys while pressing enter.  anything to take care of 
+  Zenon.
+- Added Ctrl+Left/Right to quickly navigate previous/next server 
+  sessions, along with Alt+Left/Right to quickly navigate previous/next 
+  channel/query/dcc windows...
+- Added function getCurrentWindow() that returns the safest window to 
+  echo text to, either the current active window or the status window.  
+- Altered getActiveWindow() to return the real current window wether its 
+  a special (i.e. dcc list, /list -gui) or not.  This fixes a bug with 
+  Ctrl+D on a special window closing the current server connection.
+- added &renameWindow("old", "new") for renaming a window, only works on 
+  query windows right now.
+- added a feature, when a user you have an open /window with changes 
+  their nick, jIRCii will rename the window for you.
+- added &echoColumns("window", "col1\tcol2\tcol3...", .9) for echoing 
+  formatted text that stays in columns similar to how the /names list is 
+  wordwrapped
+- added /creply command for sending a CTCP reply
+- added /eval <expr> command for quickly evaluating and echoing the 
+  result of a sleep expression
+
+Stable 14 Release 08.07.04
+======
+- fixed a nasty bug in the logging causing log files to be open in overwrite
+  mode rather than append.
+- logging information is now saved to a subfolder based on actual irc network
+  rather than the irc server hostname.
+- quick cosmetic change to the dcc options dialog
+- /newserver now takes the same parameters as /server
+- added an option under the windows dialog to adjust the width of the channel
+  names listbox.
+- enhanced clickable channels a little to allow clicking on @#channel 
+  +#channel etc.
+- gotta love the decisive nature of my coding... on repl_nnn events have 
+  returned but on nnn will continue to work as well.  I won't change this, 
+  promise :)
+- fixed a bug with failed nickname change (due to changing to fast) 
+  messing up jIRCii's internal data structures and throwing an exception.
+  nickname change set will not be fired in this case...
+- fixed bug in default.irc set SEND_DCC { }, off by one with the 
+  parameters
+
+Beta 13 Release 07.31.04  (Stable release candidate)
+====
+- fixed a problem with the sleep return stack...  it manifested itself in 
+  the form of a loose nickname being echo'd to the status window here and 
+  there.
+- made -lnf argument take precedence over setting to use native look and 
+  feel.
+- if a channel has no bans set /banstat will echo a message relaying that 
+  info.  Added a CHANNEL_BANLIST_END set to go with this.
+- made the directory selector widget recognize wether or not its disabled.
+- clicking on a channel name will cause jIRCii to join that channel.
+- made 'o' the default focus accelerator for the Commands menu, so it no 
+  longer conflicts with the Connection menu focus accelerator of 'C'.
+- /dcc stats dialog and channel /list -gui dialog sizes and positions are 
+  now remember seperately of other sorted windows.
+- found a problem with IRC events, apparently on repl_nnn doesn't work, 
+  however on nnn where nnn is a numeric does work.  So rather than fix the 
+  code I updated the documentation.  set repl_nnn { } is still in use 
+  though.
+- added a 4th parameter to addTimer(&func, n seconds, r repeats, paramter 
+  for &func) basically parameter for &func will get passed to &func 
+  whenever the timer is executed.  Useful for creating dynamic timers.  
+  Thanks elf.
+- fixed bug with dcc sessions dialog close dcc menu option closing the 
+  wrong session.  Thanks GulaBapa for pointing this one out.  See I do 
+  occasionally listen to my users.
+- made tab based file completion case insensitive to shut naz up.
+
+Beta 12 Release 07.25.04
+====
+- added an expr('3 + 4') function to sleep for evaluating an expression
+- added \r (return), \n (newline), and \t (tab separator) escape 
+  constants to sleep
+- added scripting function setClipboardText("text")
+- REPL_321 is no longer mistaken as a /whois reply numeric.
+- added normal array @_ to subroutines, which contains all of the 
+  arguments passed to the subroutine.
+- fixed divide by zero bug with trying to cascade or tile windows when 
+  there where no active windows
+- enabled SO_KEEPALIVE on dcc chat sockets, this way a dcc chat socket 
+  won't sit there forever if the socket actually died awhile back.
+- setup a timeout of 60 seconds for dcc send and receive sockets.
+- added /banstat [#channel] command for obtaining a list of bans, 
+  consequently I added a CHANNEL_BANLIST set to go with this...
+- added /unban nick|banmask command to unset all bans related to nick or 
+  to unset the specified banmask.
+- fixed problem with activateWindow() not working on windows opened as 
+  minimized to start with.
+- added a check to keep jIRCii from announcing it has resolved your local 
+  host info multiple times.
+- \t is now the column separator for sorted windows
+- added matched() function  to sleep, works like matches("string", 
+  'pattern') except it uses the values of the last ismatch comparison.
+- added to sleep getFileProper("/path/to", "file") which returns 
+  /path/to/file in the appropriate form for the current operating system.
+- added tab based file completion to /dcc send, /send, /load, and /theme
+- added a function fileCompleteAll("partial file") to access file 
+  completion routines. I originally scripted this but decided to make it 
+  available for anyone
+- reworked directory selection widget in the options dialog, this is to 
+  prevent drawing problems due to weird Java layout behavior.  Some 
+  functionality was lost but I don't think I really had a choice.
+
+Beta 11 Release 07.17.04
+====
+- made a for real no kidding hack to keep the timer thread from dieing. 
+  fix it? haha yeah right...
+- fixed potential divide by zero error when calculating dcc transfer 
+  rates.
+- removed a typo in the IRC_RECONNECT set (had to log some sort of 
+  change).
+- rearranged the dcc statistics a little bit and added a field for the 
+  total size of the data sent or received.
+- added a getScriptPath("filename.irc") function for obtaining where a 
+  loaded script exists.
+- added an option to fill spaces in a filename when doing a dcc send.
+- made the SEND_DCC set friendly to filenames with spaces ($1 = port, 
+  $2 = size, $3- = file)
+- unbroke sleep function &clear(@array).
+- added a &copy(@array) function to sleep which returns a copy of the 
+  given array and copies of all of its values.
+- fixed bugs with the tab completion... 
+- redefined some key bindings:
+  Ctrl+C is no longer bound by default, this is to prevent interfering 
+  with the function of copying text on Windows.
+
+  The Escape key has been bound to clear the editbox.
+- made 'server method' technique for resolving dcc local info the new 
+  default
+- Added a 'theme' manager.  An easy way to import/export colormap and 
+  background color settings for jIRCii.  Along with this comes a /theme 
+  "filename" command to load a theme.  Implementation wise it is just a 
+  jIRCii generated sleep script.  Loading a theme is basically the same as 
+  loading the script and executing it one time only.  Special thanks to 
+  Dekkard for the suggestion.
+- added a generateThemeScript("filename") function to generate a theme 
+  file from the current settings.
+- tile and cascade functions for jIRCii now unset maximized property
+- added "x" operator to sleep, which is string repetition i.e.
+  $str = "abc" x 4; # $str is now "abcabcabcabc"
+- updated some of the cosmetics of the help menu.
+- gave dcc open messages and dcc close messages their own colors, so they 
+  are no longer the same as joins and quits.  (just for you tijiez)
+- made sorted windows tie into most normal window events and window 
+  manipulation functions, I expect bugs, lets hope not though.  
+- added a -isspecial "window name" predicate for determining if a window 
+  is a special window (i.e. list dialog, dcc stats, sorted window etc) or 
+  not.
+- scripted sorted windows are no longer activated by default when opened.  
+  To activate them you must explicity call activateWindow("Window title")
+- added "on sclick" event for when a row is a double clicked in a 
+  scripted sorted window. right now $0 = row number, $1- = window name
+- fixed a bug with $window in "on close" always being set to "Status", 
+  had to do with the order of close events.
+- added a /dns <hostname> command, to go along with it I've also added a 
+  RESOLVED_HOST set
+
+Beta (10) Rerelease 07.11.04
+====
+- fixed a problem causing QUIT messages to now show up.  I don't know 
+  where this came from but it is the reason for the rerelease.
+- undid b10 change of making IRC_RECONNECT message display once.
+
+Beta (10) Release 07.10.04
+====
+- window position information is now saved when you close an internal 
+  window (used to only be saved when a window was activated... but 
+  nooooooo that wasn't good enough).
+- added a check to code to prevent /window by itself from opening a 
+  unclosable blank window.
+- made the size of default windows larger...
+- fixed join sync not showing up for channels with different case than 
+  what the user joined with.
+- fixed a divide by zero problem with getTransferRate()
+- added a check to prevent the dcc sessions window from being opened 
+  multiple times per session.
+- added some synchronization to the stop timers code...
+- getWindows() now returns windows in the order they were opened (i.e. 
+  the switchbar order) this fixes the Alt+n window ordering problem and 
+  makes the Window menu more accurate as well
+- altering the position of the listbox is now done in the swing event 
+  thread, should fix weird problems where a copy of the listbox becomes 
+  ghosted in some position
+- Courier New, size 13 is now the default font for Windows and MacOS X, 
+  all other platforms will by default use the "monospaced" font.  
+- fixed perform dialog bug, sometimes settings for a network would carry 
+  over to the "all networks" setting.
+- made the /reload filename.irc command apply to all irc sessions
+- verbose script loading now displays script loaded message before 
+  executing script (but after loading)
+- added nickCompleteAll("pnick", "#channel") that returns an array of all 
+  nicknames on #channel matching pnick.  the array is sorted from most 
+  relevant to least relevant...
+- enhanced tab nick completion to cycle through nicknames...
+- added tab completion for / commands i.e. /un<TAB> will put /unload in 
+  the editbox...  this is experimental, if you don't like it let me know 
+  and I'll take it out
+- added function getAliasList() that returns an array of all built in 
+  aliases and scripted aliases built in aliases are lowercase, and 
+  scripted aliases are uppercase.
+- attempting to reconnect to server message is now echo'd only once after 
+  disconnection this should prevent screen from flooding with attempting 
+  to reconnect messages
+
+Beta (9) Release 06.30.04
+====
+- added a quick way to edit the channel topic:
+  type: /topic and then hit <TAB>, the current topic will come up in the 
+   editbox found the idea in the irc client irssi.  way to clever.
+- "/mode #channel" will now echo the current mode for the given channel, 
+  the set CHANNEL_MODE_IS has been added as well
+- expanded /mode command a little bit, works as normal otherwise:
+  /mode - echos the mode for the active channel
+- added /sm command -> a shortcut for the /mode command
+- reply 331 (no topic set) now fires set CHANNEL_TOPIC_IS
+- added a SEND_DCC set, similiar to SEND_CTCP set
+- verbose script loading is now enabled by default
+- a error set is now fired (i.e. CHAT_CLOSED, or SEND_FAILED) if jIRCii cannot
+  bind a port to listen for the dcc request...
+- /notify nickname now adds user to notify list (jIRCii has always had
+  /notify <add|remove> <nickname>... however people assumed /notify nick to 
+  work).
+- the ident daemon now dies disables itself more gracefully when you turn it 
+  off in the options after it didn't startup in the first place (bug fix).
+- fixed a bug in internal method for resolving the weekday, sunday was comeing
+  up as an unknown day.
+- hitting enter on an empty textfield now fires an "on input" event with $1- 
+  set to ""
+- fixed a bug where input halting wasn't being reset after each firing of an 
+  input event.
+- fixed a case issue with determining wether or not a target is the active 
+  query, channels that were active were having text displayed like they were
+  inactive due to case differences.
+- fixed problem with fixed width switchbar buttons on Windows not 
+  dissappearing upon closing a window..
+- added a getTimeRemaning($dcc_conn) function for getting the estimated time 
+  left for a dcc send/receive connection...  I didn't want to script it so I 
+  assume you wouldn't want to either...
+- added a formatTime2(n) function for formatting n seconds into a hh:mm:ss form
+- added estimated time remaining to "/dcc stats" information
+- added "version.addons" internal property, if this property has a value it 
+  will be used when jIRCii reports its version information instead of a 
+  tagline... a convienent way for scripts to announce that they are loaded
+- tweaked the look of the /dcc send "dialog"
+- added a check to prevent jIRCii from resuming a file that is already 
+  completely downloaded.
+- fixed a data structure bug, when a user parted a channel the channel wasn't
+  removed from the user's internal list of current channels...  naughty naughty.
+- /dcc send dialog and scripted file dialogs now remember the last directory 
+  to be worked on.
+- added a check to dcc receive, full file paths are now stripped off of 
+  incoming dcc requests
+- sorted list window's now have properly sized switchbar buttons under the 
+  fixed-width setting
+- added scripting interface for creating a sorted window and refreshing the 
+  data in a sorted window.  See scriptjirc.pdf under the Dialog functions.
+
+Beta (8) Release 06.24.04
+====
+- fixed a bug with time+date stamp code miscalculating the current weekday
+- added a logging feature, now you can log everything... great for turning in
+  your friends who brag about the latest DoS attack or creating the latest
+  virii.
+- worked around a painting problem with the UI Options dialog under OS X
+- refactored the /list -gui code so I now have a more generalized window that
+  can display data in the same way, made some small cosmetic fixes as well
+- DCC_REQUEST set is now actually being utilized.  It was there just not being
+  used for some reason.
+- added a /dcc stats, it is the same as typing /dcc by itself except it comes
+  up in its own window and is updated automatically...
+
+  To go with this I added several sets for customizing this dialogs output
+  DCC_LIST_TYPE, DCC_LIST_NICK, and DCC_LIST_INFORMATION, I've also added
+  a "dcc" popup menu hook which has a local variable $this for referencing
+  the dcc connection.  See the updated scripting docs for more info..
+- popup menus will now invoke /list -gui for channel listings.
+- switched default font to Java's "Monospaced" which is available on 
+  every java platform.
+- added a "fixed width buttons" option for the switchbar, under 
+  Options->Switchbar the hack to make the fixed width buttons shrink when 
+  the switchbar is filled is beyond ugly.
+- adjusted the default size of the options window so it will layout 
+  properly on other platforms *cough*linux*cough*
+- Miscellaneous UI tweaks: font selector, miscellaneous options, script 
+  manager, input field (opaqueness)
+- Reorganized the Options->Interface Options dialogs.
+- text layout tweaks: main display, statusbar, and input field all line 
+  up with eachother when drawing text...  there is a 2px buffer between 
+  the edge of each component and the first character.
+- fixed a bug with editbox font not updating immediately when the font 
+  preference is changed
+- keys bound with the "bind" keyword are no longer processed by java 
+  itself.  once your script gets ahold of the key then thats it.  
+  consequently this fixes a bug with my Alt+n and Ctrl+n shortcuts putting 
+  numbers in the editboxes when they where being used.
+- internal help filenames no longer have spaces in them, fixing a problem 
+  with jIRCii's help on Java 1.5 under Linux
+- made some changes to the way font metrics are calculated for laying out
+  text.  most fonts will now look more centered on the statusbar.
+- fixed a null pointer exception when auto joining auto /window'd
+  channels...
+- expanded irc parser host pattern to accept the = sign
+
+Beta (7) Release 06.11.04
+====
+- added a kickass little toolbar, there is also an option to disable it 
+  under Options->UI Options at first I didn't like it but now its kind of 
+  grown on me.
+- bug fix: multiple lines of text, when pasted will all be sent to the 
+  server...
+- added a /list -gui option which pops up a channel /list dialog with 
+  sorting and searching abilities
+- added a new popup menu hook "list" for the channel /list window. $0 = 
+  channel $1 = users $2- = topic
+- added a new popup menu hook "switchbar" for the jIRCii window 
+  switchbar, $0 = the window name
+- fixed a bug with 'on input' event and halt.  once halt got used with an 
+  on input event jIRCii would not process any more input (the halt got 
+  stuck)... this one pissed me off when I was trying to write an xdcc script.
+- clicking edit in the server editor will now select and scroll to the 
+  same server in the server editor dialog.
+- removed the scriptjirc and sleeplang html files from the jIRCii 
+  distribution, I like the pdf better.  The html versions of these files 
+  will continue to be available on the jIRCii website.
+- fixed a null pointer exception when auto connecting and auto joining 
+  channels resulted in stuff happening before all the datastructures were 
+  propagated...
+- made regular expressions for nickname parsing more liberal, so jIRCii 
+  shouldn't have problems parsing nicknames on servers using different 
+  charsets (i.e. Korean nicknames)
+- added an error message for attempting to reload a script that isn't 
+  currently loaded
+- fixed scripting documentation, I documented the wrong parameters for 
+  sendReply() and sendRequest(); they both require three parameters... not 
+  two.
+- made multiserver session information querying commands take an index as 
+  a parameter, so you can query information about other sessions from a 
+  script in one multiserver session.. this affects getSessionColor()
+  and getSessionText()
+- added a %localData hash variable to help out scripters.  Local 
+  variables are basically function parameters, stuff made local with the 
+  local() function, event variables etc.  %localData is a read-only 
+  hashmap with all of the keys and values for all of the local data
+
+  To see all of the variables passed during a ctcp request event:
+
+  on request
+  {
+    foreach $var (keys(%localData))
+    {
+       echo("$var = " . %localData[$var]);
+    }
+  }
+
+- After having my arm twisted, I've added an on exit event.
+- if a variable is empty in the config file (not just non-existent) 
+  jIRCii will now use the default value, this should allow anyone to 
+  connect even people who fail to set a nickname, realname, email etc...
+- rearranged some of the ui options in the interface section of jIRCii's
+  options.
+- unbroke font previewing under Mac OS X.
+
+Beta (6) Release 06.03.04
+====
+- added an IRC_ATTEMPT_CONNECT set to go with a message that is displayed 
+  when jIRCii tries to connect to a server...
+- altered the cosmetics for default.irc's FORMATTED_NAMES to allow for a 
+  nick of up to 12 chars in length, anything longer is cut off... this is 
+  only in default.irc - your script can do what it wants.
+- fixed up default.irc's tab nick completion to not insert a space after 
+  the nickname you just nick completed, and to not insert a space if the 
+  nickname is the only word in the editbox...
+- added keyboard shortcuts Alt+1.. Alt+9 for switching windows using the 
+  keyboard...
+- added keyboard shortcuts Ctrl+1.. Ctrl+9 for switching server contexts 
+  using the keyboard...
+- altered the socket timeout stuff to time the irc connection socket out 
+  in 5 minutes rather than 30.  If the irc server or client are not 
+  responding to eachother (at least for the lag stuff) in 5 minutes then 
+  there is definetly a problem.
+- fixed a bug where you couldn't type to a dcc chat while not connected 
+  to an irc server... thanks elf.
+- added a Ctrl+W keyboard shortcut to create a window for the active 
+  query...
+- added keyboard shortcut Ctrl+D to close the active window
+- $me now returns "<Unknown>" when not connected to a server, rather than 
+  "" 
+- added the ability to auto connect to certain servers on client startup, 
+  use the server editor to flag this option.
+- added a &serverInfoCommand($server) function for returning the /server 
+  command for the given server with all the flags for the user options for 
+  that server.
+- hopefully fixed bug with autoperform on connect feature misidentifying 
+  some servers and joining the wrong stuff for the wrong network.
+- added an option for verbose script loading and unloading mainly to 
+  shutup blue-elf 
+- updated to a new servers.ini released by Tjerk Vonck on 16 Apr 04
+- small cosmetic changes to the help menu
+- added &callInSession(<session index>, "/command") to execute a 
+  command in another session...
+
+Beta (5) Release 03.13.04 
+====
+- altered some of the cosmetics of the help menu
+- decided to make auto /window enabled by default.  this goes against my 
+  idea of what the client is all about but it probably should be done. 
+- as a corollary to the auto /window enabled by default, all of the echo 
+  to active irc options have been enabled by default as well.
+- added $window variable to SBAR_LEFT and SBAR_RIGHT sets.
+- updated the servers.ini file to the one released by Tjerk Vonck on 25 Feb 04
+- removed most of the outdated classes in the test package (unnecessary)
+- double clicking a server in the server list now causes jIRCii to connect to
+  that server.  thanks eric for complaining about that one.
+- added several functions for querying information about the current server
+  connection: getServerHost(), getServerPort(), getServerPassword(), 
+  isServerConnected(), isServerSecure(), and getServerNetwork()
+- removed built in variables $myserverport and $myserver (redundant now)
+- updated the Connection -> Connect menu to store all information about a 
+  server connection including port, password, and ssl secure or not.  This 
+  information is used when reconnecting to the server. 
+- made the regular expression for detecting nick!user@host patterns a 
+  little more liberal, mainly expanded the user part of the pattern.  This 
+  should fix a bug where nicknames don't show up at all i.e. "<> hello!" 
+  instead of "<nick> hello!"
+- color codes and such are now stripped out of topic when it is put in window
+  titlebar.
+- added a tooltip to the DCC Dialog's local info option that mentions an IP 
+  address can be manually typed in.
+- added a perform on connect feature, any commands punched into the perform on
+  connect dialog for a specific network will be executed when connecting to that
+  network.  useful.  
+- added functions for accessing the data contained in the servers.ini file.
+- added an option to enable/disable the channel listbox or position it on 
+  the left or right of a channel window.  I think hyst asked for this.
+- the titlebar of channel windows now shows the channel limit if the 
+  channel has one set.
+- fixed a problem with word clicking stuff...  kind of miniscule but I'd 
+  get the occasional exception because of it.
+- added an on unload event...  now scripts can clean themselves up after 
+  being unloaded
+- when someone says your nickname in a channel there nick will be 
+  emphasized a little bit.  (small change in the default script)
+
+Stable (1) Release 02.25.04 
+====
+- fixed problem with subroutines being called in a file other than the one they   
+  were declared in.  this was created by my bugfix for runtime warnings not  
+  properly reflecting the file of the executing code.
+- altered the way dcc ctcps are echo'd, they now just go to the active window or 
+  to the status window pretty much.  (same as normal ctcp's)
+
+Beta (4) Release 02.18.04
+====
+- fixed small mismatch in default color.map and auto generated color.map
+- fixed a race condition in channel user structures against the listbox 
+  painting versus irc events...  never really reared its head until I 
+  joined a channel with over 1000 people in it.  fixed.
+- fixed a problem in -ischannel with empty input ""...  
+- altered the way built in 
+- altered <tab> binding a little, tab will either popup /msg <last nick 
+  to msg you> if the editbox is empty or complete the current word to a 
+  nickname.
+- altered statusbar format to say jIRCii, how could I miss that :)
+- Fixed the way the statusbar is refreshed when a property change occurs.  
+  When the font is changed or the statusbar background properties are 
+  changed everything should be on cue now.
+- altered on input event to use tokenized parameters for passing data.
+- added versionString() function to return the version string (basically 
+  a date stamp of when the client version was released).
+- finally altered and updated /sv and the ctcp VERSION reply.
+- fixed interesting bug involving the use of the return statement with 
+  foreach loops.  Thanks to era for helping me track this one down at 5am.  
+- altered arguments in subroutines.  Arguments passed in subroutines now 
+  begin with $1 instead of $0.  The $0 thing was creating way to much 
+  confusion so I'm curbing it this way.
+- altered sleeputils API to make string scalars check for null 
+  initialization values.  An attempt to pass a null value will result in 
+  the null scalar being returned.  This fixes some problems in the way 
+  jIRC uses sleep as my tokenizer will return null values.
+- stripped out most of the built in debug echoes...
+- added a check to the script loader for user attempts to load an already 
+  loaded script file twice.  this will prevent bad things from happening.
+- fixed bug where a runtime warning in a subroutine from another loaded 
+  script would not properly reflect which script the error occured in.  
+  thanks era for helping me catch this one.  It was actually amazingly 
+  easy to fix.  Yay for good design :)
+- a statusbar refresh is now forced when a nickname change event occurs.
+
+Beta (3) Release 02.13.04
+====
+- removed some debugging stuff that would have made it impossible to bind 
+  the tab key in scripts.
+- renamed getBaseDirectory() to baseDirectory()
+- /load will now complain if it can't find a script file you're attempting 
+  to load.
+- gave custom colors to the opening url message and to ident request 
+  messages in default.irc
+- fixed bug with user devoicing multiple times just toggling +v/-v.  
+  Thanks naz.
+- fixed a bug where refreshMenubar() wouldn't work (like anyone noticed)
+- showOptionDialog("dialog name") now works properly showing the specified 
+  dialog.
+- added $null built in scalar to sleep has the numerical value 0 and the  
+  string value "" ALWAYS!
+- attempting to access an array or hash in sleep as a normal scalar will 
+  result in an automatic conversion of the hash or array into a string 
+  scalar.
+- cleaned up AST tree generated by tree command in sleep console.
+- fixed bug with using a localvariable as the temp variable for foreach 
+  loops.  
+- implemented a parser fix for the $+ operator.  strings like "$+ blah" 
+  will no longer crash the parser...  thanks naz for finding this nasty 
+  bug.   the parser just reports a syntax error.
+- fixed a bug with $+; "\\ $+ $var" was not evaluating $var, now it does.  
+- fixed a bug with events; event listeners from unloaded scripts didn't 
+  expire even  when the script was reloaded.   Definetly a good one to have 
+  fixed.
+- added a little bit of parameter checking to some of the string 
+  predicates.  I should do this for other stuff but to lazy.  :)
+- fixed getNormal(), getOps(), getHalfOps, etc.. to return actual 
+  nicknames and nothing else... thanks mexis
+- fixed searchAddressList() - it was totally broken...
+- stabilized data being brought into sleep a little bit...  looks to see 
+  if data is null, if it is assigns it the actual null scalar rather than 
+  a real null (which results in bad things)
+- added more font size options to the font dialog, 13, 16, 18, and 19.  
+- relocated the code for the file system bridge into the sleep code.
+- send ctcp message is now echo'd to active if user requests ctcp replies
+  in active as well.
+- altered locations dcc echos are sent to - in general
+- Auto /Window leave channel when closing windows now implies the channel 
+  window should be closed on part.  Now Jono should be happy!
+- bind predicate now fires a script warning if scripter tries to bind to a 
+  non existent predicate environment
+- added IDENT_REQUEST set to go with ident event...  altered default.irc 
+  to use the set as well.
+- fixed broken ident daemon...  hopefully
+- enabled the SO_KEEPALIVE option for dcc sockets.  This way they'll die 
+  if they are disconnected but didn't disconnect for some reason.  
+  Otherwise they'll stay connected and idle for a long time :)
+- altered the way notice echoes are handled, by default a notice always 
+  goes to the status window on top of other relevant windows.  Now if a 
+  notice goes to the active window it won't go to the status window unless 
+  its supposed to.  (I know my notice echo stuff is confusing).
+- spruced up /dcc output a little bit
+- addItem("title", "command") can now take commands that begin with / or 
+  not... doesn't matter/ser
+- if a background type is selected to image but the image doesn't exist 
+  then jIRC will just draw a solid colored background.
+- added an INVITE set, also modified event processor to automatically fire 
+  a set for an unknown event based on the event name.  So say an irc DEATH 
+  event was added.  jIRC will parse this and automatically fire it as a set 
+  named "DEATH" to the status window
+- added built in command /clearall for Tijiez
+- scripted tab nick completion - its in default.irc... 
+- added -ischannel predicate to determine if the passed string is a 
+  *channel*.  this does not  say is it a channel that your on or not.  It 
+  just asks does the string begin with # or &. If you want to check if your 
+  on a channel use if ($me ison "#whatever") { }
+- added a groupNicks(@array, [n]) function that takes an array of users 
+  and groups them into comma seperated groups of size n, default is 4..  
+  these groups are returned as an @array
+- bridged my tokenizer class (from jIRC) to sleep...  documented in the 
+  jIRC scripting docs
+- added getDCCAddress($dcc_conn) function for getting the address of a 
+  dcc..  thanks naz for pointing this one out
+- added getCurrentDirectory() to file system bridge
+- renamed the client to jIRCii
+- added a parseSet("SET_NAME", "target", "parms") function for firing 
+  custom sets.
+- added fireEvent("irc data string) and fireEvent("event", %data) for 
+  firing custom events.
+- made /ver and /ping into nick completing commands.
+- added the ability for use of hyperlinks to outside sites inside of jIRC 
+  help files...
+- fixed a sleep parser bug where expressions/scalars where not being 
+  allowed within "$[align]varname"
+- added shift(@array) and removeAt(@array, index) to sleep...
+- scripted dynamic popup that remembers the last 5 servers in the 
+  Connection menu item for Tijiez
+
+
+Beta (2) Release 02.07.04
+====
+- fixed some problems with "on event" binding
+- fixed problem with isin predicate in sleep
+- made client friendlier to text entered accidentally when not connected
+- made socket classes a little bit more resistant to errors that bubble up 
+  but in actuality have little to do with the socket itself.
+- fixed bug with connect button in option window disabling keyboard shortcuts
+- scripted a server_error set.
+- fixed notice sets making them less ghetto.
+- fixed double click event firing even when no text was double clicked on
+- fixed w2k specific problem where like you couldn't select multiple
+  nicknames in the listbox.  Write once, debug every where.
+- tweaked icon dimensions a little bit so now the mdi window icons 
+  are positioned better in Windows, they look fine in the java 
+  metal look and feel, and they are somewhat better in OS X.  Its
+  one big compromise as far as I'm concerned.  I'm not 100% happy with the 
+  result but it will do.
+- /clear|/cls by itself now clears the active window
+- fixed stats bar disappearing after viewing background options
+- fixed bug where dcc send start message appears twice.  
+- spruced up server outputs a little adding a little color.  There are
+  now 3 colors for outputs, the channel/host color, nick/address color,
+  and the neutral color.  Spruced up many numeric replies including /whois.
+- fixed reply 301... it will now always show up when you whois yourself
+  or whois someone else.  Otherwise it will be stifled.  All of this and
+  no effect on the event itself.
+- numeric reply 401 is now echo'd to active window if show whois in 
+  active is turned on... (401 = no such nick/channel) thanks Tijiez.
+- fixed server disconnect message when /server'ing to another server.
+  disconnect message now reflects the server you disconnected from.
+- went to great pains to make the background images dialog a little easier 
+  to use.  If an option doesn't apply to your current settings it is 
+  disabled.  
+- added a /ww command
+- added a /help command (launches help dialog)
+- implemented /run and /exec finally
+- third parameter is now optional in the substr() command.
+- added an option to enable/disable the statusbar in the UI Options dialog.
+- added a check to jIRC for Java 1.4 or greater, if the user is not using 
+  a modern vm then jIRC will exit.
+- added a strip() function to strip control codes out of the parameter text.
+- added a second parameter to openWindow() to make it open non-channel windows
+  inactive.
+- added a (%) systemProperties() function for obtaining information about the
+  system...
+- added an array() function for quickly initializing an array.
+- removed .bmp from acceptable image type filter.  Apparently java likes 
+  to freeze when loading bitmaps.  
+- reworked the script loading stuff in a big way.  Most of the work 
+  consisted of centralizing the script loading in the sleep API's.  I also 
+  made loading a little smarter which will help just a *touch* with script 
+  loading.  This was mostly for the benefit of making sleep easier to use 
+  for other app developers.  I tested it but report any bugs to me please 
+- fixed a bug that was really messing up the irc data structures.  The 
+  mode parser did not expect -k to have a parameter associated with it.  
+  As such the targets got messed up for subsequent modes in the same mode 
+  string.  This could really desynch the client.  Should be okay now.  
+- Changed configuration defaults... jIRC will now use a single document 
+  interface by default on every platform except Windows (were it defaults 
+  to MDI).  You can switch between SDI and MDI in the Options -> UI 
+  Options dialog.
+- Adjusted some of the blank space in the dialogs.  Dropped forced white 
+  space from 10 pixels to 5 pixels.  To help accomodate for look and feels 
+  that love to suck up screen space.  Writing good looking dialogs for a 
+  'skinnable' app is a pain in the ass... trust me.
+- fixed a bug with the colormap (it only allowed colors 0-98), try ^k99 
+  in the old beta... it will completely jack the display..
+- reset the colormap...  all slots have an entry and 1-16 are properly 
+  coordinated with the defacto mIRC standard.
+- added a baseDirectory() function which returns the directory where the 
+  jirc files are located at.
+- added an interpretation for Undernet reply 330 (User is logged in as)
+- added a key binding to the menus.irc: Escape - minimizes active window
+- /dcc accept now takes another optional parameter allowing you to 
+  specify a new location for the file to be dumped to... if your 
+  accepting a receive.
+- added closeDCC($dcc_conn) method to close an active dcc... since my 
+  /dcc close is kind of inadequate... :)
+- expanded /dcc close a little to take: /dcc close [send|chat|receive] <nick>
+- redid the dcc error messages a little so they keep the exception type 
+  out of it.
+- readded the /wall and /wallex commands, along with sets SEND_WALL and 
+  SEND_WALLEX
+- added a bunch of functions for manipulating the multiserver aspect of 
+  the client... kinda kewl..  now you can code scripts to make the tabs 
+  flash and stuph.
+
+Initial Beta (1) 01.31.04
+=====
+This thing has been in development since 99, I've had other strains of
+betas going up to beta 12.  So don't think this is anything new...
