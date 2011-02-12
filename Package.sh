@@ -14,7 +14,7 @@
 #
 # Get rid of temporary stuff
 #
-rm -f jerk.tgz jerk.zip jerkOSX.tgz
+rm -rf dist/jerk.tgz dist/jerk.zip dist/jerk.dmg
 
 rm -rf bin
 rm -rf temp
@@ -57,13 +57,15 @@ cp resources/resource/menus.irc temp/extra/menus.irc
 # Create Generic jIRCii Package
 #
 mv temp jIRCii
-tar zcf ./jerk.tgz jIRCii
+rm -rf `find jIRCii -type d -name .svn`
+tar zcf ./dist/jerk.tgz jIRCii
 
 #
 # Create Windows jIRCii Package
 #
 cp src-windows/bin/jircii.exe jIRCii/jircii.exe
-zip -r ./jerk.zip jIRCii
+rm -rf `find jIRCii -type d -name .svn`
+zip -r ./dist/jerk.zip jIRCii
 
 rm -f jIRCii/jircii.exe
 
@@ -81,7 +83,8 @@ if [ `uname` = "Darwin" ]; then
    cd ..
 
    mv temp jIRCii
-#   tar zcf ./jerkOSX.tgz ./jIRCii
-   hdiutil create -ov -volname jIRCii -srcfolder ./jIRCii jerk.dmg
+#   tar zcf ./dist/jerkOSX.tgz ./jIRCii
+   rm -rf `find jIRCii -type d -name .svn`
+   hdiutil create -ov -volname jIRCii -srcfolder ./jIRCii dist/jerk.dmg
    mv jIRCii temp
 fi
