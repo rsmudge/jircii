@@ -116,11 +116,11 @@ public class AboutWindow extends JDialog
            
             JScrollPane scroller = new JScrollPane(editor);
             scroller.setOpaque(false); 
-            scroller.getViewport().setOpaque(false);
+            scroller.getViewport().setOpaque(true);
             scroller.setBorder(null);
 
             editor.setEditable(false);
-            editor.setOpaque(false);
+            editor.setOpaque(true);
 
             // 5 should be monospaced...
             if (!randomText.equals(textTables[1]) && !randomText.equals(textTables[9]) && !randomText.equals(textTables[8]))
@@ -128,7 +128,7 @@ public class AboutWindow extends JDialog
                editor.setFont(new Font("Monospaced", Font.PLAIN, 12));
             }
             editor.setText(superEliteEncryption(randomText));
-            editor.setForeground(new Color(142, 142, 142));
+            editor.setForeground(Color.black);
             editor.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
             editor.setCaretPosition(0);
 
@@ -136,28 +136,6 @@ public class AboutWindow extends JDialog
             setOpaque(false);
             add(scroller, BorderLayout.CENTER);
         }
-
-        public void paint(Graphics g)
-        {
-             int x, y, width, height;
-
-             x      = g.getClipBounds().x;
-             y      = g.getClipBounds().y;
-             width  = g.getClipBounds().width;
-             height = g.getClipBounds().height;
-
-             g.setColor(Color.black);
-
-             Graphics2D g2 = (Graphics2D)g;
-             Composite oc = g2.getComposite();
-             AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .80f);
-
-             g2.setComposite(ac);
-             g2.fillRect(x, y, width, height);
-
-             g2.setComposite(oc);
-             paintChildren(g);  
-        } 
     }
 
     /** for extra security run this method twice */

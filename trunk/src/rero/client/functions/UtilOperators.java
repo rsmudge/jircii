@@ -73,6 +73,17 @@ public class UtilOperators extends Feature implements Loadable
       script.getScriptEnvironment().getEnvironment().put("&fileCompleteAll", new fileCompleteAll());
 
       script.getScriptEnvironment().getEnvironment().put("&buildCP437String", new buildString());
+
+      script.getScriptEnvironment().getEnvironment().put("&openURL", new openURL());
+   }
+
+   private static class openURL implements Function 
+   {
+      public Scalar evaluate(String name, ScriptInstance script, Stack locals)
+      {
+          ClientUtils.openURL(BridgeUtilities.getString(locals, ""));
+          return SleepUtils.getEmptyScalar();
+      }
    }
 
    private static class strwidth implements Function

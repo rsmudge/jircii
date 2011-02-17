@@ -14,10 +14,13 @@ Release 0.9
 - jIRCii is now friendly to the latest format of mIRC's servers.ini file
 - Updated servers.ini to the latest from http://www.mirc.co.uk/servers.ini
 - join/part messages in default theme now shows addresses
-- /load can now load scripts distributed into the jerk.jar
+- /load can now load scripts contained inside of jerk.jar
 - Removed black-listing of GTKLookAndFeel for Linux systems (set use Native L&F
   option to get it). After 7 years, it has matured enough to work with jIRCii
   [See Beta 15 notes].
+- Updated jIRCii about dialog with new look jIRCii logo
+- Added &openURL("http://...") function for scripters
+- Added links to the bug tracker and jIRCii homepage in the Help menu
 
 Beta    45 release 22 Sept 09
 ====

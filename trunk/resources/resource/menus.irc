@@ -342,6 +342,20 @@ menubar "&Help"
       showHelpDialog("");
    }
 
+   addSeparator();
+
+   item "H&omepage"
+   {
+      openURL("http://jircii.dashnine.org/");
+   }
+
+   item "&Report Bugs" 
+   {
+      openURL("http://code.google.com/p/jircii/issues/list");
+   }
+
+   addSeparator();
+
    item "&About"
    {
       showAboutDialog();
