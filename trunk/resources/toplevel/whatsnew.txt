@@ -19,8 +19,8 @@ Release 0.9
   option to get it). After 7 years, it has matured enough to work with jIRCii
   [See Beta 15 notes].
 - Updated jIRCii about dialog with new look jIRCii logo
-- Added &openURL("http://...") function for scripters
 - Added links to the bug tracker and jIRCii homepage in the Help menu
+- Updated MacOS X and Windows icons to new jIRCii logo
 
 Beta    45 release 22 Sept 09
 ====

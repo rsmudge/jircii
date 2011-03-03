@@ -21,8 +21,8 @@ Running and Installation
 
 1. -   Installation      - -
 
-   Unarchive your respective jIRC archive file.   Copy the files where ever
-   you want them.
+   Unarchive your respective jIRCii archive file. Copy the files where you
+   want them.
 
 2. --  Which Java to Use - -
 
@@ -62,6 +62,9 @@ Running and Installation
    The Windows distribution of jIRCii comes with a jircii.exe file.  You
    can use this to launch jIRCii and pass any of the above command line
    arguments to jIRCii.
+
+   Unfortunately, jircii.exe does not work on Windows 64-bit. Double-click
+   the jar file to launch jIRCii in this case.
 
    === Mac OS X ===
 

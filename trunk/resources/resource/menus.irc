@@ -346,12 +346,12 @@ menubar "&Help"
 
    item "H&omepage"
    {
-      openURL("http://jircii.dashnine.org/");
+      openCommand("http://jircii.dashnine.org/");
    }
 
    item "&Report Bugs" 
    {
-      openURL("http://code.google.com/p/jircii/issues/list");
+      openCommand("http://code.google.com/p/jircii/issues/list");
    }
 
    addSeparator();
