@@ -1,4 +1,4 @@
 #include <windows.h>
 #include "jirciires.h"
-IDAPPLICON ICON c:\jircii\jicon32x32.ico
+IDAPPLICON ICON jicon32x32.ico
 

@@ -192,7 +192,7 @@ public class BuiltInOperators extends Feature implements Predicate, Function, Lo
       {
          try
          {
-            Runtime.getRuntime().exec(ClientState.getClientState().getString("ui.openfiles", ClientDefaults.ui_openfiles) + " " + locals.pop().toString());
+            ClientUtils.openURL(locals.pop() + "");
          }
          catch (Exception ex)
          {
