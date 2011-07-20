@@ -22,9 +22,6 @@ Release 0.9 (20 Jul 11)
 - Added links to the bug tracker and jIRCii homepage in the Help menu
 - Updated MacOS X and Windows icons to new jIRCii logo
 - Updated Java Application Stub so jIRCii works with MacOS X Lion now.
-- MacOS X now uses a default font size of 16 with anti-alias on. Why? There's a
-  bug in OS X Java where the AA rendering hint is ignored when JTextField is 
-  painted. This sucks, but oh well. At least the default makes it less noticable
 
 Beta    45 release 22 Sept 09
 ====
