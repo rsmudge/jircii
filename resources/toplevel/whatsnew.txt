@@ -1,4 +1,4 @@
-Release 0.9
+Release 0.9 (20 Jul 11)
 ====
 - jIRCii now uses the Nimbus look and feel and Single Document Interface modes
   on all operating systems by default. This look is much more modern.
