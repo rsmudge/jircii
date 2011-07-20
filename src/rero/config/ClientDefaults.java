@@ -40,7 +40,7 @@ public class ClientDefaults
 
    public static final int     ui_sbarlines   = 1;    // number of statusbar lines by default
    public static final Color   ui_editcolor   = Color.lightGray;
-   public static       Font    ui_font        = new Font("Courier New", Font.BOLD, 14);
+   public static       Font    ui_font        = new Font("Courier New", Font.BOLD, (System.getProperty("os.name").indexOf("Mac") > -1) ? 16 : 14);
    public static final boolean ui_usetoolbar  = true;
    public static final boolean ui_showtabs    = true;
    public static final boolean ui_showbar     = true;
@@ -50,7 +50,7 @@ public class ClientDefaults
 
    public static final int     notabs_border  = 1; // size of app border when server tabs are turned off
 
-   public static       boolean ui_antialias   = false; // enable/disable text anti-aliasing
+   public static       boolean ui_antialias   = (System.getProperty("os.name").indexOf("Mac") > -1) ? true : false; // enable/disable text anti-aliasing
 
    public static final boolean script_ignoreWarnings = false;
    public static final boolean script_verboseLoad    = true;
@@ -78,5 +78,5 @@ public class ClientDefaults
 
    public static final boolean update_ial     = true;
 
-   public static final String  version_string = "02.10.11";
+   public static final String  version_string = "07.20.11";
 }
