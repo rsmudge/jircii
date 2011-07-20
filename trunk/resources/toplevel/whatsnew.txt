@@ -21,6 +21,7 @@ Release 0.9
 - Updated jIRCii about dialog with new look jIRCii logo
 - Added links to the bug tracker and jIRCii homepage in the Help menu
 - Updated MacOS X and Windows icons to new jIRCii logo
+- Updated Java Application Stub so jIRCii works with MacOS X Lion now.
 
 Beta    45 release 22 Sept 09
 ====
