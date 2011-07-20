@@ -33,10 +33,10 @@ To Build JavaDoc for jIRCii (dumped to the docs/api directory)
 [raffi@beardsley ~/rero]$ ant docs
 
 To be safe:
-This code is (c) 2004-2009 Raphael Mudge.  We can go back as far as 1999 if 
+This code is (c) 2004-2011 Raphael Mudge.  We can go back as far as 1999 if 
 you like.  That is when I started the jIRC project.  
 
-The sleep library is (c) 2004-2009 Raphael Mudge.  Sleep is distributed under 
+The sleep library is (c) 2004-2011 Raphael Mudge.  Sleep is distributed under 
 the LGPL license.  I like sleep.  
 
 The sleep library is available at http://sleep.dashnine.org/
