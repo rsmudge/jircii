@@ -547,7 +547,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case QUIT:
             if (parms.length() == 0)
             {
-               parms = ClientState.getClientState().getString("message.quit", ircData.getMyNick() + " has no reason");
+               parms = ClientState.getClientState().getString("message.quit", "jIRCii - http://www.oldschoolirc.com");
             }
 
             if (getCapabilities().isConnected())

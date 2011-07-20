@@ -9,7 +9,7 @@ jircii - frequently asked questions:
          $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$   $$$$$$
          $$$$$$ $$$$$$ $$$$$$ $$$$$$ $$$$$$        $$$$$$   $$$$$$
   """""" $$$$$$ $$$$$$ $$$$$$        $$$$$$ $$$$$$ $$$$$$   $$$$$$
-  $$$$$$ $$$$$$ $$$$$$ $$$$$$ 092209 $$$$$$ $$$$$$ $$$$$$   $$$$$$
+  $$$$$$ $$$$$$ $$$$$$ $$$$$$ 072011 $$$$$$ $$$$$$ $$$$$$   $$$$$$
   $$$$$$ $$$$$$ $$$$$$ $$$$$$        `?$$$$s$$$$P' $$$$$$   $$$$$$
   `?$$$$s$$$$P'                                        
 
@@ -122,7 +122,7 @@ Begin jIRCii FAQ:
  2. Where can I get jIRCii?
 
     You can download jIRCii addons, scripts, and themes
-    at: http://jircii.dashnine.org/
+    at: http://www.oldschoolirc.com
 
  3. How do I create a shortcut for jIRCii on Windows?
 
@@ -161,7 +161,7 @@ Begin jIRCii FAQ:
  7. Is there any way to minimize jIRCii to the system tray?
 
     [Serge] has written an addon script called jIRCii-tray.zip and it is
-    available at: http://jircii.dashnine.org/scripts.html
+    available at: http://www.oldschoolirc.com/scripts
 
  8. How do I make Windows web browsers use jIRCii for irc:// links?
 
@@ -424,7 +424,7 @@ Begin jIRCii FAQ:
    it.  Fortunately it has already been scripted.  You can download 
    flash.irc, an addon script that adds this functionality at:
 
-   http://jircii.dashnine.org/scripts.html
+   http://www.oldschoolirc.com/scripts
 
 27. How do I specify my own local IP address information for DCCs?
 
@@ -640,7 +640,7 @@ Begin jIRCii FAQ:
     binaries are released under the artistic license.  
 
     You can download the source code at:
-    http://jircii.dashnine.org/
+    http://www.oldschoolirc.com/
 
     The Sleep source code is available for download as well at the 
     Sleep Scripting Project:

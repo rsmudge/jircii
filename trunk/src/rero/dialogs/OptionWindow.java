@@ -305,6 +305,6 @@ public class OptionWindow extends JDialog implements DCapabilities, TreeSelectio
 
         pack();
 
-	setSize(new Dimension(590, 400)); // was 520x363
+	setSize(new Dimension(590, 440)); // was 520x363
     }
 }

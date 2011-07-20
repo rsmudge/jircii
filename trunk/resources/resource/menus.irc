@@ -346,7 +346,7 @@ menubar "&Help"
 
    item "H&omepage"
    {
-      openCommand("http://jircii.dashnine.org/");
+      openCommand("http://www.oldschoolirc.com/");
    }
 
    item "&Report Bugs" 
