@@ -2,11 +2,6 @@
 # menu.irc - Default jIRC Menu Items and Keyboard Shortcuts
 ##################################################################################
 
-bind Ctrl+J 
-{
-   call("/join #jircii");
-}
-
 bind Alt+F
 {
    showSearchDialog(getActiveWindow());
