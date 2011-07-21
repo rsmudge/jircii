@@ -5,7 +5,7 @@
 	<key>CFBundleName</key>
 	<string>jIRCii</string>
 	<key>CFBundleVersion</key>
-	<string>05.08.05</string>
+	<string>07.20.11</string>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<string>true</string>
 	<key>CFBundleExecutable</key>
