@@ -34,7 +34,7 @@ public class ClientDefaults
    public static final boolean dclick_links     = true; // open links with double click
 
    public static       boolean ui_sdi        = true;
-   public static       boolean ui_native     = false; 
+   public static       boolean ui_native     = true; 
 
    public static       String  ui_openfiles;
 
@@ -50,7 +50,7 @@ public class ClientDefaults
 
    public static final int     notabs_border  = 1; // size of app border when server tabs are turned off
 
-   public static       boolean ui_antialias   = true; // enable/disable text anti-aliasing
+   public static       boolean ui_antialias   = false; // enable/disable text anti-aliasing
 
    public static final boolean script_ignoreWarnings = false;
    public static final boolean script_verboseLoad    = true;
