@@ -176,14 +176,14 @@ public class InternalDataList {
   }
 
   public boolean isUser(String nickname) {
-    return (users.get(nickname) != null);
+    return (users.get(nickname.toLowerCase()) != null);
   }
 
   public User getUser(String nickname) {
-    if (users.get(nickname) == null) {
-      users.put(nickname, new User(nickname));
+    if (users.get(nickname.toLowerCase()) == null) {
+      users.put(nickname.toLowerCase(), new User(nickname));
     }
-    return (User) users.get(nickname);
+    return (User) users.get(nickname.toLowerCase());
   }
 
   public Set getUsersWithMode(String channel, char mode) {
@@ -204,7 +204,7 @@ public class InternalDataList {
 
     wasOn.put(nickname, oldchannels);
 
-    users.remove(nickname);
+    users.remove(nickname.toLowerCase());
   }
 
   public void PartNick(String nickname, Channel channel) {
@@ -252,11 +252,11 @@ public class InternalDataList {
     }
 
     // change the nick in the data structure
-    users.remove(oldnick);
+    users.remove(oldnick.toLowerCase());
 
     temp.setNick(newnick);
 
-    users.put(newnick, temp);
+    users.put(newnick.toLowerCase(), temp);
 
     // re add the user to the channel data structure
     iter = temp.getChannels().iterator();
