@@ -1,3 +1,8 @@
+In Progress
+====
+- isop, ison, etc. script predicates no longer treat the nickname as case
+  sensitive. Thanks tricid. 
+
 Release 0.9 (20 Jul 11)
 ====
 - jIRCii now uses the Nimbus look and feel and Single Document Interface modes
