@@ -15,9 +15,15 @@ public class StringInput extends SuperInput
    protected String value;
    protected JTextField text;
 
-   public StringInput(String var, String _value, String _label, int rightGap, char mnemonic)
+   public StringInput(String var, String _value, String _label, int rightGap, char mnemonic, float font_size)
    {
       label = new JLabel(_label);
+
+      if (font_size > 0.0)
+      {
+	      Font font = UIManager.getFont("Label.font").deriveFont(font_size);
+      	      label.setFont(font);
+      }
 
       setLayout(new BorderLayout());
      

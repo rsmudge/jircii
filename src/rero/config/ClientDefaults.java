@@ -15,6 +15,7 @@ public class ClientDefaults
    public static final int     ident_port    = 113;
    public static final boolean ident_enabled = (System.getProperty("os.name").indexOf("Window") > -1) ? true : false; // by default enable ident on Windows, disable it everywher else though..
 
+   public static final int 	max_history   = 30;
    public static final String  dcc_saveto     = System.getProperty("user.home");
    public static final int     dcc_low        = 4096;
    public static final int     dcc_high       = 8192;

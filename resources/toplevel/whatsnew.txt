@@ -3,6 +3,24 @@ In Progress
 - isop, ison, etc. script predicates no longer treat the nickname as case
   sensitive. Thanks tricid. 
 
+Release 0.9.1 (???)
+===
+*- On OS X, dock icon now bounces up and down when user receives a private message, channel message, notice, etc. (this is configurable).
+- "About" window now closes with ESCAPE key as well as CTRL + D (todo: close various other windows with ESCAPE).
+- Maximum input history option made configurable and is accessible via "Options->Interface Options->Window UI->Max Lines of Input History".
+- Negligible clean-ups and minor modification of text, option text and option mneumonics in the user interface.
+*- Script predicates isop, ison, etc. no longer case-sensitive (Brandon's patch and thanks to tricid for the effort).
+*- Connecting to an SSL server with password via auto-connect and "Connection->Connect" menu now works; fixed bug with stored parameters being treated inconsistently.
+*- Text editing caret in text input field now positioned at end-of-line when navigating history via the Up key.
+*- When scripts load at start-up, we are now checking if a script is already loaded before loading it. A bug with an auto-loaded script loading another script, that would be auto-loaded after the parent, was causing scripts to be loaded twice.
+
+Development changes:
+- StringInput now has an initializer that accepts font size, along with appropriate overloaded addStringInput() method (TODO: make it accept a Font object) (items/StringAdapter.java)
+- theApplication is now set at declaration with getApplication() per Apple's specs.
+- Removed Help items that got over-written by subsequent items
+- Changed static path of SetFile to dynamic `which SetFile` in Package.sh
+
+
 Release 0.9 (20 Jul 11)
 ====
 - jIRCii now uses the Nimbus look and feel and Single Document Interface modes
