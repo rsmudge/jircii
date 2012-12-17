@@ -1,6 +1,8 @@
 package apple;
 
-import com.apple.eawt.*;
+import com.apple.eawt.Application;
+import com.apple.eawt.ApplicationAdapter;
+import com.apple.eawt.ApplicationEvent;
 
 import rero.gui.*;
 
@@ -8,7 +10,7 @@ import rero.gui.*;
     This code is meant to hook jIRC into the "jIRC" menu in the Apple menubar at the top of the screen. */
 public class OSXAdapter extends ApplicationAdapter 
 {
-    private static com.apple.eawt.Application theApplication;
+    private static Application theApplication = Application.getApplication();
 
     public void handleAbout(ApplicationEvent ae) 
     {
@@ -48,12 +50,12 @@ public class OSXAdapter extends ApplicationAdapter
   
     public static void registerMacOSXApplication() 
     {
-	if (theApplication == null) 
-        {
-	    theApplication = new com.apple.eawt.Application();
 	    theApplication.setEnabledPreferencesMenu(true);
-        }			
-		
-        theApplication.addApplicationListener(new OSXAdapter());
+            theApplication.addApplicationListener(new OSXAdapter());
+    }
+
+    public static void getAttention()
+    {
+	    theApplication.requestUserAttention(true);
     }
 }

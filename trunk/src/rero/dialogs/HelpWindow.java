@@ -117,7 +117,7 @@ public class HelpWindow extends JDialog implements HyperlinkListener
         commands.setHelp(this);
 
 	JTabbedPane left = new JTabbedPane();
-	left.addTab("Help", null, general.getNavigation(), "detailed information.");
+	left.addTab("Help", null, general.getNavigation(), "Detailed Information.");
 	left.addTab("Commands", null, commands.getNavigation(), "jIRCii command reference.");
 
         left.setSelectedIndex(0);
@@ -190,6 +190,3 @@ public class HelpWindow extends JDialog implements HyperlinkListener
         }
     }
 }
-
-
-

@@ -34,14 +34,14 @@ public class ProxyDialog extends DMain
           public void setupDialog()
           {
              addStringInput("proxy.server", ClientDefaults.proxy_server, "  Hostname: ", 'h',  60);
-             addStringInput("proxy.port"  , ClientDefaults.proxy_port, "  Port:     ", 'p', 120);
+             addStringInput("proxy.port"  , ClientDefaults.proxy_port, "  Port:     ", 'o', 120);
              addBlankSpace();
              addStringInput("proxy.userid", ClientDefaults.proxy_userid, "  Username: ", 'u',  60);
-             addStringInput("proxy.password", ClientDefaults.proxy_password, "  Password: ", 's',  60);
+             addStringInput("proxy.password", ClientDefaults.proxy_password, "  Password: ", 'p',  60);
           }
       });
 
-      CheckboxInput boxed = addCheckboxInput("proxy.enabled", false,  "Use Proxy Server", 'P', FlowLayout.CENTER);
+      CheckboxInput boxed = addCheckboxInput("proxy.enabled", false,  "Use Proxy Server", 'e', FlowLayout.CENTER);
       boxed.addDependent(temp);
    }
 }

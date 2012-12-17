@@ -12,6 +12,7 @@ public abstract class DGroup extends DContainer implements DItem
 {
     protected String title;
     protected int    inset;
+    protected boolean useBorder;
 
     public DGroup (String _title)
     {
@@ -23,6 +24,15 @@ public abstract class DGroup extends DContainer implements DItem
        title = " " + _title + " ";
        inset = _inset;
     } 
+
+    // No border or title; for alignment purposes, since the layout code isn't too flexible.
+    public DGroup (int _inset)
+    {
+	    useBorder = false;
+	    inset = _inset;
+    }
+
+    public DGroup () { this(0); }
 
     public int  getEstimatedWidth()
     {
@@ -46,7 +56,8 @@ public abstract class DGroup extends DContainer implements DItem
        component.add(temp, BorderLayout.WEST);
 
        JPanel child = new JPanel();
-       child.setBorder(BorderFactory.createTitledBorder(getTitle()));
+       if (useBorder)
+           child.setBorder(BorderFactory.createTitledBorder(getTitle()));
        child.setLayout(new GridBagLayout());
 
        component.add(child, BorderLayout.CENTER);

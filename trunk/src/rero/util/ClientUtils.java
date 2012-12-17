@@ -18,8 +18,13 @@ import rero.config.*;
 import text.*;
 import rero.dialogs.*;
 
+import java.lang.reflect.*;
+import com.apple.eawt.Application;
+
 public class ClientUtils
 {
+    private static int OS_TYPE = -1;
+
     public static void invokeLater(Runnable doIt)
     {
         if (SwingUtilities.isEventDispatchThread())
@@ -63,6 +68,7 @@ public class ClientUtils
             "Fat butane, grubbin' on French fries",
             "No rest for the wicked",
             "Clean. Christian. Comprehensive.",
+	    "a series of tubes",
         };
         int r = ctime() % taglines.length;
         return taglines[r];
@@ -623,5 +629,80 @@ public class ClientUtils
         rv.add(pfile);
 
         return rv;
+    }
+
+    // Return operating system; OS X (0), Windows (1) or Linux (2)
+    public static int GetOS()
+    {
+	    if (OS_TYPE == -1)
+	    {
+	    	String OS = System.getProperty("os.name").toLowerCase();
+		
+		if (OS.indexOf("mac") >= 0)
+			OS_TYPE = 0;
+		else if (OS.indexOf("win") >= 0)
+			OS_TYPE = 1;	
+		else if (OS.indexOf("linux") >= 0)
+			OS_TYPE = 2;
+		else
+		{
+			// Unknown OS type -- we should probably log something here (TODO)
+			OS_TYPE = -1;
+		}
+	    }
+	    
+	    return OS_TYPE;
+    }
+
+    public static boolean isWindows()
+    {
+	    if (OS_TYPE == -1)
+		    GetOS();
+
+	    return (OS_TYPE == 1);
+    }
+    public static boolean isLinux()
+    {
+	    if (OS_TYPE == -1)
+		    GetOS();
+
+	    return (OS_TYPE == 2);
+    }
+    public static boolean isMac()
+    {
+	    if (OS_TYPE == -1)
+		    GetOS();
+
+	    return (OS_TYPE == 0);
+    }
+
+    // Notify user of activity in status bar, dock, task bar, whatever
+    public static void getAttention()
+    {
+	    if (isMac())
+	    {
+		    try {
+		    	Class osxAdapter = Class.forName("apple.OSXAdapter");
+		  	  Class[] defArgs = new Class[0];
+		  	  Method gaMethod = osxAdapter.getDeclaredMethod("getAttention", defArgs);
+		  	  if (gaMethod != null)
+		   	 {
+				    gaMethod.invoke(osxAdapter, new Object[0]); // apple.OSXAdapter.getAttention() equivalent
+			    }
+		    }
+		    catch (Exception ex)
+		    {
+			    System.err.println("Exception while trying to call OSXAdapter.getAttention() (indirectly): ");
+			    ex.printStackTrace();
+		    }
+	    }
+	    else if (isWindows())
+	    {
+		    // TODO: Flash Windows task bar window
+	    }
+	    else if (isLinux())
+	    {
+		    // TODO: Do whatever it is that Linux does to get attention 
+	    }
     }
 }

@@ -136,7 +136,7 @@ public class ServerHandler extends Feature implements FrameworkConstants, Socket
 
            if (rero.test.QuickConnect.IsQuickConnect())
            {
-              user = ClientState.getClientState().getString("user.rname", "jIRCii Web User: http://jircii.hick.org/");
+              user = ClientState.getClientState().getString("user.rname", "jIRCii Web User: http://www.jircii.org/");
               nick = ClientState.getClientState().getString("user.nick",  rero.test.QuickConnect.GetInformation().getNickname());
            }
            else if ((System.currentTimeMillis() % 5) == 0) // haveing some more fun...

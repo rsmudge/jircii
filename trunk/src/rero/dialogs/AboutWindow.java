@@ -173,7 +173,7 @@ public class AboutWindow extends JDialog
 
         public void keyPressed(KeyEvent ev)
         {
-            if (ev.isControlDown() && ev.getKeyCode() == KeyEvent.VK_D)
+            if (ev.getKeyCode() == KeyEvent.VK_ESCAPE || (ev.isControlDown() && ev.getKeyCode() == KeyEvent.VK_D) )	// Now ESC key as well as CTRL+D closes About window.
             {
                AboutWindow.dialog.setVisible(false);
                KeyBindings.is_dialog_active = false; 

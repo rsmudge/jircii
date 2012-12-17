@@ -37,12 +37,11 @@ public class InputField extends JTextField implements KeyListener, ActionListene
   private ListIterator commandIterator;
 
   // This is the maximum number of commands in the command history.
-  // TODO: This should be configurable.
-  private int maxCommands = 30;
+  private int maxCommands = ClientDefaults.max_history;
 
   // True if the key pressed in the previous keyevent was the upkey
   // This flag is modified in a variety of places in the code.
-  private boolean previousKeyUpArrow = true;
+  private boolean previousKeyUpArrow = false; // Brandon: experimental; might change this back to false.  EXPERIMENTAL
 
   protected InputBorder indent;
 
@@ -208,7 +207,7 @@ public class InputField extends JTextField implements KeyListener, ActionListene
     //
     // deal with problem of windows binging when hitting backspace in an empty buffer
     //
-    if (e.getKeyChar() == KeyEvent.VK_BACK_SPACE && getText().length() == 0) {
+    if ( ( e.getKeyChar() == KeyEvent.VK_DELETE || e.getKeyChar() == KeyEvent.VK_BACK_SPACE ) && getText().length() == 0) {
       e.consume();
     }
   }
@@ -343,7 +342,6 @@ public class InputField extends JTextField implements KeyListener, ActionListene
         setText("");
         next = null;
         this.previousKeyUpArrow = true;
-
       }
 
       // I'm not really sure what this is

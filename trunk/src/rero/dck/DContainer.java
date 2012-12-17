@@ -138,16 +138,23 @@ public abstract class DContainer
 
     public StringInput addStringInput(String var, String defValue, String label, char Mn)
     {
-       StringInput temp = new StringInput(var, defValue, label, 0, Mn); 
+       StringInput temp = new StringInput(var, defValue, label, 0, Mn, 0); 
        itemList.add(temp);
        return temp;
     }
 
     public StringInput addStringInput(String var, String defValue, String label, char Mn, int gap)
     {
-       StringInput temp = new StringInput(var, defValue, label, gap, Mn); 
+       StringInput temp = new StringInput(var, defValue, label, gap, Mn, 0); 
        itemList.add(temp);
        return temp;
+    }
+
+    public StringInput addStringInput(String var, String defValue, String label, char Mn, int gap, float fontsize)
+    {
+	    StringInput temp = new StringInput(var, defValue, label, gap, Mn, fontsize);
+	    itemList.add(temp);
+	    return temp;
     }
 
     public CheckboxInput addCheckboxInput(String variable, boolean defValue, String label, char Mn)

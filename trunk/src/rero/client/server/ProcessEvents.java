@@ -54,6 +54,7 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
                 getCapabilities().getUserInterface().openQueryWindow(nick, isSelected);
              }
              output.fireSetQuery(eventDescription, nick, target, "PRIVMSG");
+	     // ClientUtils.getAttention(); // TODO: Move this somewhere else, so that we can trigger on user defined actions (channel or private msg, notice, notify, etc)
          }
       }
       else if (event.equals("MODE"))
