@@ -286,6 +286,7 @@ public class InputField extends JTextField implements KeyListener, ActionListene
         // Set text from history
         else {
           setText(previous);
+	  System.out.println("Up key; printed \"previous\" text; caretPos = " + getCaretPosition() + ", length = " + previous.length() + ", string = \"" + previous + "\"");
         }
 
       } else {

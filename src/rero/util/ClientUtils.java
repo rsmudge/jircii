@@ -634,7 +634,7 @@ public class ClientUtils
     // Return operating system; OS X (0), Windows (1) or Linux (2)
     public static int GetOS()
     {
-	    if (OS_TYPE == -1)
+	    if (OS_TYPE == -1) // We don't have the operating system yet
 	    {
 	    	String OS = System.getProperty("os.name").toLowerCase();
 		
@@ -654,27 +654,10 @@ public class ClientUtils
 	    return OS_TYPE;
     }
 
-    public static boolean isWindows()
-    {
-	    if (OS_TYPE == -1)
-		    GetOS();
-
-	    return (OS_TYPE == 1);
-    }
-    public static boolean isLinux()
-    {
-	    if (OS_TYPE == -1)
-		    GetOS();
-
-	    return (OS_TYPE == 2);
-    }
-    public static boolean isMac()
-    {
-	    if (OS_TYPE == -1)
-		    GetOS();
-
-	    return (OS_TYPE == 0);
-    }
+    // Returns the operating system
+    public static boolean isWindows() { return (GetOS() == 1); }
+    public static boolean isLinux() { return (GetOS() == 2); }
+    public static boolean isMac() { return (GetOS() == 0); }
 
     // Notify user of activity in status bar, dock, task bar, whatever
     public static void getAttention()
