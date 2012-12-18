@@ -1,0 +1,17 @@
+# Aliases and variables to make development on jIRCii a little easier. :D  -Brandon
+# To use: source SOURCE_ME
+# Some of these aliases have paths specific to my box; modify as needed.
+
+# Search Java
+alias sjava='find . -name \*.java -type f | xargs egrep -i $1'
+
+# Find EXPERIMENTAL, TODO and REPLACE comment tags in the code
+alias stodo="find . -name \*.java -type f | xargs egrep '(TODO|EXPERIMENT|REPLACE)'"
+
+# Change Directory to *j*IRCii
+alias cdj='cd ~/Documents/jircii/'
+
+# *j*IRCii Build And Run'
+alias jbar='cdj && ant && ./Run.sh'
+
+#EOF

@@ -19,7 +19,6 @@ import text.*;
 import rero.dialogs.*;
 
 import java.lang.reflect.*;
-import com.apple.eawt.Application;
 
 public class ClientUtils
 {

@@ -15,6 +15,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.PlainDocument;
+import javax.swing.text.DefaultCaret;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class InputField extends JTextField implements KeyListener, ActionListene
 
   // True if the key pressed in the previous keyevent was the upkey
   // This flag is modified in a variety of places in the code.
-  private boolean previousKeyUpArrow = false; // Brandon: experimental; might change this back to false.  EXPERIMENTAL
+  private boolean previousKeyUpArrow = true; // Brandon: experimental; might change this back to true.  EXPERIMENTAL
 
   protected InputBorder indent;
 
@@ -286,7 +287,7 @@ public class InputField extends JTextField implements KeyListener, ActionListene
         // Set text from history
         else {
           setText(previous);
-	  System.out.println("Up key; printed \"previous\" text; caretPos = " + getCaretPosition() + ", length = " + previous.length() + ", string = \"" + previous + "\"");
+	 // System.out.println("Up key; printed \"previous\" text; caretPos = " + getCaretPosition() + ", length = " + previous.length() + ", string = \"" + previous + "\"; text length = " + getText().length());
         }
 
       } else {
