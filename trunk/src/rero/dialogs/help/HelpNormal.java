@@ -119,7 +119,7 @@ public class HelpNormal extends HelperObject implements TreeSelectionListener
           option = new DefaultMutableTreeNode("Events"); category.add(option);
           option = new DefaultMutableTreeNode("Resources"); category.add(option);
 
-	  // EXPERIMENTAL; might have to re-enable these.
+// EXPERIMENTAL; might have to re-enable these? What are these
 //       helpData.put("Introduction", "part1");
  //      helpData.put("Chatting", "part2");
  //      helpData.put("Beyond Basics", "part3");

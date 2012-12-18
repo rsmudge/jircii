@@ -11,10 +11,12 @@ import rero.gui.windows.*;
 
 import rero.config.*;
 import rero.ident.*;
+import rero.util.*;
 
 import java.net.URI;
 
 import java.lang.reflect.*;
+
 
 public class WindowTest
 {
@@ -59,7 +61,8 @@ public class WindowTest
       //
       // Handle Mac OS X specific stuff (iff we are on Mac OS X... won't affect anything otherwise)
       //
-      if (System.getProperty("mrj.version") != null)
+//    if (System.getProperty("mrj.version") != null)
+      if (ClientUtils.isMac())
       {
          System.setProperty("apple.laf.useScreenMenuBar", "true");
          System.setProperty("com.apple.macos.smallTabs",  "true");

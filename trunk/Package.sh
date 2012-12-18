@@ -79,7 +79,7 @@ if [ `uname` = "Darwin" ]; then
    mv temp/jerk.jar temp/jIRCii.app/Contents/Resources/Java/jerk.jar
 
    cd temp
-   `whereis SetFile` -a B jIRCii.app
+   `which SetFile` -a B jIRCii.app
    cd ..
 
    mv temp jIRCii
