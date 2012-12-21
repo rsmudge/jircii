@@ -88,7 +88,7 @@ public class HelpNormal extends HelperObject implements TreeSelectionListener
 
     private static boolean isTutorial(String key)
     {
-        return key.equals("Introduction") || key.equals("Chatting") || key.equals("Beyond Basics");
+        return key.equals("Introduction");
     }
 
     private static boolean isScriptTutorial(String key)
@@ -108,21 +108,11 @@ public class HelpNormal extends HelperObject implements TreeSelectionListener
           option = new DefaultMutableTreeNode("Colored Text"); category.add(option);
           option = new DefaultMutableTreeNode("KB Shortcuts"); category.add(option);
 
-//       category = new DefaultMutableTreeNode("IRC Tutorial"); items.add(category);
-//          option = new DefaultMutableTreeNode("Introduction"); category.add(option);
-//          option = new DefaultMutableTreeNode("Chatting"); category.add(option);
-//          option = new DefaultMutableTreeNode("Beyond Basics"); category.add(option);
-
        category = new DefaultMutableTreeNode("Script Tutorial"); items.add(category);
           option = new DefaultMutableTreeNode("Introduction "); category.add(option);
           option = new DefaultMutableTreeNode("Aliases"); category.add(option);
           option = new DefaultMutableTreeNode("Events"); category.add(option);
           option = new DefaultMutableTreeNode("Resources"); category.add(option);
-
-// EXPERIMENTAL; might have to re-enable these? What are these
-//       helpData.put("Introduction", "part1");
- //      helpData.put("Chatting", "part2");
- //      helpData.put("Beyond Basics", "part3");
 
        helpData.put("Introduction ", "part1");
        helpData.put("Aliases", "part2");

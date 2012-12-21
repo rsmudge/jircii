@@ -189,7 +189,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
             getCapabilities().getChatCapabilities().sendRequest(tokens.getToken(0), tokens.getToken(1), tokens.getTokenFrom(2));
             break;
          case DEBUG:
-            ((ScriptManager)getCapabilities().getDataStructure(DataStructures.ScriptManager)).setDebug(tokens.getToken(0), tokens.getTokenFrom(1));
+            boolean debugSuccess = ((ScriptManager)getCapabilities().getDataStructure(DataStructures.ScriptManager)).setDebug(tokens.getToken(0), tokens.getTokenFrom(1));
             break;
          case DO:
          case DOP:
@@ -478,8 +478,16 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case OP:
             temp = " +";
             target = "";
+	    int maxModes = ircData.getMaxModes();
+
             for (int x = 0; x < tokens.getTotalTokens(); x++)
             {
+		    /*
+	       if (x % maxModes)
+	       {
+		       // Construct a new MODE line
+	       }
+		*/
                target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
                temp   = temp + "o";
             }            
@@ -661,7 +669,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
             getCapabilities().getOutputCapabilities().fireSetActive(ClientUtils.getEventHashMap("remove", parms), "SET_IGNORE");
             break;
          case UNLOAD:
-            ((ScriptManager)getCapabilities().getDataStructure(DataStructures.ScriptManager)).removeScript(parms);
+            boolean unloadSuccess = ((ScriptManager)getCapabilities().getDataStructure(DataStructures.ScriptManager)).removeScript(parms);
             break;
          case VER:
             target = gui.getQuery();
@@ -775,33 +783,135 @@ public class BuiltInCommands extends Feature implements ClientCommand
       }
    }
 
+   /* TODO: Fix this server code */
    public void connectToServer(String parms)
    {
       boolean secure   = false;
-      String  host     = "";
+      String  host     = null;
       int     port     = 6667;
       String  password = null;
-
+      int     loopCnt  = 0;
       StringStack stack = new StringStack(parms);
- 
-      String temp = stack.pop();
-      if (temp.equals("-ssl") || temp.equals("-s"))
+      String temp = null;
+
+      /* Convoluted ass code ...
+      while (!stack.isEmpty())
       {
+      	temp = stack.pop();
+	      if (loopCnt < 2)
+	      {
+		      if (temp.toLowerCase().equals("-ssl") || temp.toLowerCase().equals("-s")) {
+			      secure = true;
+		      }
+		      else if (temp.toLowerCase().equals("-pass") || temp.toLowerCase().equals("-p"))
+		      {
+			      if (stack.isEmpty())
+			      {
+				      // Needed a password, but didn't get one.
+				      getCapabilities().getUserInterface().printStatus("/server error: no password specified; no server specified..");
+				      return;
+			      }
+			      else
+			      {
+			      	password = stack.pop();
+			      }
+		      } else {
+			      if (loopCnt == 0)
+				      host = temp;
+			      else if (loopCnt == 1)
+			      {
+				      if (secure == true || password != null) {
+					      host = temp;
+				      }
+				      else {
+				     	 port = Integer.parseInt(temp);
+				      }
+			      }
+		      }
+	      }
+	      else
+	      {
+		      if (loopCnt == 2)
+		      {
+			      if (secure == true && password != null) {
+				      host = temp;
+			      } else if (secure == true && password == null) {
+				      try {
+				      	port = Integer.parseInt(temp);
+				      } catch (NumberFormatException ex) {
+					      getCapabilities().getUserInterface().printStatus("/server error: invalid port number specified.");
+					      return;
+				      }
+			      }
+		      }
+		      else if (loopCnt == 3)
+		      {
+			      if (secure == true && password != null && host != null)
+			      {
+				      try {
+				      	port = Integer.parseInt(temp);
+				      } catch (NumberFormatException ex) {
+					      getCapabilities().getUserInterface().printStatus("/server error: invalid port number specified.");
+					      return;
+				      }
+			      }
+		      }
+	      }
+
+	      loopCnt++;
+      }
+
+      if (host == null)
+      {
+	      getCapabilities().getUserInterface().printStatus("/server error: must specify a server name.");
+	      return;
+      }
+   */
+
+	if (stack.isEmpty()) {
+	    getCapabilities().getUserInterface().printStatus("Usage: /server [-ssl] [-pass <password>] <hostname> [port #]");
+	    return;
+	}
+
+      temp = stack.pop();
+    
+      if (temp.toLowerCase().equals("-ssl") || temp.toLowerCase().equals("-s")) {
          secure = true;
-         temp   = stack.pop();
+	 if (stack.isEmpty()) {
+	    getCapabilities().getUserInterface().printStatus("Usage: /server [-ssl] [-pass <password>] <hostname> [port #]");
+	    return;
+	 } else {
+            temp   = stack.pop();
+	 }
+      }
+      
+      if (temp.toLowerCase().equals("-pass") || temp.toLowerCase().equals("-p")) {
+	 if (stack.isEmpty()) {
+	    getCapabilities().getUserInterface().printStatus("Usage: /server [-ssl] [-pass <password>] <hostname> [port #]");
+	    return;
+	 } else {
+         	password = stack.pop();
+		if (stack.isEmpty()) {
+	    		getCapabilities().getUserInterface().printStatus("Usage: /server [-ssl] [-pass <password>] <hostname> [port #]");
+	   		return;
+		} else {
+			temp = stack.pop();
+		}
+	 }
       }
 
-      if (temp.equals("-pass") || temp.equals("-p"))
-      {
-         password = stack.pop();
-         temp     = stack.pop();
-      }
-
-      host = temp;
+      if (host == null)
+	      host = temp;
 
       if (!stack.isEmpty())
       {
-         port = Integer.parseInt(stack.pop());
+	      String portTemp = stack.pop();
+	      try {
+        	  port = Integer.parseInt(portTemp);
+	      } catch (NumberFormatException ex) {
+	    	  getCapabilities().getUserInterface().printStatus("Port # specified (" + portTemp + ") is not a valid number.");
+	   	  return;
+	      }
       }
 
       if (getCapabilities().isConnected())  // add some sort of check for isRegistered() as well.
@@ -944,7 +1054,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
          {
              if (StringUtils.iswm(data.getToken(1).toUpperCase(), target))
              {
-                 getCapabilities().sendln("MODE " + channel + " -b " + data.getToken(1));
+                 getCapabilities().sendln("MODE " + channel + " -b " + data.getToken(1)); // TODO: What's this?
              }
          }
 

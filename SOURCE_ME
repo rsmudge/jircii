@@ -3,7 +3,7 @@
 # Some of these aliases have paths specific to my box; modify as needed.
 
 # Search Java
-alias sjava='find . -name \*.java -type f | xargs egrep -i $1'
+alias sjava='find . -name \*.java -type f | xargs egrep $1'
 
 # Find EXPERIMENTAL, TODO and REPLACE comment tags in the code
 alias stodo="find . -name \*.java -type f | xargs egrep '(TODO|EXPERIMENT|REPLACE)'"
@@ -13,5 +13,11 @@ alias cdj='cd ~/Documents/jircii/'
 
 # *j*IRCii Build And Run'
 alias jbar='cdj && ant && ./Run.sh'
+
+# edit jIRCii development properties file
+alias jprop='vi ~/.jIRCdevel/jirc.prop'
+
+# nuke script.files property from properties file
+alias delsf='grep -v ^script.files ~/.jIRCdevel/jirc.prop > .tmp ; mv -f .tmp ~/.jIRCdevel/jirc.prop'
 
 #EOF

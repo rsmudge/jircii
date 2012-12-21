@@ -373,7 +373,7 @@ public class ServerList extends JPanel implements DItem
 
              cell.setBorder(UIManager.getBorder("List.focusCellHighlightBorder"));
 
-             if (svalue.getNetwork().length() <= 2)
+             if (svalue.getNetwork().equals(""))
              {
                 cell.setText("Random: " + svalue.getHost() + ":" + svalue.getPorts());
              }
@@ -395,7 +395,18 @@ public class ServerList extends JPanel implements DItem
              cell.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 0));
              cell.setForeground(fore);
 
-             cell.setText(svalue.getNetwork() + ": " + svalue.getDescription());
+	     String description = svalue.getDescription();
+	     String network = svalue.getNetwork();
+
+	     if (description == null || description.equals("")) {
+		     description = svalue.getHost();
+	     }
+
+	     if (network == null || network.equals("")) {
+		     network = "Random";
+	     }
+
+             cell.setText(network + ": " + description);
           }
 
           return cell;

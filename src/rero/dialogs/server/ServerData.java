@@ -171,6 +171,7 @@ public class ServerData
       buildGroupList();
    }
 
+   // Generate the servers.ini file
    public void save()
    {
       try
@@ -180,6 +181,7 @@ public class ServerData
          int x = 0;
 
          out.println("; Who thinks mIRC sucks?");
+	 out.println("; I do! :D    - Brandon");
          out.println("[servers]");
 
          Iterator i = allServers.getServers().iterator();

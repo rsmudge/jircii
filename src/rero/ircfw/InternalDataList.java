@@ -27,6 +27,7 @@ public class InternalDataList {
 
   protected HashMap iSupport = new HashMap();
   protected HashMap chanModes = new HashMap(); // key=<string-group name (A,B,C,D)> value = <string with modes>
+  protected int maxModes = 3;	// Maximum # of modes per line; Default on EFnet is 4, but set default to 3 to be safe as this is standard.
 
   public void reset() {
     myNickname = "<Unknown>";
@@ -51,6 +52,19 @@ public class InternalDataList {
 
   public void setChanGroupMode(String group, String modes) {
     chanModes.put(group, modes);
+  }
+
+  public void setMaxModes(int modes)
+  {
+	  if (modes <= 0)
+		  return;
+
+	  maxModes = modes;
+  }
+
+  public int getMaxModes()
+  {
+	  return maxModes;
   }
 
   public Set getChannelsFromPriorLife(String nick) {

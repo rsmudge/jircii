@@ -152,7 +152,7 @@ menubar "&Connection"
 
    menu "&Connect"
    {
-      local('@saved_servers $x @stemp $v');
+      local('@saved_servers $var $x @stemp $v');
       @saved_servers = getPropertyList("saved.servers");
 
       $x = 0;
@@ -161,19 +161,21 @@ menubar "&Connection"
          @stemp = split(" ", $var);
          $v = @stemp[0];
         
+	 # fixed by Brandon
          item "& $+ $x $v"
          {
-            local('@server_list $var $tokens $temp');
+            local('@server_list $tokens $temp $lvar');
 
             $temp        = substr($command, 2);
             @server_list = getPropertyList("saved.servers");
-            $tokens      = tokenize($var);
+            $tokens      = tokenize($var, " ");
 
-            foreach $var (@server_list)
+            foreach $lvar (@server_list)
             {
+               $tokens      = tokenize($lvar, " ");
                if (getToken($tokens, 0) eq $temp && getTotalTokens($tokens) > 1)
                {
-                  call(getTokenFrom(tokenize($var), 1));
+                  call(getTokenFrom($tokens, 1));
                   return;
                }
             }
