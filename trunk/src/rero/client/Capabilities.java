@@ -141,10 +141,6 @@ public class Capabilities
         setupFeature(soundops, featureList);
 
         finalizeFeatures(featureList);
-
-        //
-        // do other fun stuff... i.e. script loading and such
-        //
     }
 
     public TimerUtil getTimer()

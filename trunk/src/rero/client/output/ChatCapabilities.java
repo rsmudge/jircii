@@ -16,11 +16,13 @@ public class ChatCapabilities extends Feature {
   protected SocketConnection sock;
   protected OutputCapabilities output;
   protected DataDCC dccData;
+  protected InternalDataList ircData;
 
   public void init() {
     sock = getCapabilities().getSocketConnection();
     output = getCapabilities().getOutputCapabilities();
     dccData = (DataDCC) getCapabilities().getDataStructure("dcc");
+    ircData = ((InternalDataList) output.getCapabilities().getDataStructure("clientInformation"));
   }
 
   public void sendMessage(String nickname, String message) {
@@ -59,7 +61,7 @@ public class ChatCapabilities extends Feature {
       eventData.put("$data", nickname.substring(1, nickname.length()) + " " + message);
 
       output.fireSetTarget(eventData, nickname, "SEND_CHAT");
-    } else if (ClientUtils.isChannel(nickname)) {
+    } else if (ircData.isChannel(nickname)) {
       eventData.put("$target", nickname);
       eventData.put("$channel", nickname);
       eventData.put("$parms", message);
@@ -76,8 +78,8 @@ public class ChatCapabilities extends Feature {
   }
 
   private int computeMaxMessageLength(String nickname) {
-    InternalDataList ci = ((InternalDataList) output.getCapabilities().getDataStructure("clientInformation"));
-    String fullAddress = ci.getMyUser().getFullAddress();
+    //InternalDataList ci = ((InternalDataList) output.getCapabilities().getDataStructure("clientInformation"));
+    String fullAddress = ircData.getMyUser().getFullAddress();
     /* maximum allowed message text */
     /* :nickname!username@host.com PRIVMSG #channel :text\r\n */
     int max = 512;

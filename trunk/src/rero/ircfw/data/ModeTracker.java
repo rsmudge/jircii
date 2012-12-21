@@ -27,7 +27,7 @@ public class ModeTracker extends DataEventAction implements FrameworkConstants {
       modes = blah[1];
     }
 
-    boolean isChannel = (target.charAt(0) == '#' || target.charAt(0) == '&');
+    boolean isChannel = dataList.isChannel(target);
     boolean doSet = false;
 
     String parse[] = modes.split("\\s", 0);

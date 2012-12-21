@@ -36,7 +36,7 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
  
       if (event.equals("PRIVMSG"))
       {
-         if (ClientUtils.isChannel(target))
+         if (ircData.isChannel(target))
          {
 /*             if (!getCapabilities().getUserInterface().isActive(channel))
              {
@@ -59,7 +59,7 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
       }
       else if (event.equals("MODE"))
       {
-         if (ClientUtils.isChannel(target))
+         if (ircData.isChannel(target))
          {
              output.fireSetTarget(eventDescription, channel, "CHANNEL_MODE");
              getCapabilities().getUserInterface().notifyWindow(channel);
@@ -77,7 +77,7 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
          {
             output.fireSetStatus(eventDescription, "NOTICE");
          }
-         else if (ClientUtils.isChannel(target) || ClientState.getClientState().isOption("active.notice", ClientDefaults.active_option)) 
+         else if (ircData.isChannel(target) || ClientState.getClientState().isOption("active.notice", ClientDefaults.active_option)) 
          {
             output.fireSetConfused(eventDescription, target, "notice", "NOTICE");
          }
@@ -90,7 +90,7 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
       }
       else if (event.equals("ACTION"))
       {
-         if (ClientUtils.isChannel(target))
+         if (ircData.isChannel(target))
          {
              output.fireSetTarget(eventDescription, channel, output.chooseSet(channel, "ACTION", "ACTION_INACTIVE"));
              touchUser(nick, target);

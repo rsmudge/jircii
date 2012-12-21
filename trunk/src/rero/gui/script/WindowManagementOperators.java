@@ -62,7 +62,7 @@ public class WindowManagementOperators implements Function, Loadable
           String parms = locals.pop().toString();
           InternalDataList ircData = (InternalDataList)session.getCapabilities().getDataStructure("clientInformation");
 
-          if (ClientUtils.isChannel(parms))
+          if (ircData.isChannel(parms))
           {
              session.getCapabilities().getUserInterface().openChannelWindow(ircData.getChannel(parms));
           }

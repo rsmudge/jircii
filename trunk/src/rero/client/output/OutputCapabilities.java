@@ -101,7 +101,7 @@ public class OutputCapabilities extends Feature implements ClientStateListener
 
       boolean toActive = ClientState.getClientState().isOption("active.query", ClientDefaults.active_option);
 
-      if (ClientUtils.isChannel(target))
+      if (data.isChannel(target))
       {
          fireSetTarget(event, target, setName);
       }

@@ -1,0 +1,22 @@
+
+TODO
+===
+- Allow scripts to load 'child' scripts which are tied to the parent, and on parent unload, the children unload cleanly. The children are not stored in the script auto-load property.
+- Text editing caret in Mac OS X is positioning itself at the beginning of the line; no idea why. Fix this behavior!
+- Alter handling of lame, menus and default.irc and add proper options for them.
+- Prevent exception when sending to non-connected IRC server, and remind user to connect.
+- Fix Makefile to auto-compile apple-specific when Apple OS is detected.
+- On OS X, dock icon now bounces up and down when user receives a private message, channel message, notice, etc. (** make this configurable; right now, no activity. **)
+- Finagle server code to allow a colon ':' inside of passwords; right now, it'll bork the server entry.
+- Skip the step of going to the Server Editor when 'Edit' is clicked and a server item is selected, and instead go directly to the editor. This step seems redundant!
+
+CURRENTLY DOING/INVESTIGATING/WHATEVER ELSE
+===
+- Move networkName, maxModes, etc. to UserMode.java ?? Ask butane about this class.
+- Really check into where we should have a static, generic channel type check (types "#", "&", (also "+" and "!" ??) and where we should check based on information from the IRC server (CHANTYPES=xyz). Right now I'm just using the CHANTYPES method any which way I can.
+
+NOTES
+===
+    import rero.ircfw.InternalDataList;
+    ircData = ((InternalDataList) output.getCapabilities().getDataStructure("clientInformation"));
+

@@ -30,6 +30,23 @@ public class TokenizedString
        tokenize(delim);
     }
 
+    // Converts to and returns an arrayList
+    public ArrayList toArrayList()
+    {
+	    int total = getTotalTokens();
+
+	    if (total < 1)
+		    return null;	// Not tokenized yet
+
+	    ArrayList converted = new ArrayList(total);
+
+	    for (int x = 0; x < total; x++) {
+		    converted.add(getToken(x));
+	    }
+
+	    return converted;
+    }
+
     public int tokenize(String delim) 
     {                                      /* return number of tokens */
        MyTokenizer erect = new MyTokenizer(text, delim);

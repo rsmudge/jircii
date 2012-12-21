@@ -81,6 +81,14 @@ public class MyInformationTracker extends DataEventAction implements FrameworkCo
 		   } catch (NumberFormatException ex) {
 	             System.err.println("Error: Got invalid MODES line from IRC server. Something fish going on here ...");
 		   }
+	   } else if (key.equals("NETWORK")) {
+		   // Parse NETWORK and set network name
+		   if (!value.isEmpty())
+			   dataList.setNetworkName(value);
+	   } else if (key.equals("CHANTYPES")) {
+		   // Parse CHANTYPES
+		   if (!value.isEmpty())
+			   dataList.setChanTypes(value);
           } else {
             dataList.addSupportInfo(temp[x], "true");
           }
