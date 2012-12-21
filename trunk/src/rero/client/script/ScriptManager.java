@@ -43,17 +43,28 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
 
     public void hashScripts()
     {
+	// TODO: When we load, traverse all the loaded scripts and, if the path is not absolute, change it to absolute and save it. We must enforce absolute paths!
+
         if (lock)
             return;
 
         Set unload, load, configured;
 
+	// Traverse through the loaded scripts and correct the script paths to absolute paths, as that's the format in which we've stored them.
         configured = new LinkedHashSet();
-        configured.addAll(ClientState.getClientState().getStringList("script.files").getList());
+	Iterator si = ClientState.getClientState().getStringList("script.files").getList().iterator();
+
+	while (si.hasNext()) {
+		File absScript = new File(si.next().toString());
+		configured.add(absScript.getAbsolutePath());
+	}
+
+        //configured.addAll(ClientState.getClientState().getStringList("script.files").getList());
 
         load = loader.getScriptsToLoad(configured);
         unload = loader.getScriptsToUnload(configured);
 
+	// Exclude the resource scripts
         load.remove("menus");
         load.remove("default");
         load.remove("lame");
@@ -90,48 +101,47 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
             internalScriptLoad(filename);
             loader.unloadScript(filename);
         } else {
-            getCapabilities().getUserInterface().printStatus("Error loading script: " + new File(filename).getAbsolutePath() + " does not exist");
+            getCapabilities().getUserInterface().printStatus("Error loading theme: " + new File(filename).getAbsolutePath() + " does not exist");
         }
+    }
+
+    // Checks whether a script is in the script.files property list. It determines via getAbsolutePath() on each iteration of script.files, and of the passed argument filename.
+    public boolean isInScriptList(String filename)
+    {
+	    File fn = ClientUtils.getFile(filename);
+	    Iterator si = ClientState.getClientState().getStringList("script.files").getList().iterator();
+
+	    while (si.hasNext())
+	    {
+		    File siFn = new File(si.next().toString());
+		    if (siFn.getAbsolutePath().equals(fn.getAbsolutePath())) {
+			    return true;
+		    }
+	    }
+
+	    return false;
     }
 
     public void addScript(String filename)
     {
         StringList temp = ClientState.getClientState().getStringList("script.files");
 
-        try
-        {
-           InputStream i = ClientState.getClientState().getResourceAsStream(filename);
-           if (i != null) 
-           {
-              if (!temp.getList().contains(filename))
-              {
-                 temp.add(filename);
-                 temp.save();
-                 ClientState.getClientState().sync();
-                 i.close();
-                 return;
-              }
-           }
-        }
-        catch (Exception ex)
-        {
-           ex.printStackTrace();
-        }
+	// Sanity checks
+	File fn = ClientUtils.getFile(filename);
 
-        filename = ClientUtils.getFile(filename).getAbsolutePath();
+        if (fn.exists()) {
+	    if (isInScriptList(fn.getAbsolutePath())) {
+	    	// Already present in the script list script.files; so we're already loaded.
+		getCapabilities().getUserInterface().printStatus("Script file " + fn.getName() + " is already loaded.  Grabbing a beer instead :D");
+		return;
+	    }
 
-        if ((new File(filename)).exists()) {
-            String fn = ClientUtils.getFile(filename).getAbsolutePath();
-
-            if (!temp.getList().contains(fn)) {
-                temp.add(fn);
-                temp.save();
-                ClientState.getClientState().sync();
-            } else {
-                getCapabilities().getUserInterface().printStatus("Script file " + fn + " is already loaded.  Grabbing a beer instead");
-            }
+	    // Must not be present -- we made it this far.
+            temp.add(fn.getAbsolutePath());
+            temp.save();
+            ClientState.getClientState().sync();	// This triggers a rehash
         } else {
-            getCapabilities().getUserInterface().printStatus("Error loading script: " + new File(filename).getAbsolutePath() + " does not exist");
+            getCapabilities().getUserInterface().printStatus("Error loading script: " + fn.getName() + " (" + fn.getAbsolutePath() + ") does not exist!");
         }
     }
 
@@ -145,13 +155,17 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
         }
     }
 
-    public void setDebug(String filename, String debuglevel)
+    public boolean setDebug(String filename, String debuglevel)
     {
-        Iterator i = findScripts(filename, ClientState.getClientState().getStringList("script.files").getList()).iterator();
-        while (i.hasNext()) {
-            String scriptf = (String) i.next();
-            setDebugReal(scriptf, debuglevel);
-        }
+	String dFile = findScript(filename);
+
+	if (dFile != null) {
+   	     setDebugReal(dFile, debuglevel);
+	     return true;
+	} else {
+	     getCapabilities().getUserInterface().printStatus("Could not find loaded script " + filename + " to set debug level.");
+	     return false;
+	}
     }
 
     private void setDebugReal(String filename, String debuglevel)
@@ -160,7 +174,7 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
 
         if (script == null)
         {
-           getCapabilities().getUserInterface().printStatus("Could not find script " + filename + " to set debug level");
+           //getCapabilities().getUserInterface().printStatus("Could not find loaded script " + filename + " to set debug level.");
            return;
         }
 
@@ -198,7 +212,7 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
 
         script.setDebugFlags(debug);
 
-        getCapabilities().getUserInterface().printStatus("*** Updated debug flags for " + filename);
+        getCapabilities().getUserInterface().printStatus("*** Updated debug flags for script " + filename);
     }
 
     public String evalString(String code)
@@ -215,56 +229,43 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
     public void reloadScript(String filename)
     {
         boolean flag = true;
+	String rScript = findScript(filename);
 
-        Iterator i =
-            findScripts(filename, ClientState.getClientState().getStringList("script.files").getList()).iterator();
-        while (i.hasNext()) {
-            flag = false;
-
-            String scriptf = (String) i.next();
-
-//         if (ClientState.getClientState().isOption("script.verboseLoad", ClientDefaults.script_verboseLoad))
-//         {
-//            getCapabilities().getUserInterface().printStatus("Attempting to reload script " + scriptf);
-//         }
-
-            removeScript(scriptf);
-            addScript(scriptf);
-//         loader.unloadScript(scriptf);
-//         internalScriptLoad(scriptf);        
+	if (rScript != null) {
+            removeScript(rScript);
+            addScript(rScript);
         }
-
-        if (flag)
-            getCapabilities().getUserInterface().printStatus("Error (re)loading script: " + filename + " isn't loaded");
+	else {
+            getCapabilities().getUserInterface().printStatus("Error re-loading script: " + filename + " isn't loaded! Try /load'ing it first.");
+	}
     }
 
-    private LinkedList findScripts(String filename, LinkedList theList)
+    // Returns the absolute path of a script file found in script.files matching argument filename. Replaces findScripts().
+    private String findScript(String filename)
     {
-        LinkedList goodBye = new LinkedList();
+	    File fn = new File(filename);
 
-        Iterator i = theList.iterator();
-        while (i.hasNext()) {
-            File temp = new File((String) i.next());
-            if (temp.getName().equals(filename) || temp.getAbsolutePath().equals(filename)) {
-                goodBye.add(temp.getAbsolutePath());
-            }
-        }
+	    if (isInScriptList(fn.getAbsolutePath())) {
+		    return fn.getAbsolutePath();
+	    }
 
-        return goodBye;
+  	    return null;
     }
 
-    public void removeScript(String filename)
+    public boolean removeScript(String filename)
     {
         StringList temp = ClientState.getClientState().getStringList("script.files");
-        Iterator i = findScripts(filename, temp.getList()).iterator();
+	String remMe = findScript(filename);
 
-        while (i.hasNext()) {
-            String remMe = (String) i.next();
-            temp.remove(remMe);
-        }
+	if (remMe != null) {
+        	temp.remove(remMe);
+      	        temp.save();
+		ClientState.getClientState().sync(); // this will cause all the script values to be rehashed...
 
-        temp.save();
-        ClientState.getClientState().sync(); // this will cause all the script values to be rehashed...
+		return true;
+	}
+	else
+		return false;
     }
 
     private static boolean lame = true;
@@ -303,6 +304,7 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
         // do other fun stuff... i.e. script loading and such
         //
 
+	    // TODO: Deal with all of this stuff.
         try {
             if (ClientState.getClientState().isOption("load.default", true)) {
                 long start = System.currentTimeMillis();
@@ -346,8 +348,27 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
         hashScripts();
     }
 
-    private void internalScriptLoad(String scriptFile)
+    private boolean internalScriptLoad(String scriptFile)
     {
+	File fScript = new File(scriptFile);
+
+	if (!fScript.exists())
+	{
+		// Script doesn't exist
+		//System.err.println("internalScriptLoad(): Cannot find file " + scriptFile);
+		return false;
+	} else if (!fScript.canRead() || !fScript.isFile()) {
+		//System.err.println("internalScriptLoad(): Cannot load script, check permissions and file type for script " + scriptFile);
+		return false;
+	}
+
+	if (loader.isLoaded(fScript.getAbsolutePath()))
+	{
+		// We shouldn't get here unless something funky is happening with the script.files property... (?)
+		getCapabilities().getUserInterface().printStatus("Error loading script " +  fScript.getName() + ": already loaded. [internalScriptLoad()]");
+		return false;
+	}
+
         try {
             String charset = guessCharsetFromFileName(scriptFile);
 
@@ -363,15 +384,26 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
 
             ScriptInstance scripti = null;
             InputStream ii = ClientState.getClientState().getResourceAsStream(scriptFile);
+
             if (ii != null) 
             {
-                scripti = loader.loadScript(scriptFile, ii, environment);
+                scripti = loader.loadScript(fScript.getAbsolutePath(), ii, environment);
             }
-            else 
+	    else
+	    {
+		    // We couldn't open the file ... bail out.
+		    if (charset != null) {
+			    loader.setCharsetConversion(charsetConversions);
+			    loader.setCharset(oldcharset);
+		    }
+	
+		    return false;
+	    }
+/*            else 
             {
                 loader.loadScript(scriptFile, environment);
             }
-
+*/
             // restore previous mode
             if (charset != null) {
                 loader.setCharsetConversion(charsetConversions);
@@ -385,6 +417,7 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
             }
 
             scripti.runScript();
+	    ii.close(); // Close the InputStream
         }
         catch (YourCodeSucksException ex) {
             formatCodeException(scriptFile, ex);
@@ -392,14 +425,20 @@ public class ScriptManager extends Feature implements ClientStateListener, Runti
             lock = true;
             removeScript(scriptFile);
             lock = false;
+
+	    return false;
         }
         catch (IOException ex2) {
             getCapabilities().getUserInterface().printStatus("Error loading " + (new File(scriptFile)).getName() + ": " + ex2.getMessage());
+	    return false;
         }
         catch (Exception ex3) {
             getCapabilities().getUserInterface().printStatus("Error loading " + (new File(scriptFile)).getName() + ": " + ex3.getMessage() + " <-- could be a sleep bug, please report :)");
             ex3.printStackTrace();
+	    return false;
         }
+
+	return true;
     }
 
     private static final Pattern ENCODING_IN_FILE = Pattern.compile(".*\\.(.*?)\\..*$");

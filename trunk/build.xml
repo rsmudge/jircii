@@ -1,4 +1,4 @@
-<project name="sleep" default="all" basedir=".">
+<project name="jircii" default="all" basedir=".">
   <property name="project.src"   location="src" />
   <property name="project.build" location="bin" />
   <property name="project.compiler" value="" />

@@ -26,14 +26,22 @@ public class Server implements Comparable
 
    public void setValues(String d, String h, String r, String n, boolean s, String p)
    {
-       description = d;
-       host        = h;
-       portRange   = r;
-       network     = n;
+       description = serverTrim(d);
+       host        = serverTrim(h);
+       portRange   = serverTrim(r);
+       network     = serverTrim(n);
        isSSL       = s;
-       password    = p;
+       password    = serverTrim(p);
 
        compare     = n.toUpperCase() + host.toUpperCase();
+   }
+
+   private String serverTrim(String txt)
+   {
+	   if (txt == null || txt == "")
+		   return txt;
+	   else
+		   return txt.trim();
    }
 
    public Server() { }
@@ -51,7 +59,7 @@ public class Server implements Comparable
 
    public boolean isRandom()
    {
-      return getNetwork() == null || getNetwork().length() <= 2;
+      return getNetwork() == null || getNetwork().equals("");
    }
 
    public String getCompare() { return compare; }
@@ -110,6 +118,7 @@ public class Server implements Comparable
        return network;
    }
 
+   // Build the built-in /server command to execute
    public String getCommand()
    {
        StringBuffer command     = new StringBuffer("/server ");
@@ -168,6 +177,7 @@ public class Server implements Comparable
 
    public static Server decode(String text)
    {
+       // Check for server with password
        StringParser check = new StringParser(text, isServerPassword);
  
        if (check.matches())
@@ -179,6 +189,7 @@ public class Server implements Comparable
           return new Server(values[1], values[2], values[3], values[5], secure, values[4]);
        }
 
+       // Check for server without password
        check = new StringParser(text, isServerNormal);
 
        if (check.matches())

@@ -29,7 +29,7 @@ public class ClientState
    protected Properties backup;  // backup of the client state.
 
    // REPLACE: Using .jIRCdevel directory for devel so it doesn't interfere with non-development jIRCii. (replace to .jIRC)
-   protected static File    baseDirectory = new File(System.getProperty("user.home"), ".jIRCdevel");
+   protected static File    baseDirectory = new File(System.getProperty("user.home"), ".jIRC");
 
    protected Properties state;   // all of the properties we're going to load from the jerk.cfg file.
 

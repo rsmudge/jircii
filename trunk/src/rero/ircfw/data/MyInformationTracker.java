@@ -52,6 +52,7 @@ public class MyInformationTracker extends DataEventAction implements FrameworkCo
         for (int x = 0; x < temp.length; x++) {
           String key, value;
 
+	  // Separated as key=value pairs
           if (temp[x].indexOf('=') > -1) {
             key = temp[x].substring(0, temp[x].indexOf('='));
             value = temp[x].substring(key.length() + 1, temp[x].length());
@@ -73,14 +74,20 @@ public class MyInformationTracker extends DataEventAction implements FrameworkCo
                 dataList.setChanGroupMode("C", groups[2]);
                 dataList.setChanGroupMode("D", groups[3]);
               }
-            }
+	   } else if (key.equals("MODES")) {
+		   // Number of modes per line
+		   try {
+		     dataList.setMaxModes(Integer.parseInt(value));
+		   } catch (NumberFormatException ex) {
+	             System.err.println("Error: Got invalid MODES line from IRC server. Something fish going on here ...");
+		   }
           } else {
             dataList.addSupportInfo(temp[x], "true");
           }
         }
       }
     }
-
   }
-}
+ }
 
+}
