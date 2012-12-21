@@ -1,0 +1,15 @@
+Upcoming 0.9.1 Development Notes (Differs from 0.9.0):
+===
+- StringInput now has an initializer that accepts font size, along with appropriate overloaded addStringInput() method (TODO: make it accept a Font
+- theApplication is now set at declaration with getApplication() per Apple's specs.
+- Removed Help items that got over-written by subsequent items
+- Changed static path of SetFile to dynamic `which SetFile` in Package.sh
+- findScripts() replaced with single findScript(). Script management code cleaned up greatly, things handled more consistently internally, and as a - Values in the Server class are trimmed prior to being assigned to help avoid sloppy argument parsing issues.
+- Scripts now all referenced by their absolute path to avoid the same script being loaded twice or more.
+- Support for high-resolution "Retina" display added via key in Info.plist in Apple package.
+- connectToServer() code, Server dialog, and Server class modified to fix a intermittent issue with /server and stored servers, extra spaces in the /server line, etc.
+- Reflection used to trigger Apple specific requestUserAttention(), bouncing the dock icon up and down; won't cause an error on non-Apple systems. Plan on implementing for Windows and Linux as well.
+- toArrayList() method added to TokenizedString class; converts tokenized string to an ArrayList.
+- parmsToArrayList() method added in BuiltInCommands, to convert parameters to an ArrayList. Accepts a parameter to signify that blank parameters should be nuked.
+- createHomogenousChannelModesList() added; returns MODE line acting on all targets specified, to the maximum number of modes per line specified by IRC server. This provides fix for /op, /deop, etc.
+- Now identifying NETWORK, MAXMODES, CHANTYPES from the IRC server and using them in the code.

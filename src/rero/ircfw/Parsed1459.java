@@ -59,7 +59,7 @@ public class Parsed1459 implements FrameworkConstants
    protected static String hostPattern2   = "(.+?)";
 
    protected static String hostPattern    = "([\\w\\-\\=]++[[\\.|\\:][\\w\\-\\=]++]*)";
-   protected static String channelPattern = "([\\#|\\&|\\!|\\+]\\S++)";
+   //protected static String channelPattern = "([\\#|\\&|\\!|\\+]\\S++)";
 
    // ([\-|\[|\]|\\|\`|\^|\{|\}|\w|\-]++)!(([\~\w\-]++)@([\w\-]++[\.[\w\-]++]*))
 
@@ -148,6 +148,7 @@ public class Parsed1459 implements FrameworkConstants
        }
        else
        {
+	   // TODO: Use the isChannel() function in the InternalDataList for this.. I'm not sure how to access it.
            if ( "#&+!".indexOf(data.charAt(1)) > -1 && data.indexOf(' ') == -1 )
            {
                // the parameter is a channel, this is put in place for broke assed ircds

@@ -530,14 +530,14 @@ public class ServerList extends JPanel implements DItem
          
          if (isStartup.isSelected() && ! autoConnect.isValue(host.getText()))
          {
-             System.out.println("Adding: " + host.getText());
+             //System.out.println("Adding: " + host.getText());
 
              autoConnect.add(host.getText());
              autoConnect.save();
          }         
          else if (! isStartup.isSelected() && autoConnect.isValue(host.getText()))
          {
-             System.out.println("Removing: " + host.getText());
+             //System.out.println("Removing: " + host.getText());
 
              autoConnect.remove(host.getText());
              autoConnect.save();

@@ -174,7 +174,7 @@ public class ServerHandler extends Feature implements FrameworkConstants, Socket
            {
                if (ClientState.getClientState().isOption("option.reconnect", ClientDefaults.option_reconnect))
                {
-                  System.out.println("Reconnecting is an option");
+                  //System.out.println("Reconnecting is an option");
 
                   restoreInformation = data.getMyUser().copy();
                   restoreServer      = ev.data.hostname;

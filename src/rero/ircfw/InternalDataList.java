@@ -27,8 +27,11 @@ public class InternalDataList {
 
   protected HashMap iSupport = new HashMap();
   protected HashMap chanModes = new HashMap(); // key=<string-group name (A,B,C,D)> value = <string with modes>
-  protected int maxModes = 3;	// Maximum # of modes per line; Default on EFnet is 4, but set default to 3 to be safe as this is standard.
+  protected int maxModes = 3;	// Maximum # of modes per line, gotten from MODES variable from 005 server message; Default on EFnet is 4, but set default to 3 to be safe as this is standard.
+  protected String networkName = "Unknown"; // Network name per NETWORK variable from 005 server message
+  protected HashMap chanTypes = new HashMap(); // Channel types, from CHANTYPES variable from 005
 
+  // Reset all values, and back to defaults. Make sure these jive with the default values above.
   public void reset() {
     myNickname = "<Unknown>";
     users = new HashMap();
@@ -37,6 +40,9 @@ public class InternalDataList {
     umode = new UserMode("ohv", "@%+");
     iSupport = new HashMap();
     chanModes = new HashMap();
+    setMaxModes(3);
+    setNetworkName("Unknown");
+    setChanTypes("&#+!"); 
   }
 
   // checks if the mode belongs to one of the CHANMODES group (A, B, C or D)
@@ -62,9 +68,61 @@ public class InternalDataList {
 	  maxModes = modes;
   }
 
-  public int getMaxModes()
-  {
+  public int getMaxModes() {
 	  return maxModes;
+  }
+
+  public void setNetworkName(String nName)
+  {
+	  if (nName == null || nName.trim().isEmpty())
+		  networkName = "Unknown";
+	  else
+		  networkName = nName.trim();
+  }
+
+  public String getNetworkName() {
+	  return networkName;
+  }
+
+  public void setChanTypes(String cTypes)
+  {
+	  if (cTypes == null || cTypes.isEmpty())
+		  return;
+
+	  chanTypes = new HashMap();
+
+	  for (int x = 0; x < cTypes.length(); x++) {
+		  String cStr = Character.toString(cTypes.charAt(x));
+		  chanTypes.put(cStr, cStr);
+	  }
+
+  }
+
+  // Returns true if given char is a valid channel type prefix
+  public boolean isChanType(char cType)
+  {
+	  String cTypeStr = Character.toString(cType);
+	  String val = (String)chanTypes.get(cTypeStr); // Check if it's in the hash table
+
+	  if (val == null)
+		  return false;
+	  else
+		  return true;
+  }
+
+  // Returns true if a channel has a valid channel type prefix
+  public boolean isChanType(String cType) {
+	  if (cType == null || cType.trim().isEmpty())
+		return false;
+	  else
+	  	return isChanType(cType.charAt(0));
+  }
+
+  public boolean isChannel(String chan) {
+	  if (chan == null || chan.trim().isEmpty())
+		  return false;
+	  else
+		  return isChanType(chan.charAt(0));
   }
 
   public Set getChannelsFromPriorLife(String nick) {
@@ -186,7 +244,8 @@ public class InternalDataList {
   }
 
   public InternalDataList() {
-    /* probably don't need to do anything */
+	  // We set this, in case some code asks about it while we're disconnected.
+	  setChanTypes("#&!+");
   }
 
   public boolean isUser(String nickname) {

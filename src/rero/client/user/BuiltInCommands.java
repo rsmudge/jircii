@@ -52,6 +52,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
    public static final int DEVOICE    = -2016999119;    // implemented
    public static final int DEBUG      = 64921139;       // implemented
    public static final int DH         = 2180;           // implemented
+   public static final int DEHOP      = 64926728;	// implemented
    public static final int DNS        = 67849;          // implemented
    public static final int DO         = 2187;           // implemented
    public static final int DOP        = 67877;          // implemented
@@ -60,6 +61,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
    public static final int EXEC       = 2142353;        // implemented
    public static final int EXIT       = 2142494;        // implemented
    public static final int HELP       = 2213697;        // implemented
+   public static final int HALFOP     = 2123661652;
    public static final int HO         = 2311;           // implemented
    public static final int HOP        = 71721;          // implemented
    public static final int IGNORE     = -2137067054;    // implemented
@@ -81,6 +83,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
    public static final int MSG        = 76641;          // implemented
    public static final int MSGLOG     = -2011679709;                         // later - when away features added, maybe?
    public static final int N          = 78;             // implemented
+   public static final int NAMES      = 74047272;	// implemented
    public static final int NEWSERVER  = -1201786685;    // implemented
    public static final int NOTICE     = -1986360616;    // implemented
    public static final int NOTIFY     = -1986360503;    // implemented in default script
@@ -102,12 +105,15 @@ public class BuiltInCommands extends Feature implements ClientCommand
    public static final int SEND       = 2541448;         // implemented within DCC framework
    public static final int SERVER     = -1852497085;     // implemented
    public static final int ST         = 2657;            // implemented
+   public static final int UNTOP      = 80906236;	 // implemented
    public static final int UT         = 2719;            // implemented
    public static final int SM         = 2650;            // implemeneted
+   public static final int SPING      = 79108165;
    public static final int SV         = 2659;            // implemented
    public static final int THEME      = 79789481;        // implemented
    public static final int TOPIC      = 80008463;        // implemented
    public static final int TSEND      = 80117212;
+   public static final int UMODE      = 80871288;	 // implemented
    public static final int UNBAN      = 80888502;        // implemented
    public static final int UNIGNORE   = 478733739;       // implemented
    public static final int UNLOAD     = -1787112705;     // implemented
@@ -143,7 +149,15 @@ public class BuiltInCommands extends Feature implements ClientCommand
       TokenizedString tokens = new TokenizedString(parms);
       tokens.tokenize(" ");
 
-      String target, nick, channel, temp;
+      ArrayList parametersArray = parmsToArrayList(parms, true);	// No empty parameters included (no whitespace-only parameters)
+      ArrayList parametersArrayFull = parmsToArrayList(parms, false);	// Includes empty parameters (parameters can have whitespace)
+
+      String target, temp;
+      String channel = null;
+
+      // If the current window is a channel, set channel variable
+      if (ircData.isChannel(gui.getQuery()))
+	      channel = gui.getQuery();
 
       switch (command.hashCode())
       {
@@ -161,11 +175,15 @@ public class BuiltInCommands extends Feature implements ClientCommand
             getCapabilities().sendln("AWAY");
             break;
          case BANSTAT:
-            target = gui.getQuery();
-            if (parms.length() > 0)
-            {
-               target = parms;
-            }
+	    if (parms.trim().length() > 0)
+		    target = parms.trim();
+	    else if (channel != null)
+		    target = channel;
+	    else {
+		    gui.printActive("BANSTAT: error: must be in or specify a channel.");
+		    break;
+	    }
+
             getCapabilities().sendln("MODE " + target + " +b");
             break;
          case CLS:
@@ -194,35 +212,54 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case DO:
          case DOP:
          case DEOP:
-            temp = " -";
-            target = "";
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "o";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target.trim());
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
+
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "-", "o", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
             break;
          case DV:
          case DEVOICE:
-            temp = " -";
-            target = "";
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "v";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target);
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
+
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "-", "v", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
             break;
          case DH:
-            temp = " -";
-            target = "";
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "h";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target);
+	 case DEHOP:
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
+
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "-", "h", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
             break;
          case DESCRIBE:
             chatCommands.sendAction(tokens.getToken(0), tokens.getTokenFrom(1));
@@ -253,14 +290,21 @@ public class BuiltInCommands extends Feature implements ClientCommand
             getCapabilities().getGlobalCapabilities().showHelpDialog(parms);
             break;
          case HO:
-            temp = " +";
-            target = "";
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "h";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target);
+	 case HALFOP:
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
+
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "+", "h", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
             break;
          case HOP:
          case CYCLE:
@@ -303,13 +347,13 @@ public class BuiltInCommands extends Feature implements ClientCommand
             break;
          case J:
          case JOIN:
-            if (!ClientUtils.isChannel(parms))
+            if (!ircData.isChannel(parms))
             {
                parms = "#" + parms;
             }
             if (ircData.getChannel(parms) != null && ircData.isOn(ircData.getMyUser(), ircData.getChannel(parms)))
             {
-               getCapabilities().getUserInterface().setQuery(parms);
+               gui.setQuery(parms);
             }
             else
             { 
@@ -372,12 +416,10 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case LIST:
             if (tokens.getTotalTokens() == 1)
             {
-               if (tokens.getToken(0).equals("-gui"))
-               {
+               if (tokens.getToken(0).toLowerCase().equals("-gui")) {
                   gui.openListWindow();
                }
-               else
-               {
+               else {
                   getCapabilities().addTemporaryListener(new ListFilter(tokens.getToken(0)));
                }
 
@@ -447,6 +489,17 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case NOTICE:
             getCapabilities().getChatCapabilities().sendNotice(tokens.getToken(0), tokens.getTokenFrom(1));
             break;
+	 case NAMES:
+	    if (channel == null) {
+		    // Protect a user from himself; this will flood him off.
+		    gui.printActive("/NAMES: if you really want to see a server-wide /NAMES, type /NAMES -yes");
+	    } else if (parms.trim().toLowerCase().equals("-yes")) {
+		    getCapabilities().sendln("NAMES");
+	    } else {
+		    getCapabilities().sendln("NAMES " + channel);
+	    }
+
+	    break;
          case NOTIFY:
             if (tokens.getTotalTokens() <= 0)
                break;
@@ -476,22 +529,21 @@ public class BuiltInCommands extends Feature implements ClientCommand
             break;
          case O:
          case OP:
-            temp = " +";
-            target = "";
-	    int maxModes = ircData.getMaxModes();
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
 
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-		    /*
-	       if (x % maxModes)
-	       {
-		       // Construct a new MODE line
-	       }
-		*/
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "o";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target.trim());
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "+", "o", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
+
             break;
          case PA:
             getCapabilities().sendln("JOIN 0");
@@ -501,7 +553,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
          case PART:
             target = gui.getQuery();
             parms  = parms;
-            if (parms.length() > 0 && ClientUtils.isChannel(tokens.getToken(0)))
+            if (parms.length() > 0 && ircData.isChannel(tokens.getToken(0)))
             {
                target = tokens.getToken(0);
                parms  = tokens.getTokenFrom(1);
@@ -622,23 +674,27 @@ public class BuiltInCommands extends Feature implements ClientCommand
                 getCapabilities().sendln("TOPIC " + target);                
             }
             break;
+	 case UMODE:
+	    if (parms.length() == 0)
+	        getCapabilities().sendln("MODE " + ircData.getMyNick());
+	    else
+	    	getCapabilities().sendln("MODE " + ircData.getMyNick() + " " + tokens.getToken(0));
 
+	    break;
          // Unsets topic in the given channel
          case UT:
-         
-            // Fetch possible target from currently active window
-            target = gui.getQuery();
-            
-            // Check if there is a specified target parameter
-            if (parms.length() > 0)
-            {
-               target = tokens.getToken(0);
-            }
+         case UNTOP:
+	    if (parms.length() == 0 && channel != null)
+		    target = channel;
+	    else if (parms.length() > 0 && ircData.isChannel(tokens.getToken(0)))
+		    target = tokens.getToken(0);
+	    else
+	    	break;
  
             // Send the command to unset the topic
             getCapabilities().sendln("TOPIC " + target + " :");
             break;
-
+	 
          case UNBAN:
             if (parms.indexOf('!') > -1)
             {
@@ -669,7 +725,29 @@ public class BuiltInCommands extends Feature implements ClientCommand
             getCapabilities().getOutputCapabilities().fireSetActive(ClientUtils.getEventHashMap("remove", parms), "SET_IGNORE");
             break;
          case UNLOAD:
+	    {
+	    boolean sSilent = false;
+
+	    if (parms.length() == 0)
+		    break;
+
+	    if (tokens.getTotalTokens() > 1)
+	    {
+		    if (tokens.getToken(0).toLowerCase().equals("-s"))
+		    {
+			    sSilent = true; // Silent failure
+			    parms = tokens.getTokenRange(1, tokens.getTotalTokens());
+		    }
+		    else
+			    parms = tokens.getTokenRange(0, tokens.getTotalTokens());
+	    }
+
             boolean unloadSuccess = ((ScriptManager)getCapabilities().getDataStructure(DataStructures.ScriptManager)).removeScript(parms);
+
+	    if (!unloadSuccess && !sSilent)
+		    gui.printStatus("Unable to unload script; if you're sure the script is loaded, try using it's absolute pathname.");
+	    }
+
             break;
          case VER:
             target = gui.getQuery();
@@ -681,14 +759,21 @@ public class BuiltInCommands extends Feature implements ClientCommand
             break;
          case V:
          case VOICE:
-            temp = " +";
-            target = "";
-            for (int x = 0; x < tokens.getTotalTokens(); x++)
-            {
-               target = ircData.nickComplete(tokens.getToken(x), gui.getQuery()) + " " + target;
-               temp   = temp + "v";
-            }            
-            getCapabilities().sendln("MODE " + gui.getQuery() + temp + " " + target);
+	    {
+	    ArrayList modesToPush;
+	    Iterator modei;
+
+	    modesToPush = createHomogenousChannelModesList(gui.getQuery(), "+", "v", parametersArray);
+
+	    if (modesToPush == null)
+		    break;
+
+	    modei = modesToPush.listIterator();
+
+	    while (modei.hasNext())
+            	getCapabilities().sendln(modei.next().toString());
+	    }
+
             break;
          case WALL:
             Set chops = ircData.getUsersWithMode(gui.getQuery(), 'o');
@@ -765,7 +850,7 @@ public class BuiltInCommands extends Feature implements ClientCommand
                getCapabilities().getOutputCapabilities().cycleQuery();
             }
             
-            if (ClientUtils.isChannel(parms))
+            if (ircData.isChannel(parms))
             {
                gui.openChannelWindow(ircData.getChannel(parms));
             }
@@ -781,6 +866,106 @@ public class BuiltInCommands extends Feature implements ClientCommand
          default:
             getCapabilities().sendln(command + " " + parms);
       }
+   }
+
+   // Convert parameters to an array list; if eliminateSpace is true, then all "blank" parameters are nuked.
+   public ArrayList parmsToArrayList(String parms, boolean eliminateSpace)
+   {
+	   if (parms == null || parms.isEmpty())
+		   return null;
+
+	   if (eliminateSpace)
+		   parms = parms.trim();
+
+	   ArrayList pList = new ArrayList(Arrays.asList(parms.split(" ")));
+	   ArrayList retList = new ArrayList(pList.size());
+	   Iterator pi = pList.listIterator();
+
+	   while (pi.hasNext())
+	   {
+		   String pValue = pi.next().toString();
+
+		   if (eliminateSpace && (pValue.trim().length() < 1) )
+			   continue;
+
+		   retList.add(pValue);
+	   }
+
+	   return retList;
+   }
+
+   // Create homogenous channel MODE line(s) (that is, one mode type e.g. +o), and return it as an array with one MODE line per array element.
+   // Make sure the 'mode' passed in is always lower-case UNLESS the mode is, per some odd ircd, upper-case. Targets should be passed as an array.
+   public ArrayList createHomogenousChannelModesList(String channel, String modifier, String mode, ArrayList targets)
+   {
+	   // Sanity checks
+	   if (mode == null || modifier == null || targets == null || channel == null || targets.isEmpty()) {
+		   // Invalid input parameters
+		   return null;
+	   }
+
+	   if (channel.length() < 1) {
+		   // Empty channel
+		   return null;
+	   }
+
+	   // TODO: Check for valid channel prefix, based on the information provided by the IRC server (e.g. some servers have more than '&' and '#').
+	   if (!modifier.equals("+") && !modifier.equals("-")) {
+		   // Invalid MODE modifier
+		   return null;
+	   }
+	   
+	   if (!mode.equals("o") && !mode.equals("v") && !mode.equals("b") && !mode.equals("h")) {
+		   // Invalid mode
+		   return null;
+	   }
+
+	   ArrayList modeLines = new ArrayList(); // Defaults to 10 initially, per Java documentation. This probably won't ever be exceeded, but it'll grow if it needs to!
+	   Iterator ti = targets.listIterator();
+	   StringBuffer tempModeLine = new StringBuffer();
+	   StringBuffer tempTargetLine = new StringBuffer();
+	   int modeCounter = 0;
+	   int maxModes = ircData.getMaxModes(); // Maximum number of modes, per line
+
+	   while (ti.hasNext())
+	   {
+		   String target = ti.next().toString();
+
+		   if (tempModeLine == null)
+			   tempModeLine = new StringBuffer();
+		   if (tempTargetLine == null)
+			   tempTargetLine = new StringBuffer();
+
+		   tempModeLine.append(mode);
+		   if (modeCounter > 0)
+		  	 tempTargetLine.append(" ");
+		   
+		   tempTargetLine.append(target);
+
+		   modeCounter++;
+		   
+		   if ( ( (modeCounter % maxModes) == 0) || (!ti.hasNext()) ) {
+			   // Add MODE line to array
+			   StringBuffer finishedLine = new StringBuffer();
+			   finishedLine.append("MODE ");
+			   finishedLine.append(channel);
+			   finishedLine.append(" ");
+			   finishedLine.append(modifier);
+			   finishedLine.append(tempModeLine.toString());
+			   finishedLine.append(" ");
+			   finishedLine.append(tempTargetLine.toString());
+
+			   modeLines.add(finishedLine.toString());
+
+			   modeCounter = 0;
+
+			   // This should signal to the garbage collector to clean these up, right? God damn Java..
+			   tempModeLine = null;
+			   tempTargetLine = null;
+		   }
+	   }
+	   
+	   return modeLines;
    }
 
    /* TODO: Fix this server code */

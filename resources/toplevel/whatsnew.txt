@@ -1,16 +1,4 @@
-TODO
-===
-- Allow scripts to load 'child' scripts which are tied to the parent, and on parent unload, the children unload cleanly. The children are not stored in the script auto-load property.
-- Text editing caret in Mac OS X is positioning itself at the beginning of the line; no idea why. Fix this behavior!
-- Alter handling of lame, menus and default.irc and add proper options for them.
-- Prevent exception when sending to non-connected IRC server, and remind user to connect.
-- Fix Makefile to auto-compile apple-specific when Apple OS is detected.
-- On OS X, dock icon now bounces up and down when user receives a private message, channel message, notice, etc. (** make this configurable; right now, no activity. **)
-- Finagle server code to allow a colon ':' inside of passwords; right now, it'll bork the server entry.
-- Skip the step of going to the Server Editor when 'Edit' is clicked and a server item is selected, and instead go directly to the editor. This step seems redundant!
-- Add mode handling code that works on the MAXMODES server variable.
-
-Release 0.9.1 (01 Jan 13 ??)
+Release 0.9.0-r23 (21 Dec 12; it's the end of the world!)
 ===
 - Maximum input history option made configurable and is accessible via "Options->Interface Options->Window UI->Max Lines of Input History".
 - Script predicates isop, ison, etc. no longer case-sensitive (thanks to tricid for the patch).
@@ -21,16 +9,10 @@ Release 0.9.1 (01 Jan 13 ??)
 - Server display fixed when a server doesn't have a network and/or description value.
 - menus.irc recent server (saved.servers) connect item issue fixed
 - Support for high-resolution "Retina" Apple displays in OS X enabled preventing the "blur" effect. (Thank you to Sarge for reporting the bug!)
-
-0.9.1 Development changes:
-===
-- StringInput now has an initializer that accepts font size, along with appropriate overloaded addStringInput() method (TODO: make it accept a Font object) (items/StringAdapter.java)
-- theApplication is now set at declaration with getApplication() per Apple's specs.
-- Removed Help items that got over-written by subsequent items
-- Changed static path of SetFile to dynamic `which SetFile` in Package.sh
-- findScripts() replaced with single findScript(). Script management code cleaned up greatly, things handled more consistently internally, and as a result there are a few bugs fixed. All scripts are handled with their absolute pathnames to prevent a script being loaded twice or more.
-- Values in the Server class are trimmed prior to being assigned to help avoid sloppy argument parsing issues
-
+- /op, /deop, /voice, /devoice, etc. now act on all nicknames specified, and no longer work backwards from the end of the list of nicknames. Supports operating on the maximum number of modes per line as specified by the IRC server to which the user is connected.
+- Other aliases implemented or changed: /DEHOP, /NAMES, /UMODE, /UNTOP
+- Channel names are now utilized more often and checked for validity in the built-ins, with validity based on information from IRC server.
+- /UNLOAD now supports -s flag (/unload -s script_name) that will be silent in the case of failure (useful for parent scripts that load and unload children)
 
 Release 0.9 (20 Jul 11)
 ====

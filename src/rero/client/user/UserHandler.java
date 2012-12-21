@@ -55,7 +55,7 @@ public class UserHandler extends Feature implements rero.gui.input.InputListener
    {
       int colonIndex = text.indexOf(':');
  
-      return (colonIndex > -1 && colonIndex == (text.indexOf(' ') - 1) && ClientUtils.isChannel(getQuery()));
+      return (colonIndex > -1 && colonIndex == (text.indexOf(' ') - 1) && ircData.isChannel(getQuery()));
    }
 
    public void processNickCompletion(String text)

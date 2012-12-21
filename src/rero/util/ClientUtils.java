@@ -18,12 +18,21 @@ import rero.config.*;
 import text.*;
 import rero.dialogs.*;
 
-import java.lang.reflect.*;
+import java.lang.reflect.*; 	// For attention getting routines (we have to call indirectly)
+import rero.ircfw.*;
+import rero.ircfw.interfaces.*;
+import rero.client.*;
+import rero.client.server.*;
+import rero.client.user.*;
+import rero.client.output.*;
+import rero.net.*;
+import rero.client.script.*;
+import rero.client.notify.*;
+import rero.gui.*;
+import rero.util.*;
 
 public class ClientUtils
 {
-    private static int OS_TYPE = -1;
-
     public static void invokeLater(Runnable doIt)
     {
         if (SwingUtilities.isEventDispatchThread())
@@ -432,9 +441,10 @@ public class ClientUtils
        return "Unknown Month: "+m;
 	}
 
+    // This is a static isChannel, and does not know what channels are supported for our current connected IRC server.
     public static boolean isChannel(String target)
     {
-       return (target.length() > 0 && "#&!+".indexOf(target.charAt(0)) > -1);
+    	return (target.length() > 0 && "#&!+".indexOf(target.charAt(0)) > -1);
     }
 
     public static int ctime()
@@ -633,24 +643,17 @@ public class ClientUtils
     // Return operating system; OS X (0), Windows (1) or Linux (2)
     public static int GetOS()
     {
-	    if (OS_TYPE == -1) // We don't have the operating system yet
-	    {
-	    	String OS = System.getProperty("os.name").toLowerCase();
+  	String OS = System.getProperty("os.name").toLowerCase();
 		
-		if (OS.indexOf("mac") >= 0)
-			OS_TYPE = 0;
-		else if (OS.indexOf("win") >= 0)
-			OS_TYPE = 1;	
-		else if (OS.indexOf("linux") >= 0)
-			OS_TYPE = 2;
-		else
-		{
-			// Unknown OS type -- we should probably log something here (TODO)
-			OS_TYPE = -1;
-		}
-	    }
-	    
-	    return OS_TYPE;
+	if (OS.indexOf("mac") >= 0)
+		return 0;
+	else if (OS.indexOf("win") >= 0)
+		return 1;
+	else if (OS.indexOf("linux") >= 0)
+		return 2;
+
+	return -1;
+
     }
 
     // Returns the operating system
