@@ -1,20 +1,10 @@
 #!/bin/bash
 #
-# Build and Package jIRC
-# 
-# If I was sharper I would make ant do it.  I hate XML though.
-#
-# To Run:
-#   chmod +x Package.sh
-#   ./Package.sh
-#
-# The output will be 2-3 shiny files in this directory... jerk.tgz, jerk.zip, and jerkOSX.tgz (assuming your on MacOS X)
-#
+# Build and Package jIRC (for Apple only)
 
-#
 # Get rid of temporary stuff
 #
-rm -rf dist/jerk.tgz dist/jerk.zip dist/jerk.dmg
+rm -rf dist/jerk.dmg
 
 rm -rf bin
 rm -rf temp
@@ -52,24 +42,6 @@ cd ../../
 
 #cp resources/resource/default.irc temp/extra/default.irc
 #cp resources/resource/menus.irc temp/extra/menus.irc
-
-#
-# Create Generic jIRCii Package
-#
-mv temp jIRCii
-rm -rf `find jIRCii -type d -name .svn`
-tar zcf ./dist/jerk.tgz jIRCii
-
-#
-# Create Windows jIRCii Package
-#
-cp src-windows/bin/jircii.exe jIRCii/jircii.exe
-rm -rf `find jIRCii -type d -name .svn`
-zip -r ./dist/jerk.zip jIRCii
-
-rm -f jIRCii/jircii.exe
-
-mv jIRCii temp
 
 #
 # Create Mac OS X jIRCii Package

@@ -169,6 +169,9 @@ public class ServerHandler extends Feature implements FrameworkConstants, Socket
            boolean isDone = false;
 
            getCapabilities().getOutputCapabilities().fireSetAll(ClientUtils.getEventHashMap(ev.data.hostname, ev.message), "IRC_DISCONNECT");
+	   
+	   if (ClientState.getClientState().attentionEnabledActions())
+	   	 ClientUtils.getAttention(); // Get attention for disconnect
 
            if (data.getMyUser().getChannels().size() > 0)
            {

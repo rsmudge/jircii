@@ -1,3 +1,8 @@
+Release 0.9.0-r24 (22 Dec 12; the world didn't end. jIRCii chats on!)
+===
+- Fixed bug introduced in 0.9.0-r23 that effectively nuked titled bordered groups in the options dialogs. Oops.
+- Mac OS X: Dock icon now bounces on configurable events, including private message, private notice, channel chat, and kill/kick/disconnect actions. These are configurable under Options->Interface Options->Notifications. By default, only private message and Notice cause the dock icon to bounce. By default it will bounce repeatedly until the application is opened or the dock icon is moused over, but an option is present to disable this and bounce only once under the same Notifications options dialog. NOTE: Windows and Linux users will not have the "Notifications" dialog in their Interface Options menu, as they are not currently supported.
+
 Release 0.9.0-r23 (21 Dec 12; it's the end of the world!)
 ===
 - Maximum input history option made configurable and is accessible via "Options->Interface Options->Window UI->Max Lines of Input History".

@@ -12,7 +12,7 @@ public abstract class DGroup extends DContainer implements DItem
 {
     protected String title;
     protected int    inset;
-    protected boolean useBorder;
+    protected boolean useBorder = true;
 
     public DGroup (String _title)
     {

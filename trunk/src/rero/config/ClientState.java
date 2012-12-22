@@ -488,5 +488,22 @@ public class ClientState
       setString(key, bounds.toString());
    }
 
+   // TODO: These will be per-operating system; right now it does just OS X, but it will also check the value for Windows and Linux.
+   // Returns whether or not a notification preference is enabled for private messages.
+   public boolean attentionEnabledMsg() {
+	   return isOption("option.attention.osx.bouncedock.msg", ClientDefaults.attention_osx_bouncedock_msg);
+   }
+   // Returns whether or not a notification preference is enabled for private notices.
+   public boolean attentionEnabledNotice() {
+	  return isOption("option.attention.osx.bouncedock.notice", ClientDefaults.attention_osx_bouncedock_notice);
+   }
+   // Returns whether or not a notification preference is enabled for channel chat/notices
+   public boolean attentionEnabledChannelChat() {
+	   return isOption("option.attention.osx.bouncedock.channelchat", ClientDefaults.attention_osx_bouncedock_channelchat);
+   }
+   // Returns whether or not a notification preference is enabled for server disconnect and kills, kicks from channels
+   public boolean attentionEnabledActions() {
+	   return isOption("option.attention.osx.bouncedock.actions", ClientDefaults.attention_osx_bouncedock_actions);
+   }
 }
 

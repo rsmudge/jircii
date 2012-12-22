@@ -1,6 +1,11 @@
+12/22/12
+- Fixed issue with DGroup() instances where it was not drawing a border window. I neglected to insert a default value for the new property useBorder (boolean), so it was always false. Doh.
+- Added Package.Apple.sh for packaging only Apple Mac OS X jerk.dmg file
+- Added dialog box for Attention / Notifications in Interface Options -> Notifications for setting on what conditions the OS X dock icon should bounce to let the user know a message, notice, channel chat, etc. is waiting, and whether or not the bouncing should repeat until answered ("critical" boolean flag to requestUserAttention() method on OS X Java class)
+
 Upcoming 0.9.1 Development Notes (Differs from 0.9.0):
 ===
-- StringInput now has an initializer that accepts font size, along with appropriate overloaded addStringInput() method (TODO: make it accept a Font
+- StringInput now has an initializer that accepts font size, along with appropriate overloaded addStringInput() method (TODO: make it accept a Font)
 - theApplication is now set at declaration with getApplication() per Apple's specs.
 - Removed Help items that got over-written by subsequent items
 - Changed static path of SetFile to dynamic `which SetFile` in Package.sh
@@ -13,3 +18,5 @@ Upcoming 0.9.1 Development Notes (Differs from 0.9.0):
 - parmsToArrayList() method added in BuiltInCommands, to convert parameters to an ArrayList. Accepts a parameter to signify that blank parameters should be nuked.
 - createHomogenousChannelModesList() added; returns MODE line acting on all targets specified, to the maximum number of modes per line specified by IRC server. This provides fix for /op, /deop, etc.
 - Now identifying NETWORK, MAXMODES, CHANTYPES from the IRC server and using them in the code.
+- Fixed util/debugjirc.sh
+

@@ -80,5 +80,20 @@ public class ClientDefaults
 
    public static final boolean update_ial     = true;
 
-   public static final String  version_string = "07.20.11";
+   // Attention / notification values
+   // OS X
+   public static final boolean attention_osx_bouncedock_msg		= true;
+   public static final boolean attention_osx_bouncedock_notice		= true;
+   public static final boolean attention_osx_bouncedock_channelchat	= true;
+   public static final boolean attention_osx_bouncedock_actions		= true;
+   public static final boolean attention_osx_bouncedock_repeat		= true;
+   // TODO: Windows, Linux
+   
+   public static final String  version_string = "07.20.11";	// Full version string
+
+   // This would build out to: 0.90(-revision)(+extra)
+   public static final String  version_major  = "0";
+   public static final String  version_minor  = "90";
+   public static final String  version_rev    = "rev24";
+   public static final String  version_extra  = "";
 }

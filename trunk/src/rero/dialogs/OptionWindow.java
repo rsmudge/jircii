@@ -13,6 +13,7 @@ import rero.dck.*;
 import rero.gui.*;
 
 import java.util.*;
+import rero.util.*;
 
 public class OptionWindow extends JDialog implements DCapabilities, TreeSelectionListener
 { 
@@ -116,6 +117,10 @@ public class OptionWindow extends JDialog implements DCapabilities, TreeSelectio
           option = new DefaultMutableTreeNode(addDialog(new SwitchBarDialog()));    category.add(option);
           option = new DefaultMutableTreeNode(addDialog(new WindowsDialog()));      category.add(option);
           option = new DefaultMutableTreeNode(addDialog(new ImageDialog()));        category.add(option);
+	  
+	  // For the time being, enable this only if we're in OS X, since attention code doesn't work on Windows or Linux.
+	  if (ClientUtils.isMac())
+	  	option = new DefaultMutableTreeNode(addDialog(new AttentionDialog()));    category.add(option);
     }
 
     public void valueChanged(TreeSelectionEvent e) 

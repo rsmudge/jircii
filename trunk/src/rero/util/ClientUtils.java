@@ -82,6 +82,43 @@ public class ClientUtils
         return taglines[r];
     }
 
+   // Return version strings
+
+   public String getVersionBase() {
+	   return getVersionMajor() + "." + getVersionMinor();
+   }
+   public String getVersionBaseRevision() {
+	   String vString = getVersionBase();
+
+	   if (ClientDefaults.version_rev != null && !ClientDefaults.version_rev.isEmpty())
+		   vString = vString + "-" + ClientDefaults.version_rev;
+
+	   return vString;
+   }
+   public String getVersionFull() {
+	   String vString = getVersionBase();
+
+	   if (ClientDefaults.version_rev != null && !ClientDefaults.version_rev.isEmpty())
+		   vString = vString + "-" + ClientDefaults.version_rev;
+
+	   if (ClientDefaults.version_extra != null && !ClientDefaults.version_extra.isEmpty())
+		   vString = vString + "+" + ClientDefaults.version_extra;
+
+	   return vString;
+   }
+   public String getVersionMajor() {
+	   return ClientDefaults.version_major;
+   }
+   public String getVersionMinor() {
+	   return ClientDefaults.version_minor;
+   }
+   public String getVersionRevision() {
+	   return ClientDefaults.version_rev;
+   }
+   public String getVersionExtra() {
+	   return ClientDefaults.version_extra;
+   }
+
     public static String formatTime(long seconds)
     {
         StringBuffer rv = new StringBuffer();
@@ -659,21 +696,22 @@ public class ClientUtils
     // Returns the operating system
     public static boolean isWindows() { return (GetOS() == 1); }
     public static boolean isLinux() { return (GetOS() == 2); }
-    public static boolean isMac() { return (GetOS() == 0); }
+    public static boolean isMac() { return (GetOS() == 1); }
 
     // Notify user of activity in status bar, dock, task bar, whatever
     public static void getAttention()
     {
-	    if (isMac())
-	    {
+	    if (isMac()) {
+		    // OS X: We bounce the dock icon up and down.
 		    try {
 		    	Class osxAdapter = Class.forName("apple.OSXAdapter");
-		  	  Class[] defArgs = new Class[0];
+		  	  Class[] defArgs = new Class[] { boolean.class }; // We're going to be passing one argument to the method
 		  	  Method gaMethod = osxAdapter.getDeclaredMethod("getAttention", defArgs);
 		  	  if (gaMethod != null)
-		   	 {
-				    gaMethod.invoke(osxAdapter, new Object[0]); // apple.OSXAdapter.getAttention() equivalent
-			    }
+			  {
+				  Boolean blnObj = new Boolean(ClientState.getClientState().isOption("option.attention.osx.bouncedock.repeat", ClientDefaults.attention_osx_bouncedock_repeat));
+				  gaMethod.invoke(osxAdapter, new Object[] { blnObj } ); // apple.OSXAdapter.getAttention(boolean) equivalent; what a bitch to code this.
+			  }
 		    }
 		    catch (Exception ex)
 		    {
@@ -681,13 +719,11 @@ public class ClientUtils
 			    ex.printStackTrace();
 		    }
 	    }
-	    else if (isWindows())
-	    {
-		    // TODO: Flash Windows task bar window
+	    else if (isWindows()) {
+		    return;
 	    }
-	    else if (isLinux())
-	    {
-		    // TODO: Do whatever it is that Linux does to get attention 
+	    else if (isLinux()) {
+		    return;
 	    }
     }
 }
