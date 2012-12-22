@@ -696,7 +696,7 @@ public class ClientUtils
     // Returns the operating system
     public static boolean isWindows() { return (GetOS() == 1); }
     public static boolean isLinux() { return (GetOS() == 2); }
-    public static boolean isMac() { return (GetOS() == 1); }
+    public static boolean isMac() { return (GetOS() == 0); }
 
     // Notify user of activity in status bar, dock, task bar, whatever
     public static void getAttention()

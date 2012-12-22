@@ -78,7 +78,7 @@ public class ServerHandler extends Feature implements FrameworkConstants, Socket
             while (i.hasNext())
             {
                Channel temp = (Channel)i.next();
-               getCapabilities().sendln("JOIN " + temp.getName() + " :" + temp.getKey());
+               getCapabilities().sendln("JOIN " + temp.getName() + " :" + temp.getKey()); // TODO: Investigate -- is this right? With a colon before the key? Because JOIN in BuiltInCommands.java doesn't use the colon.
             }
 
             restoreInformation = null;
