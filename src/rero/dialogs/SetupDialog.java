@@ -59,7 +59,7 @@ public class SetupDialog extends DMain
           public void setupDialog()
           {
              addStringInput("user.rname"  , "", " Real Name:  ", 'R',  10);
-             addStringInput("user.email"  , "", " Email:   "   , 'E',  60);
+             addStringInput("user.email"  , "", " E-mail:  "   , 'E',  60);
              addStringInput("user.nick"   , "", " Nickname:   ", 'N',  60);
              addStringInput("user.altnick", "", " Alt. Nick:  ", 'A',  60);
           }

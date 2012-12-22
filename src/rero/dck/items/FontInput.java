@@ -29,6 +29,8 @@ public class FontInput extends SuperInput implements ItemListener
          "The quick brown fox jumped over the lazy coder",
          "Fat butane, grubbin' on French fries",
          "Sun sucks!@",
+	 "His name was Robert Paulson",
+	 "I always forget some mundate detail!"
      };
      int r = ((int)System.currentTimeMillis() / 1000) % taglines.length;
      return taglines[Math.abs(r)];

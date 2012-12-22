@@ -54,8 +54,8 @@ public class OSXAdapter extends ApplicationAdapter
             theApplication.addApplicationListener(new OSXAdapter());
     }
 
-    public static void getAttention()
+    public static void getAttention(boolean critical)
     {
-	    theApplication.requestUserAttention(true);
+	    theApplication.requestUserAttention(critical);
     }
 }

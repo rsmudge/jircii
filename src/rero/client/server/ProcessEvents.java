@@ -45,6 +45,9 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
 
              output.fireSetTarget(eventDescription, channel, output.chooseSet(channel, "CHANNEL_TEXT", "CHANNEL_TEXT_INACTIVE"));
              touchUser(nick, target);
+
+	     if (ClientState.getClientState().attentionEnabledChannelChat())
+		     ClientUtils.getAttention(); // Get attention for channel chat
          }
          else
          {
@@ -54,7 +57,9 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
                 getCapabilities().getUserInterface().openQueryWindow(nick, isSelected);
              }
              output.fireSetQuery(eventDescription, nick, target, "PRIVMSG");
-	     // ClientUtils.getAttention(); // TODO: Move this somewhere else, so that we can trigger on user defined actions (channel or private msg, notice, notify, etc)
+
+	     if (ClientState.getClientState().attentionEnabledMsg())
+	     	ClientUtils.getAttention(); // Get attention for private message
          }
       }
       else if (event.equals("MODE"))
@@ -73,17 +78,23 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
       }
       else if (event.equals("NOTICE"))
       {
-         if (nick == null || nick.length() == 0)
-         {
+         if (nick == null || nick.length() == 0) {
             output.fireSetStatus(eventDescription, "NOTICE");
          }
-         else if (ircData.isChannel(target) || ClientState.getClientState().isOption("active.notice", ClientDefaults.active_option)) 
-         {
+         else if (ircData.isChannel(target))  {
             output.fireSetConfused(eventDescription, target, "notice", "NOTICE");
-         }
-         else
-         {
+
+	    if (ClientState.getClientState().attentionEnabledChannelChat())
+	         ClientUtils.getAttention(); // Get attention for channel notice
+	 } else if (ClientState.getClientState().isOption("active.notice", ClientDefaults.active_option)) {
+	    output.fireSetConfused(eventDescription, target, "notice", "NOTICE");
+
+	    if (ClientState.getClientState().attentionEnabledNotice())
+	         ClientUtils.getAttention(); // Get attention for a private notice?
+         } else {
             output.fireSetAllTarget2(eventDescription, nick, "NOTICE");
+	    if (ClientState.getClientState().attentionEnabledNotice())
+	         ClientUtils.getAttention(); // Get attention for a private notice?
          }
 
 //         rero.util.ClientUtils.dump(eventDescription);
@@ -94,6 +105,8 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
          {
              output.fireSetTarget(eventDescription, channel, output.chooseSet(channel, "ACTION", "ACTION_INACTIVE"));
              touchUser(nick, target);
+	     if (ClientState.getClientState().attentionEnabledChannelChat())
+	     	ClientUtils.getAttention(); // Get attention for channel action message
          }
          else
          {
@@ -104,6 +117,8 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
              }
 
              output.fireSetTarget(eventDescription, nick, "PRIVACTION"); 
+	     if (ClientState.getClientState().attentionEnabledMsg())
+	     	ClientUtils.getAttention(); // Get attention for private action message
          }
       }
       else if (event.equals("JOIN"))
@@ -144,6 +159,9 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
          if (eventDescription.get("$nick").equals(ircData.getMyNick()))
          {
             output.cycleQuery();
+
+	     if (ClientState.getClientState().attentionEnabledActions())
+	     	ClientUtils.getAttention(); // Get attention for KICK action
          }
          output.fireSetTarget(eventDescription, channel, "CHANNEL_KICK");
       }
@@ -243,6 +261,10 @@ public class ProcessEvents extends Feature implements FrameworkConstants, ChatLi
          nick = "=" + eventDescription.get("$nick");
 
          output.fireSetTarget(eventDescription, nick, "CHATMSG");
+
+	 // TODO: Find out if this belongs here for DCC chat
+	 //if (ClientState.getClientState().attentionEnabledMsg())
+	 //   ClientUtils.getAttention(); // Get attention for private message (dcc)
       }
       else if (event.equals("ERROR"))
       {
