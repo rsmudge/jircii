@@ -1,3 +1,6 @@
+Release 0.9.0-r26 (22 Dec 12)
+- Files missing from svn tree (AttentionDialog.java) for Notification support added.
+
 Release 0.9.0-r25 (22 Dec 12)
 ===
 - Typo and debug condition was left in r24; removed and set back to production. Rebuilt and commited.

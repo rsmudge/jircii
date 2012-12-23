@@ -94,6 +94,6 @@ public class ClientDefaults
    // This would build out to: 0.90(-revision)(+extra)
    public static final String  version_major  = "0";
    public static final String  version_minor  = "90";
-   public static final String  version_rev    = "rev24";
+   public static final String  version_rev    = "rev26";
    public static final String  version_extra  = "";
 }
